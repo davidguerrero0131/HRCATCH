@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Nuevo llamado</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+      .loader-page {
+	    position: fixed;
+	    z-index: 25000;
+	    background: rgb(255, 255, 255);
+	    left: 0px;
+	    top: 0px;
+	    height: 100%;
+	    width: 100%;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    transition:all .3s ease;
+	  }
+	  .loader-page::before {
+	    content: "";
+	    position: absolute;
+	    border: 2px solid rgb(50, 150, 176);
+	    width: 60px;
+	    height: 60px;
+	    border-radius: 50%;
+	    box-sizing: border-box;
+	    border-left: 2px solid rgba(50, 150, 176,0);
+	    border-top: 2px solid rgba(50, 150, 176,0);
+	    animation: rotarload 1s linear infinite;
+	    transform: rotate(0deg);
+	  }
+	  @keyframes rotarload {
+	      0%   {transform: rotate(0deg)}
+	      100% {transform: rotate(360deg)}
+	  }
+	  .loader-page::after {
+	    content: "";
+	    position: absolute;
+	    border: 2px solid rgba(50, 150, 176,.5);
+	    width: 60px;
+	    height: 60px;
+	    border-radius: 50%;
+	    box-sizing: border-box;
+	    border-left: 2px solid rgba(50, 150, 176, 0);
+	    border-top: 2px solid rgba(50, 150, 176, 0);
+	    animation: rotarload 1s ease-out infinite;
+	    transform: rotate(0deg);
+	  }
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/form-validation.css" rel="stylesheet" th:href = "@{/css/form-validation.css}">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Más opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+    
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>      
+
+  <main>
+  <div class="container">
+    <div class="py-5 text-center">
+     
+      <h2>Nuevo usuario</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+    </div>
+ <form class="needs-validation" validate th:action="@{/crearusuario}"th:object="${usuario}" method="post">     
+    <div class="row g-3 mb-3">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Seccion de datos</span>
+          <span class="badge bg-secondary rounded-pill">ROLES</span>
+        </h4>
+        <ul class="list-group mb-3">
+          
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">ADMIN</h6>
+              <small class="text-muted"> Acceso total a todas las funciones</small>
+            </div>
+            
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">SYSADMIN</h6>
+              <small class="text-muted">Acceso total funciones del área de sistemas</small>
+            </div>
+           
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">SYSUSER</h6>
+              <small class="text-muted">Excepción en la edición de reportes área de sistemas</small>
+            </div>
+           
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">EDITOR</h6>
+              <small class="text-muted">Dar baja, crear, editar reportes, programar mantenimientos área biomédica</small>
+            </div>
+           
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">USER</h6>
+              <small class="text-muted">Crear reportes y demás funciones área biomédica</small>
+            </div>
+           
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">VISITOR</h6>
+              <small class="text-muted">Unicamente visualización reportes, hojas de vida, guias e inventario</small>
+            </div>
+           
+          </li>
+ 
+        </ul>
+        
+    	</div>
+
+ 
+      
+     <div class="col-md-7 col-lg-8">       
+	          <div class="row g-3">
+	            <div class="col-sm-4">
+	            	<h4 class="mb-3">Roles</h4>
+	              <select class="form-control" th:name = "auths" required>
+	              	<option selected disabled value="0">Seleccione el equipo</option>
+	              	<div th:each="auth:${auths}">
+	              		<option th:text="${auth.authority}" th:value = "${auth.id_Authority}"></option>
+	              	</div>
+					 
+					</select>	              
+	            </div>
+	            <div class="col-md-4">
+	              <label for= "input_starttime" class="form-label lead">Nombres</label>
+	              <input th:field="*{Nombre}"onkeyup="mayus(this);" placeholder= "Quien realiza el llamado" type="text" class="form-control" required></input>
+	         
+	            </div>
+	            <div class="col-md-4">
+	              <label for= "input_starttime" class="form-label lead">Apellidos</label>
+	              <input th:field="*{Apellido}"onkeyup="mayus(this);" placeholder= "Quien realiza el llamado" type="text" class="form-control" required></input>
+	         
+	            </div>
+		           <div class="col-md-6">
+		              <label for= "input_starttime" class="form-label lead">Contraseña</label>
+				       <input type="password"name = "password" id="password" class="form-control" placeholder="Contraseña" required/>
+				       <label for= "input_starttime" class="form-label lead">Confirmar contraseña</label>
+				       <input type="password" id="confirmpassword" class="form-control" placeholder="Confirmar contraseña" required/>
+		          		<span class="badge badge-light lead" id='message'></span>
+		          </div>
+	           <div class = "col-md-6">
+	           	<label for= "input_starttime" class="form-label lead">Cedula</label>
+	              <input th:field="*{Cedula}"onkeyup="mayus(this);" placeholder= "Quien realiza el llamado" type="text" class="form-control" required></input>
+	              <label for= "input_starttime" class="form-label lead">Registro INVIMA(Si aplica)</label>
+	              <input th:field="*{Registro_invima}"onkeyup="mayus(this);" placeholder= "Quien realiza el llamado" type="text" class="form-control"></input>
+	           </div>
+	            
+	            <div class="col-md-6">
+	              <label for="country" class="form-label lead">Tipo de cargo</label>
+	              <div class="my-3">
+	              	<div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=1  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label">Admin</label>
+	                </div>
+	                <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}"value=2  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label">Coordinador área</label>
+	                </div>
+	               <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=3  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" >Técnico sistemas</label>
+	                </div>
+	                <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=4 type="radio" class="form-check-input" required>
+	                  <label class="form-check-label">Auxiliar sistemas</label>
+	                </div>
+	              <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=3  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" >Técnico biomédico</label>
+	                </div>
+	                <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=4  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" >Auxiliar biomédico</label>
+	                </div>
+	             <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=5  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label">Técnico administrativo</label>
+	                </div>
+	              <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=6  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" >Auxiliar administrativo</label>
+	                </div>
+	              <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=7  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" >Visitante</label>
+	                </div>
+	                <div class="form-check">
+	                  <input th:field="*{Tipo_cargo_usuario}" value=0  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" >Otro cargo</label>
+	                </div>
+	              </div>
+	              
+	            </div>  
+	            <div class = "col-md-6">
+	            
+			        <div id = "charge">
+				        <div class = "input-group">
+				        	<button class = "btn btn-success" onclick="return Validate()" id = "make" type = "submit">Crear usuario</button>
+				        	<button class = "btn btn-secondary" id = "cancel" type = "button">Cancelar</button>
+				        </div>
+			        </div>
+	            </div>
+	            
+	            
+	            
+	        
+	       </div>
+	      </div>
+       </div>    
+ </form>
+     
+    </div>
+  
+  </main>
+  
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2022 HRCatch</p>
+    
+  </footer>
+</div>
+
+<script type="text/javascript" th:inline = "javascript">
+/*<![CDATA[*/
+var text = document.getElementById("typedevice");
+var select = document.getElementById("device");
+var pclave = document.getElementById("pclave");
+var desc = document.getElementById("desc");
+var psent = document.getElementById("psent");
+$('#password, #confirmpassword').on('keyup', function () {
+  if ($('#password').val() == $('#confirmpassword').val()) {
+    $('#message').html('Matching').css('color', 'green');
+  
+  } else 
+    $('#message').html('Not Matching').css('color', 'red');
+ 
+});
+function Validate() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmpassword").value;
+        if (password != confirmPassword) {
+            alert("Las contraseñas no coinciden.");
+            return false;
+        }
+        return true;
+    }
+function mayus(e){
+	e.value = e.value.toUpperCase();
+	
+}
+/*]]>*/
+</script>
+	
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	
+      
+  </body>
+</html>

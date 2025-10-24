@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Atender llamado</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/form-validation.css" rel="stylesheet" th:href = "@{/css/form-validation.css}">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+          </ul>
+        </li>          
+        </ul>
+        
+      </div>
+    </div>
+  </nav>
+  <main>
+  <div class="container">
+    <div class="py-5 text-center">
+     
+      <h2>Solucionar llamado</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+    </div>
+ <form class="needs-validation" validate th:action="@{/solucionarllamado/}+${allamado.id_Llamado}"th:object="${allamado}" method="post">     
+    <div class="row g-3 mb-3">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Seccion de datos</span>
+          <span class="badge bg-secondary rounded-pill" th:text="${servicio.id_Servicio}"></span>
+        </h4>
+        <ul class="list-group mb-3">
+          
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Tipo de equipo</h6>
+              <small class="text-muted" th:text="${tipo_equipo.nombre_Tipo_equipo}"></small>
+            </div>
+            
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Marca/Modelo/Serie/Placa</h6>
+              <small class="text-muted" th:text="${equipo.Marca}+'/'+${equipo.Modelo}+'/'+${equipo.Serie}+'/'+${equipo.Placa_inventario}"></small>
+            </div>
+            
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Servicio/Ubicación</h6>
+              <small class="text-muted" th:text="${servicio.Nombre_servicio}+'/'+${servicio.Ubicacion_servicio}"></small>
+            </div>
+           
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Palabras clave</h6>
+              <small class="text-muted" th:text="${allamado.Palabras_clave}"></small>
+              
+            </div>
+           
+          </li>
+          
+ 
+        </ul>
+        <div class = "input-group">
+        	<button class = "btn btn-success" type = "submit">Cerrar llamado</button>
+        	<button class = "btn btn-secondary" type = "button">Cancelar</button>
+        </div>
+    	</div>
+
+ 
+      
+     <div class="col-md-7 col-lg-8">       
+	          <div class="row g-3">
+	            <div class="col-sm-5">
+	            	<div class="form-check">
+			            <input type="checkbox" id = "phone" th:field="*{Confirmacion_telefono}"class="form-check-input">
+			            <label class="form-check-label" for="phone">Complete si fue atendido fuera del hospital</label>
+			          </div>
+	            </div>
+	            <div class = "col-sm-3">
+	            	<input class = "form-control mb-2"type="time" name = "hora_solucion" id = "horar">
+	            </div>
+	            <div class = "col-sm-4">
+	            
+	            	<input class = "form-control mb-2"type="date" name = "fecha_solucion" id = "fechar">
+	            </div>
+	            <div class="col-md-6">
+	              <label for="country" class="form-label lead">Prioridad</label>
+	              <div class="my-3">
+	              	<div class="form-check form-check-inline">
+	                  <input th:field="*{Atencion_prioridad}"id="Predictivo" value=5  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" for="Predictivo">5</label>
+	                </div>
+	                <div class="form-check form-check-inline">
+	                  <input th:field="*{Atencion_prioridad}"id="Predictivo" value=4  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" for="Predictivo">4</label>
+	                </div>
+	                <div class="form-check form-check-inline">
+	                  <input th:field="*{Atencion_prioridad}"id="Preventivo" value=3  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" for="Preventivo">3</label>
+	                </div>
+	                <div class="form-check form-check-inline">
+	                  <input th:field="*{Atencion_prioridad}"id="Correctivo" value=2 type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" for="Correctivo">2</label>
+	                </div>
+	                
+	                <div class="form-check form-check-inline">
+	                  <input th:field="*{Atencion_prioridad}"id="Otro" value=1  type="radio" class="form-check-input" required>
+	                  <label class="form-check-label" for="Otro">1</label>
+	                </div>
+	              </div>
+	              
+	            </div>  
+	            <div class="col-md-6">
+		              <h4 class="mb-3">Solución</h4>
+				       <textarea class="form-control" onkeyup="mayus(this);" id = "desc"rows ="2" th:field="*{Solucion}" required></textarea>
+				
+		          </div>
+	
+				
+		      
+		          
+
+	       </div>
+	      </div>
+       </div>    
+ </form>
+     
+    </div>
+  
+  </main>
+  
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2022 HRCatch</p>
+    
+  </footer>
+</div>
+
+<script type="text/javascript" th:inline = "javascript">
+/*<![CDATA[*/
+$("#fechar").hide();
+$("#horar").hide();
+
+$(document).ready(function() {
+    $('#device').select2();
+    
+});
+$('#phone').on('change',function(){
+	var phone = document.getElementById("phone").checked;
+	
+	console.log(document.getElementById("fechar"))
+    if (phone) {
+     $("#fechar").show();
+     $("#horar").show();
+	 $("#fechar").prop('required',true);
+     $("#horar").prop('required',true);
+    } else {
+     $("#fechar").hide();
+     $("#horar").hide();
+     $("#fechar").prop('required',false);
+     $("#horar").prop('required',false);
+    	
+    }  
+    
+  })
+function mayus(e){
+	e.value = e.value.toUpperCase();
+
+}
+
+/*]]>*/
+</script>
+	
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	
+      
+  </body>
+</html>

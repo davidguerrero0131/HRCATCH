@@ -1,0 +1,1922 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+	<meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Mantenimientos</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+<script th:src = "@{/js/chart.js}"></script>
+
+    <style>
+	    .modal-body{
+		  height: 200px;
+		  width: 100%;
+		  overflow-y: auto;
+		  overflow-x: auto;
+		}
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  
+    <!-- Custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+  </head>
+<body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+<main class="container-xl">  
+<form th:action="@{/mantenimiento}" method="post">
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+	<div class="py-4 text-center">
+     
+        <h2>Mantenimientos preventivos programados</h2>
+        <p class="lead">Seleccione para clasificar de acuerdo a mantenimientos asignados</p>
+      </div>
+      <div class = "row">
+      <div class="col-md-2">
+		<p class ="lead"><small>Técnicos biomédicos:</small></p>
+		
+	</div>
+	<div class="col-md-1">
+		<select class="form-select form-select-sm" th:name="usuarioprogramado"id= "tecnico" onchange = "ViewInd();"required>
+          <option selected disabled value="">Elegir técnico</option>
+          
+          	<div th:each="usuario:${ptomtto}">
+				<option th:text="${usuario.Nombre}+' '+${usuario.Apellido}" th:value = "${usuario.id_Usuario}"></option>
+			</div>
+			<option value = 1>TODOS</option>
+        </select>
+		
+	</div>
+	<div class="col-md-2">
+		<input type="text" name = "daterange" id = "rangofecha"  required>
+	</div>
+	<div class = "col-md-1 mb-3">
+		<button type="submit" class="w-200 btn btn-dark btn-sm">Buscar</button>
+	</div>
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-5">
+		<b><p>De <medium th:text="${fecha1}"></medium> a <medium th:text="${fecha2}"></medium></p></b>
+	</div>
+      </div>
+  <div class="container-xl">
+  	<div class = "row">
+  		
+  		<div class="bd-example">
+        <nav>
+          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Mantenimientos programados</a>
+            <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Seguimiento de metas</a>
+			<a class="nav-link" id="nav-corr-tab" data-bs-toggle="tab" href="#nav-corr" role="tab" aria-controls="nav-correctivos" aria-selected="false">Mantenimientos Correctivos</a>
+           <!-- <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Estadísticas</a> -->
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          	
+          		<div class="row">
+          			<div class = "col-md-3">
+          			 <p class = "lead" th:text="${nombre}"></p>
+          			</div>
+          			<div class="col-md-6">
+          				<b style="color: red;">
+          				<label th:text="'Mes actual'+': '+${totalmtto}+' mantenimientos preventivos. '"></label> <small th:text="${tiempototal}+' minutos'"></small>
+          				</b>
+          			</div>
+          			<div class="col-md-3">
+          				<div class="input-group">
+          					<span th:text="Filtrar  " class="label label-warning"></span>
+         					<input id="myInput"onkeyup="myFunction()"class="form-control"  placeholder="Nombre, marca, serie">
+          				</div>
+          			</div>
+	          		<div class="col-md-12">
+	          			<div th:if="${#lists.isEmpty(mttoactual)}"
+							        	 class="alert alert-info my-4"
+							        	 th:text="'No hay mantenimientos programados en este rango'">
+						  </div>
+	          			<div class="table-responsive">
+		          			<table class = "table table-sm"th:if="${not #lists.isEmpty(mttoactual)}" id = "myTable">
+		          				<thead>
+		          					<tr>
+		          						<th scope = "col">Nombre</th>
+		          						<th scope = "col">Marca</th>
+		          						<th scope = "col">Modelo</th>
+		          						<th scope = "col">Serie</th>
+		          						<th scope = "col">Placa</th>
+		          						<th scope = "col">Servicio</th>
+		          						<th scope = "col">Ubicación</th>
+		          	
+		          						
+		          						
+		          						
+		          						<div th:if="${asign}">
+		          							<th scope = "col">Asignado</th>
+		          						</div>
+		          						<th scope = "col">Dia programado</th>
+		          						<th scope = "col">Realizado</th>
+		          					</tr>
+		          				</thead>
+		          					
+		          				<tbody>
+		          					<tr th:each="equipo:${mttoactual}">
+		          						<td th:text="${equipo.nombre_Equipo}"></td>
+		          						<td th:text="${equipo.Marca}"></td>
+		          						<td th:text="${equipo.Modelo}"></td>
+		          						<td th:text="${equipo.Serie}"></td>
+		          						<td th:text="${equipo.Placa_inventario}"></td>
+		          						<td th:text="${equipo.Servicio}"></td>
+		          						<td th:text="${equipo.Ubicacion}"></td>
+		          						<div th:if="${asign}">
+		          							<td th:text = "${equipo.usuario.Nombre}+' '+ ${equipo.usuario.Apellido}"></td>
+		          						</div>
+
+		          						<td th:text = "${equipo.Dias}"></td>
+		          						<div th:if="${equipo.Realizado==true}">
+		          							<td class="table-success">
+		          								<div class="form-check">
+		          									<input class = "form-check-input"type = "checkbox"checked disabled>
+		          									
+		          								</div>
+		          							</td>
+		          						</div>
+		          						<div th:unless="${equipo.Realizado==true}">
+		          							<td class = "table-danger">
+		          								<input class = "form-check-input"type = "checkbox"disabled>
+		          							</td>
+		          						</div>
+		          						
+		          						
+		          					</tr>
+		          				</tbody>
+		          			</table>
+	          			</div>
+	          		</div>
+          		</div>
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+			
+            <article class="my-3" id="progress">
+	
+	      <div th:switch="${advancecolor}">
+	        <div class="bd-example">
+	        <div class="progress mb-3" th:case="1">
+	          <div class="progress-bar bg-success w-100" role="progressbar" th:aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100" th:text="${porcentaje}+'%'"></div>
+	        </div>
+	        <div class="progress mb-3" th:case="2">
+	          <div class="progress-bar bg-info w-75" role="progressbar" th:aria-valuenow="${porcentaje}" aria-valuemin="75" aria-valuemax="100" th:text="${porcentaje}+'%'"></div>
+	        </div>
+	        <div class="progress mb-3" th:case="3">
+	          <div class="progress-bar bg-secondary w-50" role="progressbar" th:aria-valuenow="${porcentaje}" aria-valuemin="50" aria-valuemax="75" th:text="${porcentaje}+'%'"></div>
+	        </div>
+	        <div class="progress mb-3" th:case="4">
+	          <div class="progress-bar bg-warning w-25" role="progressbar" th:aria-valuenow="${porcentaje}" aria-valuemin="25" aria-valuemax="50" th:text="${porcentaje}+'%'"></div>
+	        </div>
+	        <div class="progress" th:case="5">
+	          <div class="progress-bar bg-danger" role="progressbar" th:aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="25"th:text="${porcentaje}+'%'"></div>
+	        </div>
+	        </div>
+
+	      </div>
+	    </article>
+	    
+	    <div class="row">
+	    <div class = "col-md-3">
+	    	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 220px;">	
+			    <ul class="nav nav-pills flex-column mb-auto">
+			      <li class="nav-item">
+			        <a href="#nav-sinrealizar" id="nav-sinrealizar-tab"class="nav-link active" data-bs-toggle="tab" role="tab" aria-controls="nav-sinrealizar" aria-selected="true" aria-current="page">			          
+			          Mantenimientos sin realizar
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#nav-realizado" id="nav-realizado-tab"class="nav-link link-dark"data-bs-toggle="tab" role="tab" aria-controls="nav-realizado"  aria-selected="false">
+			            Mantenimientos realizados
+			        </a>
+			      </li>		      
+			    </ul>
+			    
+			  </div>
+	    </div>
+	    <div class="col-md-9">
+	    	<div class="tab-content" id="nav-tabContents">
+		  		<div class="tab-pane fade show active" id="nav-sinrealizar" role="tabpanel" aria-labelledby="nav-sinrealizar-tab">
+		  			<p class = "lead" th:text="${listsinrealizar.size()}+' Mantenimientos sin realizar'">Mantenimientos sin realizar</p>
+		
+		  			<div th:if="${#lists.isEmpty(listsinrealizar)}"
+							        	 class="alert alert-info my-4"
+							        	 th:text="'No hay mantenimientos programados en este rango'">
+						  </div>
+		  			<div class="table-responsive">
+		      			<table class = "table table-sm" th:if="${not #lists.isEmpty(listsinrealizar)}">
+		      				<thead>
+		      					<tr class = "table-danger">
+		      						<th scope = "col">Nombre</th>
+		      						<th scope = "col">Marca</th>
+		      						<th scope = "col">Modelo</th>
+		      						<th scope = "col">Serie</th>
+		      						
+		      						<th scope = "col">Servicio</th>
+		     	
+		      						<th scope = "col">Dias</th>
+									<th scope = "col">Responsable</th>
+		      						<th scope = "col">Realizar</th>
+		      					</tr>
+		      				</thead>
+		      					
+		      				<tbody>
+		      					<tr th:each="equipo:${listsinrealizar}">
+		      						<td th:text="${equipo.nombre_Equipo}"></td>
+		      						<td th:text="${equipo.Marca}"></td>
+		      						<td th:text="${equipo.Modelo}"></td>
+		      						<td th:text="${equipo.Serie}"></td>
+		      						
+		      						<td th:text="${equipo.Servicio}"></td>
+		      					
+		
+		      						<td th:text = "${equipo.Dias}"></td>
+									<td th:text = "${equipo.usuario.Nombre} + ' ' + ${equipo.usuario.Apellido}"></td>
+		      						<td>
+		      						<div th:if="${equipo.equipo}">
+		      							<div th:if="${equipo.Realizado}">
+		      								<a class = "btn btn-warning btn-sm"th:href="@{/visualizacionreportes/}+${equipo.equipo.id_Equipo}">Subir reporte</a>
+		      								
+		      								</div>
+		      							<div th:unless="${equipo.Realizado}">
+		      								<button th:onclick= "'window.location.href = \'' +@{/rutinamtto/}+${equipo.equipo.id_Equipo}+'/'+${equipo.id_Mantenimiento_preventivo}+'\''"type="button" class="w-100 btn btn-sm btn-dark">Ejecutar</button>
+		      							
+		      								</div>
+		              				</div>
+		              				<div th:unless="${equipo.equipo}">
+		              				hi
+		              				</div>
+			
+		      						</td>
+		      						
+		      						
+		      					</tr>
+		      				</tbody>
+		      			</table>
+		  			</div>
+		  		</div>
+		  		<div class="tab-pane fade" id="nav-realizado" role="tabpanel" aria-labelledby="nav-realizado-tab">
+		  		
+		  			<p class = "lead" th:text="${listhechos.size()}+' Mantenimientos realizados'">Mantenimientos sin realizar</p>
+		
+		  			<div th:if="${#lists.isEmpty(listhechos)}"
+					        	 class="alert alert-info my-4"
+					        	 th:text="'No hay mantenimientos hechos hasta el momento'">
+				  </div>
+		   			<div class="tab-content table-responsive-xl">
+		      			<table class = "table table-success table-sm" th:if="${not #lists.isEmpty(listhechos)}">
+		      				<thead>
+		      					<tr>
+		      						<th scope = "col">Nombre</th>
+		      						<th scope = "col">Marca</th>
+									<th scope = "col">Modelo</th>
+		      						<th scope = "col">Serie</th>
+		      						<th scope = "col">Placa</th>
+		      						<th scope = "col">Servicio</th>
+		      						<th scope = "col">Fecha realización</th>
+		      						<th scope = "col">Tiempo realización</th>
+		      						<th scope = "col">Número reporte</th>
+		      						<th scope = "col">Observaciones</th>
+		      						<th scope = "col">Ver reportes</th>
+		      					</tr>
+		      				</thead>
+		      					
+		      				<tbody>
+		      					<tr th:each="equipo:${listhechos}">
+		      						<td th:text="${equipo.nombre_Equipo}"></td>
+		      						<td th:text="${equipo.Marca}"></td>
+		 							<td th:text="${equipo.Modelo}">
+		      						<td th:text="${equipo.Serie}"></td>
+		      						<td th:text="${equipo.Placa_inventario}"></td>
+		      						<td th:text="${equipo.equipo.servicio.Nombre_servicio}"></td>
+		      						<td th:text="${equipo.Fecha_realizacion}"></td>
+		      						<td th:text="${equipo.Tiempo_realizacion}"></td> 
+									<td th:text="${equipo.reporte.Numero_reporte}"></td>
+									<td th:text="${equipo.reporte.Observaciones}"></td>
+		      						<td><a class = "btn btn-success btn-sm"th:href="@{/visualizacionreportes/}+${equipo.equipo.id_Equipo}" th:text="${equipo.equipo.id_Equipo}+R"></a>
+		      							<div  th:if="${equipo.reporte.Rutapdf}"> 
+				                          	<div  th:if="${equipo.reporte.Rutapdf!='ARCHIVO_BIOMEDICA'}"> 
+		                                		<a th:href="@{/visualpdfreport/}+${equipo.reporte.id_Reporte}" id = "previewBtn" class = "btn btn-primary">Visualizar</a>
+				                          	</div>
+				                          	<div th:unless="${equipo.reporte.Rutapdf!='ARCHIVO_BIOMEDICA'}">
+				                          		<!-- Button trigger modal -->
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${equipo.id_Mantenimiento_preventivo}">  Visualizar
+												</button>
+							
+												<!-- Modal -->
+												<div class="modal" th:id="'staticBackdrop'+${equipo.id_Mantenimiento_preventivo}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">  <div class="modal-dialog" role="document">
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <h5 class="modal-title"></h5>
+												        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												      </div>
+												      <div class="modal-body">
+												        <h4>REPORTE EN EL ARCHIVO DE BIOMÉDICA</h4>
+												      </div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                     
+												      </div>
+												    </div>
+												  </div>
+												</div>
+				                          	</div>
+		                            	</div>
+		      						</td>  						
+		      					</tr>
+		      				</tbody>
+		      			</table>
+		  			</div>
+		  		</div>
+	    	</div>
+	    	
+  		</div>
+	    </div>
+          </div>
+		  
+		  
+		  <div class="tab-pane fade" id="nav-corr" role="tabpanel" aria-labelledby="nav-corr-tab">
+		  	
+		  		<div class="row">
+		  			<div class="col-md-3">
+		  				<div class="input-group">
+		  					<span th:text="Filtrar  " class="label label-warning"></span>
+		  				<input id="myInputcorr"onkeyup="myFunctionCorrectivos()"class="form-control"  placeholder="buscar por Nombre, serie o autor">
+		  				</div>
+		  			</div>
+		      		<div class="col-md-12">
+		      			<div th:if="${#lists.isEmpty(mantenimientosCorrectivos)}"
+		  				        	 class="alert alert-info my-4"
+		  				        	 th:text="'No hay mantenimientos correctivos realizados en este periodo.'">
+		  			  </div>
+		      			<div class="table-responsive">
+		          			<table class = "table table-sm"th:if="${not #lists.isEmpty(mantenimientosCorrectivos)}" id = "tablaCorrectivos">
+		          				<thead>
+		          					<tr>
+		          						<th scope = "col">Nombre</th>
+		          						<th scope = "col">Marca</th>
+		          						<th scope = "col">Modelo</th>
+		          						<th scope = "col">Serie</th>
+		          						<th scope = "col">Placa</th>
+		          						<th scope = "col">Servicio</th>
+										<th scope = "col">Realizo</th>
+										<th scope = "col">Opciones</th>
+		     
+		          					</tr>
+		          				</thead>
+		          					
+		          				<tbody>
+		          					<tr th:each="reporte:${mantenimientosCorrectivos}">
+		          						<td th:text="${reporte.nombre_equipo}"></td>
+		          						<td th:text="${reporte.Marca}"></td>
+		          						<td th:text="${reporte.Modelo}"></td>
+		          						<td th:text="${reporte.Serie}"></td>
+		          						<td th:text="${reporte.Placa_inventario}"></td>
+		          						<td th:text="${reporte.Servicio}"></td>
+										<td th:text="${reporte.Autor_realizado}"></td>
+										<td style="text-align: center;">
+										<a th:href="@{/visualpdfreport/}+${reporte.id_Reporte}" th:if="${reporte.Rutapdf} != null" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Ver Reporte</a>
+										<a th:href="@{/visualizacionreportes/}+${reporte.equipo.id_Equipo}" th:if="${reporte.Rutapdf} == null" class="btn btn-warning" tabindex="-1" role="button" aria-disabled="true">Sin Reporte</a>
+									</td>			
+		          					</tr>
+		          				</tbody>
+		          			</table>
+		      			</div>
+		      		</div>
+		  		</div>
+		  </div>
+		  
+		  
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+          	<div class = "row">
+          	<p class = "lead" >Seleccione el técnico para observar sus estadísticas</p>
+          		<div class = "col-md-6">
+          			<canvas id="donutmttos" width = "50" height = "50"></canvas>
+          		
+					<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		                <div class="modal-dialog modal-xl"role="document">
+		                  <div class="modal-content">
+		                    <div class="modal-header">
+		                      <h5 class="modal-title"  id = "titlemodal"></h5>
+		                      <button type="button" id=  "xmodal"class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+		                    </div>
+		                    <div class="modal-body">
+		                    	<div class="table-responsive">
+			            			<table class="table table-sm">
+				            			<thead class = "table-secondary">
+				            				<tr>
+				            					<th scope = "col">Nombre</th>
+				            					<th scope = "col">Marca</th>
+				            					<th scope = "col">Modelo</th>
+				            					<th scope = "col">Serie</th>
+				            					<th scope = "col">Servicio</th>
+				            					<th scope = "col" id = "tipo">Falla</th>
+				            					<th scope = "col">Trabajo</th>
+				            					<th scope = "col">Fecha</th>
+				            					<th scope = "col">Reporte</th>
+				            				</tr>
+				            			</thead>
+				            			<tbody id = "table">
+				            				<tr>
+				            				</tr>
+				            				
+				            			</tbody>
+			            			</table>
+			            		</div>
+		                   
+					    	
+		                        
+		                    </div>
+		                    <div class="modal-footer">
+		                      <button type="button" id=  "closemodal"class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		                                                
+		                    
+		                  </div>
+		                </div>
+		             </div>
+					</div>
+          			<p align="center" class = "lead mb-3"> Tiempo invertido en los mantenimientos según tipo de mantenimiento</p>
+          			<div class = "table-responsive">
+          				<table class = "table table-sm">
+		      				<thead>
+		      					<tr>
+		      						<th scope = "col">Tiempo(Tiempo total)</th>
+		      						<th scope = "col">Total</th>
+		      						<th scope = "col">Promedio</th>		
+		      					</tr>
+		      				</thead>
+		      					
+		      				<tbody>
+		      					<tr>
+		      						<td class = "table-danger">Correctivo</td>
+		      						<td id = "ttc"></td>
+		    						<td id = "tpc"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-primary">Preventivo</td>
+		      						<td id="ttp"></td>
+		    						<td id="tpp"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-info">Predictivo</td>
+		      						<td id="ttpd"></td>
+		    						<td id="tppd"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-warning">Otros</td>
+		      						<td id= "tto"></td>
+		    						<td id="tpo"></td>
+		      					</tr>
+		      				</tbody>
+		      				<thead>
+		      					<tr>
+		      						<th scope = "col">Tiempo(Tiempo de llamado)</th>
+		      						<th scope = "col">Total</th>
+		      						<th scope = "col">Promedio</th>		
+		      					</tr>
+		      				</thead>
+		      				<tbody>
+		      					<tr>
+		      						<td class = "table-danger">Correctivo</td>
+		      						<td id = "ttcr"></td>
+		    						<td id = "tpcr"></td>
+		      					</tr>
+		      					
+		      					<tr>
+		      						<td class = "table-info">Predictivo</td>
+		      						<td id="ttpdr"></td>
+		    						<td id="tppdr"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-warning">Otros</td>
+		      						<td id= "ttor"></td>
+		    						<td id="tpor"></td>
+		      					</tr>
+		      				</tbody>
+		      			</table>
+          			</div>
+          			
+          			
+          			
+          		</div>
+          		<div class = "col-md-6">
+   
+          			<canvas id="donutfallas" width = "50" height = "50"></canvas>
+          			<p align="center" class = "lead mb-6"> Tiempo invertido en los mantenimientos según los tipos de falla<br></p>
+          			<div class = "table-responsive">
+          				<table class = "table table-sm">
+		      				<thead>
+		      					<tr>
+		      						<th scope = "col">Tiempo</th>
+		      						<th scope = "col">Total</th>
+		      						<th scope = "col">Promedio</th>		
+		      					</tr>
+		      				</thead>
+		      					
+		      				<tbody>
+		      					<tr>
+		      						<td class = "table-warning">Desgaste</td>
+		      						<td id = "ttdes"></td>
+		    						<td id = "tpdes"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-danger">Operación indebida</td>
+		      						<td id="ttopind"></td>
+		    						<td id="tpopind"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-info">Causa externa</td>
+		      						<td id="ttex"></td>
+		    						<td id="tpex"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-primary">Accesorios</td>
+		      						<td id= "ttac"></td>
+		    						<td id="tpac"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-secondary">Desconocido</td>
+		      						<td id= "ttunk"></td>
+		    						<td id="tpunk"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-success">Sin fallas</td>
+		      						<td id= "ttsin"></td>
+		    						<td id="tpsin"></td>
+		      					</tr>
+		      					<tr>
+		      						<td class = "table-info">Otro</td>
+		      						<td id= "ttotra"></td>
+		    						<td id="tpotra"></td>
+		      					</tr>
+		      				</tbody>
+		      			</table>
+          			</div>
+          		</div>
+          	</div>
+            
+          </div>
+		 
+        </div>
+        </div>	
+  	
+  		
+  		
+  	</div>
+  </div>
+</div>
+</form>
+<script th:inline = "javascript" type = "text/javascript">
+/*<![CDATA[*/
+	var correctivo = /*[[${indicorrec}]]*/ 'default';
+	var predictivo = /*[[${indipredic}]]*/ 'default';
+	var preventivo = /*[[${indiprev}]]*/ 'default';
+	var otrosmtto = /*[[${indiotrosm}]]*/ 'default';
+	var desgaste = /*[[${indidesg}]]*/ 'default';
+	var opindebida = /*[[${indiopind}]]*/ 'default';
+	var causaexterna = /*[[${indicausa}]]*/ 'default';
+	var accesorios = /*[[${indiaccesorios}]]*/ 'default';
+	var desconocido = /*[[${inddesconocido}]]*/ 'default';
+	var sinfallas = /*[[${indsinfallas}]]*/ 'default';
+	var otrasfallas = /*[[${indotrosf}]]*/ 'default';
+	
+	let milena = ['CLAUDIA MILENA QUEVEDO','MILENA QUEVEDO'];
+	let manuel = ['MANUEL LÓPEZ','MANUEL LOPEZ','MANUEL RICARDO LÓPEZ','MANUEL RICARDO LÓPEZ'];
+	let german = ['GERMÁN CRUZ','GERMAN  CRUZ','GERMÁN  CRUZ','GERMAN CRUZ','GERNÁN CRUZ','GERMÁN CRUZ SALAS','GERMAN CRUZ SALAS'];
+	let miguel = ['MIGUEL SANCHEZ','MIGUEL ANTONIO SANCHEZ','MIGUEL SÁNCHEZ','MIGUEL ANTONIO SÁNCHEZ'];
+	let wilson = ['WILSÓN CAMARGO','WILSON CAMARGO','WILSON CÁMARGO'];
+	let cesar = ['CESAR AUGUSTO SUAREZ','CESAR SUAREZ'];
+
+	let germanp = ['GERMÁN PUERTO','GERMÁN DARIO PUERTO'];
+	
+	function myFunction(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTable");
+		tr = div.getElementsByTagName("tr");
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			td2 = tr[i].getElementsByTagName("td")[1];
+			td3 = tr[i].getElementsByTagName("td")[3];
+			td4 = tr[i].getElementsByTagName("td")[7];
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				txtValue4 = td4.textContent || td4.innerText;
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+	
+	function myFunctionCorrectivos(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInputcorr");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("tablaCorrectivos");
+		tr = div.getElementsByTagName("tr");
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			td2 = tr[i].getElementsByTagName("td")[1];
+			td3 = tr[i].getElementsByTagName("td")[3];
+			td4 = tr[i].getElementsByTagName("td")[6];
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				txtValue4 = td4.textContent || td4.innerText;
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+	
+	function ViewInd(){
+		
+		var tecnico = document.getElementById('tecnico').value;
+		
+		
+		var mcorrectivo = 0;
+		var mcorrectivocolectivo = 0;
+		var timetotalcorrectivo = 0;
+		var timetotalcorrectivocolectivo = 0;
+		
+		var timetotalpreventivo = 0;
+		var timetotalpredictivo = 0;
+		var timetotalotros = 0;
+		var timellamadocorrectivo = 0;
+		var timellamadocorrectivocolectivo = 0;
+		
+		var timellamadopredictivo = 0;
+		var timellamadootros = 0;
+		var timedesgaste = 0;
+		var timeopindebida = 0;
+		var timecausaexterna = 0;
+		var timeaccesorios = 0;
+		var timedesconocido = 0;
+		var timesinfallas = 0;
+		var timeotrafalla = 0;
+		var mpreventivo = 0;
+		var mpredictivo = 0;
+		var mpredictivosinllamado = 0;
+		var motrosmtto = 0;
+		var motrossinllamado = 0;
+		var fdesgaste = 0;
+		var fopindebiba = 0;
+		var fcausaexterna = 0;
+		var faccesorios = 0;
+		var fdesconocido = 0;
+		var fsinfallas = 0;
+		var fotros = 0;
+		var nombre = null;
+		var reportescid = [];
+		var reportesccid = [];
+		var reportespdid = [];
+		var reportespvid = [];
+		var reportesoid = [];
+		var reportesdesid = [];
+		var reportesopid = [];
+		var reportesaccid = [];
+		var reportesceid = [];
+		var reportesunkid = [];
+		var reporteswfid = [];
+		var reportesofid = [];
+		var reportid = [reportescid,reportesccid,reportespdid,reportespvid,reportesoid,reportesdesid,reportesopid,reportesaccid,reportesceid,reportesunkid,reporteswfid,reportesofid];
+		if (tecnico==4){
+			nombre = german[0];
+			for(mc of correctivo){
+				
+				mcor = mc.split(',');
+				
+				for(gc of german){
+					if(mcor[4].indexOf(gc)==0 && mcor[4].trim()==gc){
+						mcorrectivo+=1;
+						reportescid.push(mcor);
+						timetotalcorrectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+					else if(mcor[4].indexOf(gc)!=-1){
+						mcorrectivocolectivo+=1;
+						reportesccid.push(mcor);
+						timetotalcorrectivocolectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivocolectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+				}
+				
+					
+			}
+			
+			
+			for(mpd of predictivo){
+				mpred = mpd.split(',');
+				
+				for(gc of german){
+					if(mpred[4].indexOf(gc)==0){
+						reportespdid.push(mpred);
+						mpredictivo+=1;
+						timetotalpredictivo+=parseInt(mpred[5].split(':')[0],10)*60+parseInt(mpred[5].split(':')[1],10);
+						if(mpred[3]!='00:00:00'){
+							mpredictivosinllamado+=1;
+							timellamadopredictivo+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						
+						break;
+					}
+				}
+			
+			}
+			for(mpv of preventivo){
+				mprev = mpv.split(',');
+				
+		
+				for(gc of german){
+					if(mprev[4].indexOf(gc)==0){
+						reportespvid.push(mprev);
+						mpreventivo+=1;
+						timetotalpreventivo+= parseInt(mprev[5].split(':')[0],10)*60+parseInt(mprev[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+				
+			}
+			for(mo of otrosmtto){
+				motro = mo.split(',');
+				
+				for(gc of german){
+					if(motro[4].indexOf(gc)==0){
+						reportesoid.push(motro);
+						motrosmtto+=1;
+						timetotalotros+= parseInt(motro[5].split(':')[0],10)*60+parseInt(motro[5].split(':')[1],10);
+						if(motro[3]!='00:00:00'){
+							motrossinllamado+=1;
+							timellamadootros+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(des of desgaste){
+				fdes = des.split(',');
+				for(gc of german){
+					if(fdes[4].indexOf(gc)==0){
+						fdesgaste+=1;
+						reportesdesid.push(fdes);
+						timedesgaste+= parseInt(fdes[5].split(':')[0],10)*60+parseInt(fdes[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(opi of opindebida){
+				fopi = opi.split(',');
+				for(gc of german){
+					if(fopi[4].indexOf(gc)==0){
+						fopindebiba+=1;
+						reportesopid.push(fopi);
+						timeopindebida+= parseInt(fopi[5].split(':')[0],10)*60+parseInt(fopi[5].split(':')[1],10);
+						break;
+					}
+				}
+			}
+			for(acc of accesorios){
+				facc = acc.split(',');
+				for(gc of german){
+					if(facc[4].indexOf(gc)==0){
+						faccesorios+=1;
+						reportesaccid.push(facc);
+						timeaccesorios+= parseInt(facc[5].split(':')[0],10)*60+parseInt(facc[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(cex of causaexterna){
+				fcex = cex.split(',');
+				for(gc of german){
+					if(fcex[4].indexOf(gc)==0){
+						fcausaexterna+=1;
+						reportesceid.push(fcex);
+						timecausaexterna+= parseInt(fcex[5].split(':')[0],10)*60+parseInt(fcex[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(desco of desconocido){
+				fdesco = desco.split(',');
+				for(gc of german){
+					if(fdesco[4].indexOf(gc)==0){
+						fdesconocido+=1;
+						reportesunkid.push(fdesco);
+						timedesconocido+= parseInt(fdesco[5].split(':')[0],10)*60+parseInt(fdesco[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(sinf of sinfallas){
+				fsinf = sinf.split(',');
+				for(gc of german){
+					if(fsinf[4].indexOf(gc)==0){
+						fsinfallas+=1;
+						reporteswfid.push(fsinf);
+						timesinfallas+= parseInt(fsinf[5].split(':')[0],10)*60+parseInt(fsinf[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(fotro of otrasfallas){
+				fotrosf = fotro.split(',');
+				for(gc of german){
+					if(fotrosf[4].indexOf(gc)==0){
+						fotros+=1;
+						reportesofid.push(fotrosf);
+						timeotrafalla+= parseInt(fotrosf[5].split(':')[0],10)*60+parseInt(fotrosf[5].split(':')[1],10);
+					
+						break;
+					}
+				}
+			}
+			
+			document.getElementById("ttc").innerHTML = Math.floor(timetotalcorrectivo/60)+':'+Math.floor(timetotalcorrectivo%60)+':'+'00';
+			document.getElementById("tpc").innerHTML =Math.floor((timetotalcorrectivo/mcorrectivo)/60)+':'+Math.floor((timetotalcorrectivo/mcorrectivo)%60)+':'+Math.floor(((timetotalcorrectivo/mcorrectivo)%60-Math.floor((timetotalcorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttp").innerHTML =Math.floor(timetotalpreventivo/60)+':'+Math.floor(timetotalpreventivo%60)+':'+'00';
+			document.getElementById("tpp").innerHTML =Math.floor((timetotalpreventivo/mpreventivo)/60)+':'+Math.floor((timetotalpreventivo/mpreventivo)%60)+':'+Math.floor(((timetotalpreventivo/mpreventivo)%60-Math.floor((timetotalpreventivo/mpreventivo)%60))*60);
+			document.getElementById("ttpd").innerHTML =Math.floor(timetotalpredictivo/60)+':'+Math.floor(timetotalpredictivo%60)+':'+'00';
+			document.getElementById("tppd").innerHTML =Math.floor((timetotalpredictivo/mpredictivo)/60)+':'+Math.floor((timetotalpredictivo/mpredictivo)%60)+':'+Math.floor(((timetotalpredictivo/mpredictivo)%60-Math.floor((timetotalpredictivo/mpredictivo)%60))*60);
+			document.getElementById("tto").innerHTML =Math.floor(timetotalotros/60)+':'+Math.floor(timetotalotros%60)+':'+'00';
+			document.getElementById("tpo").innerHTML =Math.floor((timetotalotros/motrosmtto)/60)+':'+Math.floor((timetotalotros/motrosmtto)%60)+':'+Math.floor(((timetotalotros/motrosmtto)%60-Math.floor((timetotalotros/motrosmtto)%60))*60);
+			
+			document.getElementById("ttcr").innerHTML =Math.floor(timellamadocorrectivo/60)+':'+Math.floor(timellamadocorrectivo%60)+':'+'00';
+			document.getElementById("tpcr").innerHTML =Math.floor((timellamadocorrectivo/mcorrectivo)/60)+':'+Math.floor((timellamadocorrectivo/mcorrectivo)%60)+':'+Math.floor(((timellamadocorrectivo/mcorrectivo)%60-Math.floor((timellamadocorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttpdr").innerHTML =Math.floor(timellamadopredictivo/60)+':'+Math.floor(timellamadopredictivo%60)+':'+'00';
+			document.getElementById("tppdr").innerHTML =Math.floor((timellamadopredictivo/mpredictivosinllamado)/60)+':'+Math.floor((timellamadopredictivo/mpredictivosinllamado)%60)+':'+Math.floor(((timellamadopredictivo/mpredictivosinllamado)%60-Math.floor((timellamadopredictivo/mpredictivosinllamado)%60))*60);
+			document.getElementById("ttor").innerHTML =Math.floor(timellamadootros/60)+':'+Math.floor(timellamadootros%60)+':'+'00';
+			document.getElementById("tpor").innerHTML =Math.floor((timellamadootros/motrossinllamado)/60)+':'+Math.floor((timellamadootros/motrossinllamado)%60)+':'+Math.floor(((timellamadootros/motrossinllamado)%60-Math.floor((timellamadootros/motrossinllamado)%60))*60);
+			
+			document.getElementById("ttdes").innerHTML = Math.floor(timedesgaste/60)+':'+Math.floor(timedesgaste%60)+':'+'00';
+			document.getElementById("tpdes").innerHTML =Math.floor((timedesgaste/fdesgaste)/60)+':'+Math.floor((timedesgaste/fdesgaste)%60)+':'+Math.floor(((timedesgaste/fdesgaste)%60-Math.floor((timedesgaste/fdesgaste)%60))*60);
+			document.getElementById("ttopind").innerHTML =Math.floor(timeopindebida/60)+':'+Math.floor(timeopindebida%60)+':'+'00';
+			document.getElementById("tpopind").innerHTML =Math.floor((timeopindebida/fopindebiba)/60)+':'+Math.floor((timeopindebida/fopindebiba)%60)+':'+Math.floor(((timeopindebida/fopindebiba)%60-Math.floor((timeopindebida/fopindebiba)%60))*60);
+			document.getElementById("ttex").innerHTML =Math.floor(timecausaexterna/60)+':'+Math.floor(timecausaexterna%60)+':'+'00';
+			document.getElementById("tpex").innerHTML =Math.floor((timecausaexterna/fcausaexterna)/60)+':'+Math.floor((timecausaexterna/fcausaexterna)%60)+':'+Math.floor(((timecausaexterna/fcausaexterna)%60-Math.floor((timecausaexterna/fcausaexterna)%60))*60);
+			document.getElementById("ttac").innerHTML =Math.floor(timeaccesorios/60)+':'+Math.floor(timeaccesorios%60)+':'+'00';
+			document.getElementById("tpac").innerHTML =Math.floor((timeaccesorios/faccesorios)/60)+':'+Math.floor((timeaccesorios/faccesorios)%60)+':'+Math.floor(((timeaccesorios/faccesorios)%60-Math.floor((timeaccesorios/faccesorios)%60))*60);
+			document.getElementById("ttunk").innerHTML =Math.floor(timedesconocido/60)+':'+Math.floor(timedesconocido%60)+':'+'00';
+			document.getElementById("tpunk").innerHTML =Math.floor((timedesconocido/fdesconocido)/60)+':'+Math.floor((timedesconocido/fdesconocido)%60)+':'+Math.floor(((timedesconocido/fdesconocido)%60-Math.floor((timedesconocido/fdesconocido)%60))*60);
+			document.getElementById("ttsin").innerHTML =Math.floor(timesinfallas/60)+':'+Math.floor(timesinfallas%60)+':'+'00';
+			document.getElementById("tpsin").innerHTML =Math.floor((timesinfallas/fsinfallas)/60)+':'+Math.floor((timesinfallas/fsinfallas)%60)+':'+Math.floor(((timesinfallas/fsinfallas)%60-Math.floor((timesinfallas/fsinfallas)%60))*60);
+			document.getElementById("ttotra").innerHTML =Math.floor(timeotrafalla/60)+':'+Math.floor(timeotrafalla%60)+':'+'00';
+			document.getElementById("tpotra").innerHTML =Math.floor((timeotrafalla/fotros)/60)+':'+Math.floor((timeotrafalla/fotros)%60)+':'+Math.floor(((timeotrafalla/fotros)%60-Math.floor((timeotrafalla/fotros)%60))*60);
+			
+		}
+		else if(tecnico==5){
+			
+			nombre = manuel[0];
+			for(mc of correctivo){
+				mcor = mc.split(',');
+				
+				for(gc of manuel){
+				
+					if(mcor[4].indexOf(gc)==0 && mcor[4].trim()==gc){
+						mcorrectivo+=1;
+						reportescid.push(mcor);
+						timetotalcorrectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+					else if(mcor[4].indexOf(gc)!=-1){
+						mcorrectivocolectivo+=1;
+						reportesccid.push(mcor);
+						timetotalcorrectivocolectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivocolectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+				}
+					
+			}
+			for(mpd of predictivo){
+				mpred = mpd.split(',');
+				for(gc of manuel){
+					if(mpred[4].indexOf(gc)==0){
+						mpredictivo+=1;
+						reportespdid.push(mpred);
+						timetotalpredictivo+=parseInt(mpred[5].split(':')[0],10)*60+parseInt(mpred[5].split(':')[1],10);
+						if(mpred[3]!='00:00:00'){
+							mpredictivosinllamado+=1;
+							timellamadopredictivo+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(mpv of preventivo){
+				mprev = mpv.split(',');
+				for(gc of manuel){
+					if(mprev[4].indexOf(gc)==0){
+						mpreventivo+=1;
+						reportespvid.push(mprev);
+						timetotalpreventivo+= parseInt(mprev[5].split(':')[0],10)*60+parseInt(mprev[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(mo of otrosmtto){
+				motro = mo.split(',');
+				for(gc of manuel){
+					if(motro[4].indexOf(gc)==0){
+						motrosmtto+=1;
+						reportesoid.push(motro);
+						timetotalotros+= parseInt(motro[5].split(':')[0],10)*60+parseInt(motro[5].split(':')[1],10);
+						if(motro[3]!='00:00:00'){
+							motrossinllamado+=1;
+							timellamadootros+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(des of desgaste){
+				fdes = des.split(',');
+				for(gc of manuel){
+					if(fdes[4].indexOf(gc)==0){
+						fdesgaste+=1;
+						reportesdesid.push(fdes);
+						timedesgaste+= parseInt(fdes[5].split(':')[0],10)*60+parseInt(fdes[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(opi of opindebida){
+				fopi = opi.split(',');
+				for(gc of manuel){
+					if(fopi[4].indexOf(gc)==0){
+						fopindebiba+=1;
+						reportesopid.push(fopi);
+						timeopindebida+= parseInt(fopi[5].split(':')[0],10)*60+parseInt(fopi[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(acc of accesorios){
+				facc = acc.split(',');
+				for(gc of manuel){
+					if(facc[4].indexOf(gc)==0){
+						faccesorios+=1;
+						reportesaccid.push(facc);
+						timeaccesorios+= parseInt(facc[5].split(':')[0],10)*60+parseInt(facc[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(cex of causaexterna){
+				fcex = cex.split(',');
+				for(gc of manuel){
+					if(fcex[4].indexOf(gc)==0){
+						fcausaexterna+=1;
+						reportesceid.push(fcex);
+						timecausaexterna+= parseInt(fcex[5].split(':')[0],10)*60+parseInt(fcex[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(desco of desconocido){
+				fdesco = desco.split(',');
+				for(gc of manuel){
+					if(fdesco[4].indexOf(gc)==0){
+						fdesconocido+=1;
+						reportesunkid.push(fdesco);
+						timedesconocido+= parseInt(fdesco[5].split(':')[0],10)*60+parseInt(fdesco[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(sinf of sinfallas){
+				fsinf = sinf.split(',');
+				for(gc of manuel){
+					if(fsinf[4].indexOf(gc)==0){
+						fsinfallas+=1;
+						reporteswfid.push(fsinf);
+						timesinfallas+= parseInt(fsinf[5].split(':')[0],10)*60+parseInt(fsinf[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(fotro of otrasfallas){
+				fotrosf = fotro.split(',');
+				for(gc of manuel){
+					if(fotrosf[4].indexOf(gc)==0){
+						fotros+=1;
+						reportesofid.push(fotrosf);
+						timeotrafalla+= parseInt(fotrosf[5].split(':')[0],10)*60+parseInt(fotrosf[5].split(':')[1],10);
+					
+						break;
+					}
+				}
+			}
+			document.getElementById("ttc").innerHTML = Math.floor(timetotalcorrectivo/60)+':'+Math.floor(timetotalcorrectivo%60)+':'+'00';
+			document.getElementById("tpc").innerHTML =Math.floor((timetotalcorrectivo/mcorrectivo)/60)+':'+Math.floor((timetotalcorrectivo/mcorrectivo)%60)+':'+Math.floor(((timetotalcorrectivo/mcorrectivo)%60-Math.floor((timetotalcorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttp").innerHTML =Math.floor(timetotalpreventivo/60)+':'+Math.floor(timetotalpreventivo%60)+':'+'00';
+			document.getElementById("tpp").innerHTML =Math.floor((timetotalpreventivo/mpreventivo)/60)+':'+Math.floor((timetotalpreventivo/mpreventivo)%60)+':'+Math.floor(((timetotalpreventivo/mpreventivo)%60-Math.floor((timetotalpreventivo/mpreventivo)%60))*60);
+			document.getElementById("ttpd").innerHTML =Math.floor(timetotalpredictivo/60)+':'+Math.floor(timetotalpredictivo%60)+':'+'00';
+			document.getElementById("tppd").innerHTML =Math.floor((timetotalpredictivo/mpredictivo)/60)+':'+Math.floor((timetotalpredictivo/mpredictivo)%60)+':'+Math.floor(((timetotalpredictivo/mpredictivo)%60-Math.floor((timetotalpredictivo/mpredictivo)%60))*60);
+			document.getElementById("tto").innerHTML =Math.floor(timetotalotros/60)+':'+Math.floor(timetotalotros%60)+':'+'00';
+			document.getElementById("tpo").innerHTML =Math.floor((timetotalotros/motrosmtto)/60)+':'+Math.floor((timetotalotros/motrosmtto)%60)+':'+Math.floor(((timetotalotros/motrosmtto)%60-Math.floor((timetotalotros/motrosmtto)%60))*60);
+			
+			document.getElementById("ttcr").innerHTML =Math.floor(timellamadocorrectivo/60)+':'+Math.floor(timellamadocorrectivo%60)+':'+'00';
+			document.getElementById("tpcr").innerHTML =Math.floor((timellamadocorrectivo/mcorrectivo)/60)+':'+Math.floor((timellamadocorrectivo/mcorrectivo)%60)+':'+Math.floor(((timellamadocorrectivo/mcorrectivo)%60-Math.floor((timellamadocorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttpdr").innerHTML =Math.floor(timellamadopredictivo/60)+':'+Math.floor(timellamadopredictivo%60)+':'+'00';
+			document.getElementById("tppdr").innerHTML =Math.floor((timellamadopredictivo/mpredictivosinllamado)/60)+':'+Math.floor((timellamadopredictivo/mpredictivosinllamado)%60)+':'+Math.floor(((timellamadopredictivo/mpredictivosinllamado)%60-Math.floor((timellamadopredictivo/mpredictivosinllamado)%60))*60);
+			document.getElementById("ttor").innerHTML =Math.floor(timellamadootros/60)+':'+Math.floor(timellamadootros%60)+':'+'00';
+			document.getElementById("tpor").innerHTML =Math.floor((timellamadootros/motrossinllamado)/60)+':'+Math.floor((timellamadootros/motrossinllamado)%60)+':'+Math.floor(((timellamadootros/motrossinllamado)%60-Math.floor((timellamadootros/motrossinllamado)%60))*60);
+			
+			document.getElementById("ttdes").innerHTML = Math.floor(timedesgaste/60)+':'+Math.floor(timedesgaste%60)+':'+'00';
+			document.getElementById("tpdes").innerHTML =Math.floor((timedesgaste/fdesgaste)/60)+':'+Math.floor((timedesgaste/fdesgaste)%60)+':'+Math.floor(((timedesgaste/fdesgaste)%60-Math.floor((timedesgaste/fdesgaste)%60))*60);
+			document.getElementById("ttopind").innerHTML =Math.floor(timeopindebida/60)+':'+Math.floor(timeopindebida%60)+':'+'00';
+			document.getElementById("tpopind").innerHTML =Math.floor((timeopindebida/fopindebiba)/60)+':'+Math.floor((timeopindebida/fopindebiba)%60)+':'+Math.floor(((timeopindebida/fopindebiba)%60-Math.floor((timeopindebida/fopindebiba)%60))*60);
+			document.getElementById("ttex").innerHTML =Math.floor(timecausaexterna/60)+':'+Math.floor(timecausaexterna%60)+':'+'00';
+			document.getElementById("tpex").innerHTML =Math.floor((timecausaexterna/fcausaexterna)/60)+':'+Math.floor((timecausaexterna/fcausaexterna)%60)+':'+Math.floor(((timecausaexterna/fcausaexterna)%60-Math.floor((timecausaexterna/fcausaexterna)%60))*60);
+			document.getElementById("ttac").innerHTML =Math.floor(timeaccesorios/60)+':'+Math.floor(timeaccesorios%60)+':'+'00';
+			document.getElementById("tpac").innerHTML =Math.floor((timeaccesorios/faccesorios)/60)+':'+Math.floor((timeaccesorios/faccesorios)%60)+':'+Math.floor(((timeaccesorios/faccesorios)%60-Math.floor((timeaccesorios/faccesorios)%60))*60);
+			document.getElementById("ttunk").innerHTML =Math.floor(timedesconocido/60)+':'+Math.floor(timedesconocido%60)+':'+'00';
+			document.getElementById("tpunk").innerHTML =Math.floor((timedesconocido/fdesconocido)/60)+':'+Math.floor((timedesconocido/fdesconocido)%60)+':'+Math.floor(((timedesconocido/fdesconocido)%60-Math.floor((timedesconocido/fdesconocido)%60))*60);
+			document.getElementById("ttsin").innerHTML =Math.floor(timesinfallas/60)+':'+Math.floor(timesinfallas%60)+':'+'00';
+			document.getElementById("tpsin").innerHTML =Math.floor((timesinfallas/fsinfallas)/60)+':'+Math.floor((timesinfallas/fsinfallas)%60)+':'+Math.floor(((timesinfallas/fsinfallas)%60-Math.floor((timesinfallas/fsinfallas)%60))*60);
+			document.getElementById("ttotra").innerHTML =Math.floor(timeotrafalla/60)+':'+Math.floor(timeotrafalla%60)+':'+'00';
+			document.getElementById("tpotra").innerHTML =Math.floor((timeotrafalla/fotros)/60)+':'+Math.floor((timeotrafalla/fotros)%60)+':'+Math.floor(((timeotrafalla/fotros)%60-Math.floor((timeotrafalla/fotros)%60))*60);
+			
+		}
+		else if(tecnico==7){
+			
+			nombre = milena[0];
+			for(mc of correctivo){
+				mcor = mc.split(',');
+				for(gc of milena){					
+					if(mcor[4].indexOf(gc)==0 && mcor[4].trim()==gc){
+						mcorrectivo+=1;
+						reportescid.push(mcor);
+						timetotalcorrectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+					else if(mcor[4].indexOf(gc)!=-1){
+						mcorrectivocolectivo+=1;
+						reportesccid.push(mcor);
+						timetotalcorrectivocolectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivocolectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+				}
+					
+			}
+			for(mpd of predictivo){
+				mpred = mpd.split(',');
+				for(gc of milena){
+					if(mpred[4].indexOf(gc)==0){
+						reportespdid.push(mpred);
+						mpredictivo+=1;
+						timetotalpredictivo+=parseInt(mpred[5].split(':')[0],10)*60+parseInt(mpred[5].split(':')[1],10);
+						if(mpred[3]!='00:00:00'){
+							mpredictivosinllamado+=1;
+							timellamadopredictivo+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(mpv of preventivo){
+				mprev = mpv.split(',');
+				for(gc of milena){
+					if(mprev[4].indexOf(gc)==0){
+						mpreventivo+=1;
+						reportespvid.push(mprev);
+						timetotalpreventivo+= parseInt(mprev[5].split(':')[0],10)*60+parseInt(mprev[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(mo of otrosmtto){
+				motro = mo.split(',');
+				for(gc of milena){
+					if(motro[4].indexOf(gc)==0){
+						motrosmtto+=1;
+						reportesoid.push(motro);
+						timetotalotros+= parseInt(motro[5].split(':')[0],10)*60+parseInt(motro[5].split(':')[1],10);
+						if(motro[3]!='00:00:00'){
+							motrossinllamado+=1;
+							timellamadootros+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(des of desgaste){
+				fdes = des.split(',');
+				for(gc of milena){
+					if(fdes[4].indexOf(gc)==0){
+						fdesgaste+=1;
+						reportesdesid.push(fdes);
+						timedesgaste+= parseInt(fdes[5].split(':')[0],10)*60+parseInt(fdes[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(opi of opindebida){
+				fopi = opi.split(',');
+				for(gc of milena){
+					if(fopi[4].indexOf(gc)==0){
+						fopindebiba+=1;
+						reportesopid.push(fopi);
+						timeopindebida+= parseInt(fopi[5].split(':')[0],10)*60+parseInt(fopi[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(acc of accesorios){
+				facc = acc.split(',');
+				for(gc of milena){
+					if(facc[4].indexOf(gc)==0){
+						faccesorios+=1;
+						reportesaccid.push(facc);
+						timeaccesorios+= parseInt(facc[5].split(':')[0],10)*60+parseInt(facc[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(cex of causaexterna){
+				fcex = cex.split(',');
+				for(gc of milena){
+					if(fcex[4].indexOf(gc)==0){
+						fcausaexterna+=1;
+						reportesceid.push(fcex);
+						timecausaexterna+= parseInt(fcex[5].split(':')[0],10)*60+parseInt(fcex[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(desco of desconocido){
+				fdesco = desco.split(',');
+				for(gc of milena){
+					if(fdesco[4].indexOf(gc)==0){
+						fdesconocido+=1;
+						reportesunkid.push(fdesco);
+						timedesconocido+= parseInt(fdesco[5].split(':')[0],10)*60+parseInt(fdesco[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(sinf of sinfallas){
+				fsinf = sinf.split(',');
+				for(gc of milena){
+					if(fsinf[4].indexOf(gc)==0){
+						fsinfallas+=1;
+						reporteswfid.push(fsinf);
+						timesinfallas+= parseInt(fsinf[5].split(':')[0],10)*60+parseInt(fsinf[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(fotro of otrasfallas){
+				fotrosf = fotro.split(',');
+				for(gc of milena){
+					if(fotrosf[4].indexOf(gc)==0){
+						fotros+=1;
+						reportesofid.push(fotrosf);
+						timeotrafalla+= parseInt(fotrosf[5].split(':')[0],10)*60+parseInt(fotrosf[5].split(':')[1],10);
+					
+						break;
+					}
+				}
+			}
+			document.getElementById("ttc").innerHTML = Math.floor(timetotalcorrectivo/60)+':'+Math.floor(timetotalcorrectivo%60)+':'+'00';
+			document.getElementById("tpc").innerHTML =Math.floor((timetotalcorrectivo/mcorrectivo)/60)+':'+Math.floor((timetotalcorrectivo/mcorrectivo)%60)+':'+Math.floor(((timetotalcorrectivo/mcorrectivo)%60-Math.floor((timetotalcorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttp").innerHTML =Math.floor(timetotalpreventivo/60)+':'+Math.floor(timetotalpreventivo%60)+':'+'00';
+			document.getElementById("tpp").innerHTML =Math.floor((timetotalpreventivo/mpreventivo)/60)+':'+Math.floor((timetotalpreventivo/mpreventivo)%60)+':'+Math.floor(((timetotalpreventivo/mpreventivo)%60-Math.floor((timetotalpreventivo/mpreventivo)%60))*60);
+			document.getElementById("ttpd").innerHTML =Math.floor(timetotalpredictivo/60)+':'+Math.floor(timetotalpredictivo%60)+':'+'00';
+			document.getElementById("tppd").innerHTML =Math.floor((timetotalpredictivo/mpredictivo)/60)+':'+Math.floor((timetotalpredictivo/mpredictivo)%60)+':'+Math.floor(((timetotalpredictivo/mpredictivo)%60-Math.floor((timetotalpredictivo/mpredictivo)%60))*60);
+			document.getElementById("tto").innerHTML =Math.floor(timetotalotros/60)+':'+Math.floor(timetotalotros%60)+':'+'00';
+			document.getElementById("tpo").innerHTML =Math.floor((timetotalotros/motrosmtto)/60)+':'+Math.floor((timetotalotros/motrosmtto)%60)+':'+Math.floor(((timetotalotros/motrosmtto)%60-Math.floor((timetotalotros/motrosmtto)%60))*60);
+			
+			document.getElementById("ttcr").innerHTML =Math.floor(timellamadocorrectivo/60)+':'+Math.floor(timellamadocorrectivo%60)+':'+'00';
+			document.getElementById("tpcr").innerHTML =Math.floor((timellamadocorrectivo/mcorrectivo)/60)+':'+Math.floor((timellamadocorrectivo/mcorrectivo)%60)+':'+Math.floor(((timellamadocorrectivo/mcorrectivo)%60-Math.floor((timellamadocorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttpdr").innerHTML =Math.floor(timellamadopredictivo/60)+':'+Math.floor(timellamadopredictivo%60)+':'+'00';
+			document.getElementById("tppdr").innerHTML =Math.floor((timellamadopredictivo/mpredictivosinllamado)/60)+':'+Math.floor((timellamadopredictivo/mpredictivosinllamado)%60)+':'+Math.floor(((timellamadopredictivo/mpredictivosinllamado)%60-Math.floor((timellamadopredictivo/mpredictivosinllamado)%60))*60);
+			document.getElementById("ttor").innerHTML =Math.floor(timellamadootros/60)+':'+Math.floor(timellamadootros%60)+':'+'00';
+			document.getElementById("tpor").innerHTML =Math.floor((timellamadootros/motrossinllamado)/60)+':'+Math.floor((timellamadootros/motrossinllamado)%60)+':'+Math.floor(((timellamadootros/motrossinllamado)%60-Math.floor((timellamadootros/motrossinllamado)%60))*60);
+			
+			document.getElementById("ttdes").innerHTML = Math.floor(timedesgaste/60)+':'+Math.floor(timedesgaste%60)+':'+'00';
+			document.getElementById("tpdes").innerHTML =Math.floor((timedesgaste/fdesgaste)/60)+':'+Math.floor((timedesgaste/fdesgaste)%60)+':'+Math.floor(((timedesgaste/fdesgaste)%60-Math.floor((timedesgaste/fdesgaste)%60))*60);
+			document.getElementById("ttopind").innerHTML =Math.floor(timeopindebida/60)+':'+Math.floor(timeopindebida%60)+':'+'00';
+			document.getElementById("tpopind").innerHTML =Math.floor((timeopindebida/fopindebiba)/60)+':'+Math.floor((timeopindebida/fopindebiba)%60)+':'+Math.floor(((timeopindebida/fopindebiba)%60-Math.floor((timeopindebida/fopindebiba)%60))*60);
+			document.getElementById("ttex").innerHTML =Math.floor(timecausaexterna/60)+':'+Math.floor(timecausaexterna%60)+':'+'00';
+			document.getElementById("tpex").innerHTML =Math.floor((timecausaexterna/fcausaexterna)/60)+':'+Math.floor((timecausaexterna/fcausaexterna)%60)+':'+Math.floor(((timecausaexterna/fcausaexterna)%60-Math.floor((timecausaexterna/fcausaexterna)%60))*60);
+			document.getElementById("ttac").innerHTML =Math.floor(timeaccesorios/60)+':'+Math.floor(timeaccesorios%60)+':'+'00';
+			document.getElementById("tpac").innerHTML =Math.floor((timeaccesorios/faccesorios)/60)+':'+Math.floor((timeaccesorios/faccesorios)%60)+':'+Math.floor(((timeaccesorios/faccesorios)%60-Math.floor((timeaccesorios/faccesorios)%60))*60);
+			document.getElementById("ttunk").innerHTML =Math.floor(timedesconocido/60)+':'+Math.floor(timedesconocido%60)+':'+'00';
+			document.getElementById("tpunk").innerHTML =Math.floor((timedesconocido/fdesconocido)/60)+':'+Math.floor((timedesconocido/fdesconocido)%60)+':'+Math.floor(((timedesconocido/fdesconocido)%60-Math.floor((timedesconocido/fdesconocido)%60))*60);
+			document.getElementById("ttsin").innerHTML =Math.floor(timesinfallas/60)+':'+Math.floor(timesinfallas%60)+':'+'00';
+			document.getElementById("tpsin").innerHTML =Math.floor((timesinfallas/fsinfallas)/60)+':'+Math.floor((timesinfallas/fsinfallas)%60)+':'+Math.floor(((timesinfallas/fsinfallas)%60-Math.floor((timesinfallas/fsinfallas)%60))*60);
+			document.getElementById("ttotra").innerHTML =Math.floor(timeotrafalla/60)+':'+Math.floor(timeotrafalla%60)+':'+'00';
+			document.getElementById("tpotra").innerHTML =Math.floor((timeotrafalla/fotros)/60)+':'+Math.floor((timeotrafalla/fotros)%60)+':'+Math.floor(((timeotrafalla/fotros)%60-Math.floor((timeotrafalla/fotros)%60))*60);
+			
+		}
+		else if(tecnico==8){
+			
+			nombre = wilson[0];
+			for(mc of correctivo){
+				mcor = mc.split(',');
+				for(gc of wilson){
+					
+					if(mcor[4].indexOf(gc)==0 && mcor[4].trim()==gc){
+						mcorrectivo+=1;
+						reportescid.push(mcor);
+						timetotalcorrectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+					else if(mcor[4].indexOf(gc)!=-1){
+						mcorrectivocolectivo+=1;
+						reportesccid.push(mcor);
+						timetotalcorrectivocolectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivocolectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+				}
+					
+			}
+			for(mpd of predictivo){
+				mpred = mpd.split(',');
+				for(gc of wilson){
+					if(mpred[4].indexOf(gc)==0){
+						reportespdid.push(mpred);
+						mpredictivo+=1;
+						timetotalpredictivo+=parseInt(mpred[5].split(':')[0],10)*60+parseInt(mpred[5].split(':')[1],10);
+						if(mpred[3]!='00:00:00'){
+							mpredictivosinllamado+=1;
+							timellamadopredictivo+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(mpv of preventivo){
+				mprev = mpv.split(',');
+				for(gc of wilson){
+					if(mprev[4].indexOf(gc)==0){
+						mpreventivo+=1;
+						reportespvid.push(mprev);
+						timetotalpreventivo+= parseInt(mprev[5].split(':')[0],10)*60+parseInt(mprev[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(mo of otrosmtto){
+				motro = mo.split(',');
+				for(gc of wilson){
+					if(motro[4].indexOf(gc)==0){
+						motrosmtto+=1;
+						reportesoid.push(motro);
+						timetotalotros+= parseInt(motro[5].split(':')[0],10)*60+parseInt(motro[5].split(':')[1],10);
+						if(motro[3]!='00:00:00'){
+							motrossinllamado+=1;
+							timellamadootros+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(des of desgaste){
+				fdes = des.split(',');
+				for(gc of wilson){
+					if(fdes[4].indexOf(gc)==0){
+						fdesgaste+=1;
+						reportesdesid.push(fdes);
+						timedesgaste+= parseInt(fdes[5].split(':')[0],10)*60+parseInt(fdes[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(opi of opindebida){
+				fopi = opi.split(',');
+				for(gc of wilson){
+					if(fopi[4].indexOf(gc)==0){
+						fopindebiba+=1;
+						reportesopid.push(fopi);
+						timeopindebida+= parseInt(fopi[5].split(':')[0],10)*60+parseInt(fopi[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(acc of accesorios){
+				facc = acc.split(',');
+				for(gc of wilson){
+					if(facc[4].indexOf(gc)==0){
+						faccesorios+=1;
+						reportesaccid.push(facc);
+						timeaccesorios+= parseInt(facc[5].split(':')[0],10)*60+parseInt(facc[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(cex of causaexterna){
+				fcex = cex.split(',');
+				for(gc of wilson){
+					if(fcex[4].indexOf(gc)==0){
+						fcausaexterna+=1;
+						reportesceid.push(fcex);
+						timecausaexterna+= parseInt(fcex[5].split(':')[0],10)*60+parseInt(fcex[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(desco of desconocido){
+				fdesco = desco.split(',');
+				for(gc of wilson){
+					if(fdesco[4].indexOf(gc)==0){
+						fdesconocido+=1;
+						reportesunkid.push(fdesco);
+						timedesconocido+= parseInt(fdesco[5].split(':')[0],10)*60+parseInt(fdesco[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(sinf of sinfallas){
+				fsinf = sinf.split(',');
+				for(gc of wilson){
+					if(fsinf[4].indexOf(gc)==0){
+						fsinfallas+=1;
+						reporteswfid.push(fsinf);
+						timesinfallas+= parseInt(fsinf[5].split(':')[0],10)*60+parseInt(fsinf[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(fotro of otrasfallas){
+				fotrosf = fotro.split(',');
+				for(gc of wilson){
+					if(fotrosf[4].indexOf(gc)==0){
+						fotros+=1;
+						reportesofid.push(fotrosf);
+						timeotrafalla+= parseInt(fotrosf[5].split(':')[0],10)*60+parseInt(fotrosf[5].split(':')[1],10);
+					
+						break;
+					}
+				}
+			}
+			document.getElementById("ttc").innerHTML = Math.floor(timetotalcorrectivo/60)+':'+Math.floor(timetotalcorrectivo%60)+':'+'00';
+			document.getElementById("tpc").innerHTML =Math.floor((timetotalcorrectivo/mcorrectivo)/60)+':'+Math.floor((timetotalcorrectivo/mcorrectivo)%60)+':'+Math.floor(((timetotalcorrectivo/mcorrectivo)%60-Math.floor((timetotalcorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttp").innerHTML =Math.floor(timetotalpreventivo/60)+':'+Math.floor(timetotalpreventivo%60)+':'+'00';
+			document.getElementById("tpp").innerHTML =Math.floor((timetotalpreventivo/mpreventivo)/60)+':'+Math.floor((timetotalpreventivo/mpreventivo)%60)+':'+Math.floor(((timetotalpreventivo/mpreventivo)%60-Math.floor((timetotalpreventivo/mpreventivo)%60))*60);
+			document.getElementById("ttpd").innerHTML =Math.floor(timetotalpredictivo/60)+':'+Math.floor(timetotalpredictivo%60)+':'+'00';
+			document.getElementById("tppd").innerHTML =Math.floor((timetotalpredictivo/mpredictivo)/60)+':'+Math.floor((timetotalpredictivo/mpredictivo)%60)+':'+Math.floor(((timetotalpredictivo/mpredictivo)%60-Math.floor((timetotalpredictivo/mpredictivo)%60))*60);
+			document.getElementById("tto").innerHTML =Math.floor(timetotalotros/60)+':'+Math.floor(timetotalotros%60)+':'+'00';
+			document.getElementById("tpo").innerHTML =Math.floor((timetotalotros/motrosmtto)/60)+':'+Math.floor((timetotalotros/motrosmtto)%60)+':'+Math.floor(((timetotalotros/motrosmtto)%60-Math.floor((timetotalotros/motrosmtto)%60))*60);
+			
+			document.getElementById("ttcr").innerHTML =Math.floor(timellamadocorrectivo/60)+':'+Math.floor(timellamadocorrectivo%60)+':'+'00';
+			document.getElementById("tpcr").innerHTML =Math.floor((timellamadocorrectivo/mcorrectivo)/60)+':'+Math.floor((timellamadocorrectivo/mcorrectivo)%60)+':'+Math.floor(((timellamadocorrectivo/mcorrectivo)%60-Math.floor((timellamadocorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttpdr").innerHTML =Math.floor(timellamadopredictivo/60)+':'+Math.floor(timellamadopredictivo%60)+':'+'00';
+			document.getElementById("tppdr").innerHTML =Math.floor((timellamadopredictivo/mpredictivosinllamado)/60)+':'+Math.floor((timellamadopredictivo/mpredictivosinllamado)%60)+':'+Math.floor(((timellamadopredictivo/mpredictivosinllamado)%60-Math.floor((timellamadopredictivo/mpredictivosinllamado)%60))*60);
+			document.getElementById("ttor").innerHTML =Math.floor(timellamadootros/60)+':'+Math.floor(timellamadootros%60)+':'+'00';
+			document.getElementById("tpor").innerHTML =Math.floor((timellamadootros/motrossinllamado)/60)+':'+Math.floor((timellamadootros/motrossinllamado)%60)+':'+Math.floor(((timellamadootros/motrossinllamado)%60-Math.floor((timellamadootros/motrossinllamado)%60))*60);
+			
+			document.getElementById("ttdes").innerHTML = Math.floor(timedesgaste/60)+':'+Math.floor(timedesgaste%60)+':'+'00';
+			document.getElementById("tpdes").innerHTML =Math.floor((timedesgaste/fdesgaste)/60)+':'+Math.floor((timedesgaste/fdesgaste)%60)+':'+Math.floor(((timedesgaste/fdesgaste)%60-Math.floor((timedesgaste/fdesgaste)%60))*60);
+			document.getElementById("ttopind").innerHTML =Math.floor(timeopindebida/60)+':'+Math.floor(timeopindebida%60)+':'+'00';
+			document.getElementById("tpopind").innerHTML =Math.floor((timeopindebida/fopindebiba)/60)+':'+Math.floor((timeopindebida/fopindebiba)%60)+':'+Math.floor(((timeopindebida/fopindebiba)%60-Math.floor((timeopindebida/fopindebiba)%60))*60);
+			document.getElementById("ttex").innerHTML =Math.floor(timecausaexterna/60)+':'+Math.floor(timecausaexterna%60)+':'+'00';
+			document.getElementById("tpex").innerHTML =Math.floor((timecausaexterna/fcausaexterna)/60)+':'+Math.floor((timecausaexterna/fcausaexterna)%60)+':'+Math.floor(((timecausaexterna/fcausaexterna)%60-Math.floor((timecausaexterna/fcausaexterna)%60))*60);
+			document.getElementById("ttac").innerHTML =Math.floor(timeaccesorios/60)+':'+Math.floor(timeaccesorios%60)+':'+'00';
+			document.getElementById("tpac").innerHTML =Math.floor((timeaccesorios/faccesorios)/60)+':'+Math.floor((timeaccesorios/faccesorios)%60)+':'+Math.floor(((timeaccesorios/faccesorios)%60-Math.floor((timeaccesorios/faccesorios)%60))*60);
+			document.getElementById("ttunk").innerHTML =Math.floor(timedesconocido/60)+':'+Math.floor(timedesconocido%60)+':'+'00';
+			document.getElementById("tpunk").innerHTML =Math.floor((timedesconocido/fdesconocido)/60)+':'+Math.floor((timedesconocido/fdesconocido)%60)+':'+Math.floor(((timedesconocido/fdesconocido)%60-Math.floor((timedesconocido/fdesconocido)%60))*60);
+			document.getElementById("ttsin").innerHTML =Math.floor(timesinfallas/60)+':'+Math.floor(timesinfallas%60)+':'+'00';
+			document.getElementById("tpsin").innerHTML =Math.floor((timesinfallas/fsinfallas)/60)+':'+Math.floor((timesinfallas/fsinfallas)%60)+':'+Math.floor(((timesinfallas/fsinfallas)%60-Math.floor((timesinfallas/fsinfallas)%60))*60);
+			document.getElementById("ttotra").innerHTML =Math.floor(timeotrafalla/60)+':'+Math.floor(timeotrafalla%60)+':'+'00';
+			document.getElementById("tpotra").innerHTML =Math.floor((timeotrafalla/fotros)/60)+':'+Math.floor((timeotrafalla/fotros)%60)+':'+Math.floor(((timeotrafalla/fotros)%60-Math.floor((timeotrafalla/fotros)%60))*60);
+			
+		}
+		else if(tecnico==9){
+			
+			nombre = miguel[0];
+			for(mc of correctivo){
+				mcor = mc.split(',');
+				console.log(mcor[4]);
+				for(gc of miguel){
+					
+					
+					if(mcor[4].indexOf(gc)==0 && mcor[4].trim()==gc){
+						mcorrectivo+=1;
+						reportescid.push(mcor);
+						timetotalcorrectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+					else if(mcor[4].indexOf(gc)!=-1){
+						mcorrectivocolectivo+=1;
+						reportesccid.push(mcor);
+						timetotalcorrectivocolectivo+=parseInt(mcor[5].split(':')[0],10)*60+parseInt(mcor[5].split(':')[1],10);
+						timellamadocorrectivocolectivo+= parseInt(mcor[1].split(':')[0],10)*60+parseInt(mcor[1].split(':')[1],10)-(parseInt(mcor[3].split(':')[0],10)*60+parseInt(mcor[3].split(':')[1],10));
+						break;
+					}
+				}
+					
+			}
+			for(mpd of predictivo){
+				mpred = mpd.split(',');
+				for(gc of miguel){
+					if(mpred[4].indexOf(gc)==0){
+						reportespdid.push(mpred);
+						mpredictivo+=1;
+						timetotalpredictivo+=parseInt(mpred[5].split(':')[0],10)*60+parseInt(mpred[5].split(':')[1],10);
+						if(mpred[3]!='00:00:00'){
+							mpredictivosinllamado+=1;
+							timellamadopredictivo+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(mpv of preventivo){
+				mprev = mpv.split(',');
+				for(gc of miguel){
+					if(mprev[4].indexOf(gc)==0){
+						mpreventivo+=1;
+						reportespvid.push(mprev);
+						timetotalpreventivo+= parseInt(mprev[5].split(':')[0],10)*60+parseInt(mprev[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(mo of otrosmtto){
+				motro = mo.split(',');
+				for(gc of miguel){
+					if(motro[4].indexOf(gc)==0){
+						motrosmtto+=1;
+						reportesoid.push(motro);
+						timetotalotros+= parseInt(motro[5].split(':')[0],10)*60+parseInt(motro[5].split(':')[1],10);
+						if(motro[3]!='00:00:00'){
+							motrossinllamado+=1;
+							timellamadootros+= parseInt(mpred[1].split(':')[0],10)*60+parseInt(mpred[1].split(':')[1],10)-(parseInt(mpred[3].split(':')[0],10)*60+parseInt(mpred[3].split(':')[1],10));
+						
+						}
+						break;
+					}
+				}
+			
+			}
+			for(des of desgaste){
+				fdes = des.split(',');
+				for(gc of miguel){
+					if(fdes[4].indexOf(gc)==0){
+						reportesdesid.push(fdes);
+						fdesgaste+=1;
+						timedesgaste+= parseInt(fdes[5].split(':')[0],10)*60+parseInt(fdes[5].split(':')[1],10);
+						break;
+					}
+				}
+				
+			}
+			for(opi of opindebida){
+				fopi = opi.split(',');
+				for(gc of miguel){
+					if(fopi[4].indexOf(gc)==0){
+						fopindebiba+=1;
+						reportesopid.push(fopi);
+						timeopindebida+= parseInt(fopi[5].split(':')[0],10)*60+parseInt(fopi[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(acc of accesorios){
+				facc = acc.split(',');
+				for(gc of miguel){
+					if(facc[4].indexOf(gc)==0){
+						faccesorios+=1;
+						reportesaccid.push(facc);
+						timeaccesorios+= parseInt(facc[5].split(':')[0],10)*60+parseInt(facc[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(cex of causaexterna){
+				fcex = cex.split(',');
+				for(gc of miguel){
+					if(fcex[4].indexOf(gc)==0){
+						fcausaexterna+=1;
+						reportesceid.push(fcex);
+						timecausaexterna+= parseInt(fcex[5].split(':')[0],10)*60+parseInt(fcex[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(desco of desconocido){
+				fdesco = desco.split(',');
+				for(gc of miguel){
+					if(fdesco[4].indexOf(gc)==0){
+						fdesconocido+=1;
+						reportesunkid.push(fdesco);
+						timedesconocido+= parseInt(fdesco[5].split(':')[0],10)*60+parseInt(fdesco[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(sinf of sinfallas){
+				fsinf = sinf.split(',');
+				for(gc of miguel){
+					if(fsinf[4].indexOf(gc)==0){
+						fsinfallas+=1;
+						reporteswfid.push(fsinf);
+						timesinfallas+= parseInt(fsinf[5].split(':')[0],10)*60+parseInt(fsinf[5].split(':')[1],10);
+						
+						break;
+					}
+				}
+			}
+			for(fotro of otrasfallas){
+				fotrosf = fotro.split(',');
+				for(gc of miguel){
+					if(fotrosf[4].indexOf(gc)==0){
+						fotros+=1;
+						reportesofid.push(fotrosf);
+						timeotrafalla+= parseInt(fotrosf[5].split(':')[0],10)*60+parseInt(fotrosf[5].split(':')[1],10);
+					
+						break;
+					}
+				}
+			}
+			document.getElementById("ttc").innerHTML = Math.floor(timetotalcorrectivo/60)+':'+Math.floor(timetotalcorrectivo%60)+':'+'00';
+			document.getElementById("tpc").innerHTML =Math.floor((timetotalcorrectivo/mcorrectivo)/60)+':'+Math.floor((timetotalcorrectivo/mcorrectivo)%60)+':'+Math.floor(((timetotalcorrectivo/mcorrectivo)%60-Math.floor((timetotalcorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttp").innerHTML =Math.floor(timetotalpreventivo/60)+':'+Math.floor(timetotalpreventivo%60)+':'+'00';
+			document.getElementById("tpp").innerHTML =Math.floor((timetotalpreventivo/mpreventivo)/60)+':'+Math.floor((timetotalpreventivo/mpreventivo)%60)+':'+Math.floor(((timetotalpreventivo/mpreventivo)%60-Math.floor((timetotalpreventivo/mpreventivo)%60))*60);
+			document.getElementById("ttpd").innerHTML =Math.floor(timetotalpredictivo/60)+':'+Math.floor(timetotalpredictivo%60)+':'+'00';
+			document.getElementById("tppd").innerHTML =Math.floor((timetotalpredictivo/mpredictivo)/60)+':'+Math.floor((timetotalpredictivo/mpredictivo)%60)+':'+Math.floor(((timetotalpredictivo/mpredictivo)%60-Math.floor((timetotalpredictivo/mpredictivo)%60))*60);
+			document.getElementById("tto").innerHTML =Math.floor(timetotalotros/60)+':'+Math.floor(timetotalotros%60)+':'+'00';
+			document.getElementById("tpo").innerHTML =Math.floor((timetotalotros/motrosmtto)/60)+':'+Math.floor((timetotalotros/motrosmtto)%60)+':'+Math.floor(((timetotalotros/motrosmtto)%60-Math.floor((timetotalotros/motrosmtto)%60))*60);
+			
+			document.getElementById("ttcr").innerHTML =Math.floor(timellamadocorrectivo/60)+':'+Math.floor(timellamadocorrectivo%60)+':'+'00';
+			document.getElementById("tpcr").innerHTML =Math.floor((timellamadocorrectivo/mcorrectivo)/60)+':'+Math.floor((timellamadocorrectivo/mcorrectivo)%60)+':'+Math.floor(((timellamadocorrectivo/mcorrectivo)%60-Math.floor((timellamadocorrectivo/mcorrectivo)%60))*60);
+			document.getElementById("ttpdr").innerHTML =Math.floor(timellamadopredictivo/60)+':'+Math.floor(timellamadopredictivo%60)+':'+'00';
+			document.getElementById("tppdr").innerHTML =Math.floor((timellamadopredictivo/mpredictivosinllamado)/60)+':'+Math.floor((timellamadopredictivo/mpredictivosinllamado)%60)+':'+Math.floor(((timellamadopredictivo/mpredictivosinllamado)%60-Math.floor((timellamadopredictivo/mpredictivosinllamado)%60))*60);
+			document.getElementById("ttor").innerHTML =Math.floor(timellamadootros/60)+':'+Math.floor(timellamadootros%60)+':'+'00';
+			document.getElementById("tpor").innerHTML =Math.floor((timellamadootros/motrossinllamado)/60)+':'+Math.floor((timellamadootros/motrossinllamado)%60)+':'+Math.floor(((timellamadootros/motrossinllamado)%60-Math.floor((timellamadootros/motrossinllamado)%60))*60);
+			
+			document.getElementById("ttdes").innerHTML = Math.floor(timedesgaste/60)+':'+Math.floor(timedesgaste%60)+':'+'00';
+			document.getElementById("tpdes").innerHTML =Math.floor((timedesgaste/fdesgaste)/60)+':'+Math.floor((timedesgaste/fdesgaste)%60)+':'+Math.floor(((timedesgaste/fdesgaste)%60-Math.floor((timedesgaste/fdesgaste)%60))*60);
+			document.getElementById("ttopind").innerHTML =Math.floor(timeopindebida/60)+':'+Math.floor(timeopindebida%60)+':'+'00';
+			document.getElementById("tpopind").innerHTML =Math.floor((timeopindebida/fopindebiba)/60)+':'+Math.floor((timeopindebida/fopindebiba)%60)+':'+Math.floor(((timeopindebida/fopindebiba)%60-Math.floor((timeopindebida/fopindebiba)%60))*60);
+			document.getElementById("ttex").innerHTML =Math.floor(timecausaexterna/60)+':'+Math.floor(timecausaexterna%60)+':'+'00';
+			document.getElementById("tpex").innerHTML =Math.floor((timecausaexterna/fcausaexterna)/60)+':'+Math.floor((timecausaexterna/fcausaexterna)%60)+':'+Math.floor(((timecausaexterna/fcausaexterna)%60-Math.floor((timecausaexterna/fcausaexterna)%60))*60);
+			document.getElementById("ttac").innerHTML =Math.floor(timeaccesorios/60)+':'+Math.floor(timeaccesorios%60)+':'+'00';
+			document.getElementById("tpac").innerHTML =Math.floor((timeaccesorios/faccesorios)/60)+':'+Math.floor((timeaccesorios/faccesorios)%60)+':'+Math.floor(((timeaccesorios/faccesorios)%60-Math.floor((timeaccesorios/faccesorios)%60))*60);
+			document.getElementById("ttunk").innerHTML =Math.floor(timedesconocido/60)+':'+Math.floor(timedesconocido%60)+':'+'00';
+			document.getElementById("tpunk").innerHTML =Math.floor((timedesconocido/fdesconocido)/60)+':'+Math.floor((timedesconocido/fdesconocido)%60)+':'+Math.floor(((timedesconocido/fdesconocido)%60-Math.floor((timedesconocido/fdesconocido)%60))*60);
+			document.getElementById("ttsin").innerHTML =Math.floor(timesinfallas/60)+':'+Math.floor(timesinfallas%60)+':'+'00';
+			document.getElementById("tpsin").innerHTML =Math.floor((timesinfallas/fsinfallas)/60)+':'+Math.floor((timesinfallas/fsinfallas)%60)+':'+Math.floor(((timesinfallas/fsinfallas)%60-Math.floor((timesinfallas/fsinfallas)%60))*60);
+			document.getElementById("ttotra").innerHTML =Math.floor(timeotrafalla/60)+':'+Math.floor(timeotrafalla%60)+':'+'00';
+			document.getElementById("tpotra").innerHTML =Math.floor((timeotrafalla/fotros)/60)+':'+Math.floor((timeotrafalla/fotros)%60)+':'+Math.floor(((timeotrafalla/fotros)%60-Math.floor((timeotrafalla/fotros)%60))*60);
+			
+		}
+		else{
+			graphs(mpreventivo,mcorrectivo,mpredictivo,motrosmtto,nombre,fdesgaste,fopindebiba,faccesorios,fcausaexterna,fdesconocido,fsinfallas,fotros,mcorrectivocolectivo,reportid);
+			
+		}
+		graphs(mpreventivo,mcorrectivo,mpredictivo,motrosmtto,nombre,fdesgaste,fopindebiba,faccesorios,fcausaexterna,fdesconocido,fsinfallas,fotros,mcorrectivocolectivo,reportid);
+		
+		
+			
+	}
+	let chart;
+	let chart2;
+	function graphs(mpreven,mcorrect,mpredic,motrosmt,name,desgas,opind,acces,causeex,unknown,wfallas,otrosf,colectivoc,arrmtto){
+		var Mttos = document.getElementById("donutmttos").getContext("2d");
+		var Fmtto = document.getElementById("donutfallas").getContext("2d");
+		if(chart){
+			chart.destroy();
+		}
+		if(chart2){
+			chart2.destroy();
+		}
+		chart = new Chart(Mttos,{
+		type: "doughnut",
+		data:{
+			labels:['Preventivos','Correctivos','Predictivos','Otros    ','Correctivos colectivos'],
+			datasets:[{
+					label:name,
+					data:[mpreven,mcorrect,mpredic,motrosmt,colectivoc],
+					backgroundColor:['rgb(59,131,189)','rgb(255,0,0)','rgb(0,143,57)','rgb(255,164,32)','rgb(140,0,75)'],
+					hoverOffset:4
+					
+				}]
+			}
+		});
+		chart2 = new Chart(Fmtto,{
+		type: "doughnut",
+		data:{
+			labels:['Desgaste','Operación indebida','Accesorios','Causa externa','Desconocido','Sin fallas','Otros'],
+			datasets:[{
+					label:name,
+					data:[desgas,opind,acces,causeex,unknown,wfallas,otrosf],
+					backgroundColor:['rgb(255,225,53)','rgb(139,0,0)','rgb(244,70,17)','rgb(144,238,144)','rgb(130,130,130)','rgb(0,143,57)','rgb(87,35,100)'],
+					hoverOffset:4
+					
+				}]
+			}
+		
+		
+		});
+		document.getElementById("donutfallas").onclick = function(evt) {
+			document.getElementById("tipo").innerHTML = 'Mantenimiento';
+			var activePoints = chart2.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            var tablamtto= document.getElementById('table')
+			tablamtto.innerHTML = '';
+            var titlemodal = document.getElementById("titlemodal")
+            var firstPoint = activePoints[0];
+            var indexP = firstPoint.index;
+            var arraysend = [];
+           	titlemodal.innerHTML = chart2.data.labels[firstPoint.index];
+           	
+           
+           	if (indexP ==0){
+				//Desgaste
+				arraysend = arrmtto[5];
+				
+			}
+			else if(indexP ==1){
+				//Operacion indebida
+				arraysend = arrmtto[6];
+				
+			}
+			else if(indexP ==2){
+				//Accesorios 
+				arraysend = arrmtto[7];
+			}
+			else if(indexP == 3){
+				//Causa externa
+				arraysend = arrmtto[8];
+			}
+			else if(indexP == 4){
+				//Desconocido
+				arraysend = arrmtto[9];			
+			}
+			else if(indexP == 5){
+				//Sin fallas
+				arraysend = arrmtto[10];
+				
+			}
+			else{
+				//Otros
+				arraysend = arrmtto[11];
+			}
+			console.log(arraysend)
+			for(mtto of arraysend){
+				tablamtto.innerHTML+=`
+							<tr>
+								<td>${mtto[7]}</td>
+								<td>${mtto[8]}</td>
+								<td>${mtto[9]}</td>
+								<td>${mtto[10]}</td>
+								<td>${mtto[12]}</td>
+								<td>${mtto[13]}</td>
+								<td>${mtto[14]}</td>
+								<td>${mtto[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/formatoreporte/ ${mtto[6]}">Reporte</a>
+								</td>
+							
+							</tr>
+						`
+			}
+			document.getElementById('myModal').style.display = 'block';
+		
+		
+		}
+
+		document.getElementById("donutmttos").onclick = function(evt) {
+			document.getElementById("tipo").innerHTML = 'Falla';
+            var activePoints = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            var tablamtto= document.getElementById('table')
+			tablamtto.innerHTML = '';
+            var titlemodal = document.getElementById("titlemodal")
+            var firstPoint = activePoints[0];
+            var indexP = firstPoint.index;
+            var arraysend = [];
+           	titlemodal.innerHTML = chart.data.labels[firstPoint.index];
+            if (indexP ==0){
+				arraysend = arrmtto[3];
+				
+			}
+			else if(indexP ==1){
+				arraysend = arrmtto[0];
+				
+			}
+			else if(indexP ==2){
+				arraysend = arrmtto[2];
+			}
+			else if(indexP == 3){
+				arraysend = arrmtto[4];
+			}
+			else{
+				arraysend = arrmtto[1];
+			}
+			console.log(arraysend)
+			for(mtto of arraysend){
+				tablamtto.innerHTML+=`
+							<tr>
+								<td>${mtto[7]}</td>
+								<td>${mtto[8]}</td>
+								<td>${mtto[9]}</td>
+								<td>${mtto[10]}</td>
+								<td>${mtto[12]}</td>
+								<td>${mtto[13]}</td>
+								<td>${mtto[14]}</td>
+								<td>${mtto[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/formatoreporte/ ${mtto[6]}">Reporte</a>
+								</td>
+							
+							</tr>
+						`
+			}
+			document.getElementById('myModal').style.display = 'block';
+			
+			console.log(firstPoint.index)
+           	console.log(chart.data.labels[firstPoint.index])
+			console.log(chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index])
+       		
+        };
+	
+	
+	
+	
+	}	
+	
+
+	$("#closemodal").click(function(){
+	  document.getElementById('myModal').style.display = 'none';
+
+	});
+	$("#xmodal").click(function(){
+	  document.getElementById('myModal').style.display = 'none';
+
+	});
+	 
+	$(function(){
+        $('input[name="daterange"]').daterangepicker({
+          opens:'right'});
+
+      });
+    
+    
+/*]]>*/
+</script>
+
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</main>
+</body>

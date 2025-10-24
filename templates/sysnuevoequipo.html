@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Nuevo equipo</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/nuevoequiposinhv.css}" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/syshome}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/sysusuarios}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/systipos}">Inventario</a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" th:href="@{/sysusuarios}">Usuarios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Más opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>       
+<div class="container-xl">
+  <main>
+    <div class="py-4 text-center">
+     
+      <h2>Nuevo equipo</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+      <p class = "lead"><small>Recuerde completar todo en mayúscula</small></p>
+    </div>
+    <div class="row g-3">
+        <h4 class="mb-3">Datos del equipo</h4>
+        <form class="needs-validation" validate th:action="@{/sysnuevoequipo/}+${sysequipo.tipo_equipo.id_Tipo_equipo}"th:object="${sysequipo}"method="post">
+          <div class="row g-3">
+            <div class="col-sm-4">
+              <label for="seriee" class="form-label">Serie</label>
+              <input th:field="*{Serie}"type="text" class="form-control is-valid" id="seriee" placeholder="Ingrese la serie del equipo" required>
+              <div class="invalid-feedback">
+                Número de serie requerido
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="nombree" class="form-label">Nombre del equipo</label>
+              <input th:field="*{Nombre_equipo}"type="text" class="form-control is-valid" id="nombree" placeholder="Reescriba el nombre del tipo de equipo, en caso de que no tenga un nombre distinto" value="" required>
+              <div class="invalid-feedback">
+                Ingrese el nombre del equipo
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="marcae" class="form-label">Marca</label>
+              <input th:field="*{Marca}" type="text" class="form-control is-valid" id="marcae" placeholder="Ingrese la marca del equipo"value=""required>
+              <div class="invalid-feedback">
+                Ingrese la marca del equipo
+              </div>
+
+            </div>
+            <div class="col-md-4">
+              <label for="modeloe" class="form-label">Modelo</label>
+              <input th:field="*{Modelo}"type="text" class="form-control is-valid" id="modeloe" placeholder="Ingrese el modelo del equipo"value=""required>
+              <div class="invalid-feedback">
+                Ingrese el modelo del equipo
+              </div>
+                
+            </div>
+            <div class="col-sm-4">
+              <label for="anoinge" class="form-label">Año de ingreso</label>
+              <input type="date" name = "fecha"class="form-control is-valid" placeholder="Ejemplo: 2022"id="anoinge"value=""required>
+                         
+            </div>
+
+            <div class="col-md-4">
+              <label for="placae" class="form-label" align= "text-center">Placa inventario</label>
+              <input th:field="*{Placa_inventario}"type="text" class="form-control is-valid" id="placae" placeholder="Ingrese la placa inventario" required>
+            
+                
+            </div>
+            <div class="col-md-4">
+              <label for= "servicioe" class="form-label" align = "text-center">Servicio</label>
+              <select class="form-control" th:name = "myService"id = "service" required>
+	              	<option selected disabled value="0">Seleccione el servicio</option>
+	              	<div th:each="servicio:${servicios}">
+	              		<option th:text="${servicio.Nombre_servicio}" th:value = "${servicio.id_Servicio}"></option>
+	              	</div>
+				 
+				</select>
+              
+            </div>
+            <div class="col-md-4">
+              <label for="ubicacionee"class="form-label is-valid"align="text-center">Ubicación</label>
+              <input th:field="*{Ubicacion}"type="text" class="form-control is-valid" id="ubicacionee" placeholder="Ingrese la ubicación del equipo" required>
+            </div>
+            <div class="col-md-4">
+              <label for = "ubicacionespecificae" class="form-label" align="text-center">Ubicación específica</label>
+              <input th:field="*{Ubicacion_especifica}"type="text" class="form-control" id="ubicacionespecificae"placeholder="Ingrese la ubicación específica del equipo">
+            </div>
+
+            <hr class="featurette-divider">
+            <div class="mb-3">
+            <div class="row">
+            	<div class="col-md-6">
+              		<h4>Mantenimiento del equipo</h4>
+            	</div>
+            	<div class = "col-md-6" th:if="${dias}">
+            		<p class = "lead" th:text="${dias}"></p>
+            	</div>
+            </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <div class="mb-3">
+                  <h6>Periodicidad</h6>
+                </div>
+              </div>
+              <div class="col-md-6">
+              	
+                <p class="lead" id ="period"><small></small></p>
+              </div>
+              <div class = "col-md-4">
+              	<p class="lead" id ="adv" style = "color: red;"></p>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-check mb-3">
+                  <input th:field="*{Periodicidad}"type="radio" name="metodoPeriodicidadMantenimiento"  id= "trimestral" class="form-check-input" value=3 required>
+                  <label class="form-check-label" for ="trimestral" >Trimestral </label>
+                </div>
+                <div class="form-check mb-3">
+                  <input th:field="*{Periodicidad}" type="radio" name="metodoPeriodicidadMantenimiento" id ="cuatrimestral" class="form-check-input" value=4 required> 
+                  <label class="form-check-label" for = "cuatrimestral">Cuatrimestral  </label>
+                </div>
+                <div class="form-check mb-3">
+                  <input th:field="*{Periodicidad}"type="radio" name="metodoPeriodicidadMantenimiento"id = "semestral" class="form-check-input"value=2 required>
+                  <label class="form-check-label" for ="semestral">Semestral </label>
+                </div>
+                <div class="form-check mb-3">
+                  <input th:field="*{Periodicidad}"type="radio" name="metodoPeriodicidadMantenimiento" id = "anual" class="form-check-input"value=1 required>
+                  <label class="form-check-label" for ="anual">Anual </label>
+                </div>
+                
+
+              </div>
+            
+              
+              <div class="col-md-10">
+                <div class="row">
+                	<div class = "col-md-6 mb-3">
+                		<label for= "servicioe" class="form-label" align = "text-center">Fecha 1</label>
+                		<input type="text" name = "daterange" id = "rangofecha1">
+                	</div>
+                	<div class = "col-md-6 mb-3">
+                		<label for= "servicioe" class="form-label" align = "text-center">Fecha 2</label>
+                		<input type="text" name = "daterange" id = "rangofecha2">
+                	</div>
+                	<div class = "col-md-6 mb-3">
+                		<label for= "servicioe" class="form-label" align = "text-center">Fecha 3</label>
+                		<input type="text" name = "daterange" id = "rangofecha3">
+                	</div>
+                	<div class = "col-md-6 mb-3">
+                		<label for= "servicioe" class="form-label" align = "text-center">Fecha 4</label>
+                		<input type="text" name = "daterange" id = "rangofecha4">
+                	</div>
+                	
+                </div>
+                  
+			
+              </div>
+
+              </div>
+              
+            </div>
+            
+            <div class="row mb-3">
+            
+              <div class="col-md-4 mb-3">
+                <label for="anomtto" class="form-label">Sede</label>
+				<select class="form-control" th:name = "sede" id = "sede" required>
+				    	<option selected disabled value="0">Seleccione la sede</option>
+				    	<div th:each="sede:${sedes}">
+				    		<option th:text="${sede.Nombre_hospital}" th:value = "${sede.id_Hospital}"></option>
+				    	</div>
+				 
+				</select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="nombree" class="form-label">Tipo de equipo</label>
+                <input type="text" class="form-control is-valid" id="nombree" name = "tipoequipo" th:text="${sysequipo.tipo_equipo.nombre_Tipo_equipo}"  th:value="${sysequipo.tipo_equipo.nombre_Tipo_equipo}" disabled>
+                   
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for = "mesditipomtto">Responsabilidad mantenimiento</label>
+                <select class="form-control"th:field="*{Mtto}" id="mesditipomtto">
+                  <option disabled value = "0">Elija</option>
+                  <option value = "0">Propio</option>
+                  <option value = "1">Contrato</option>
+                  <option value = "2">Garantía</option>
+                </select>   
+            </div>
+        
+              
+            
+            
+            </div>
+            <hr class="featurette-divider">
+            <div class = "row">
+            <div class="col-md-4">
+              <label for= "codigo" class="form-label" align = "text-center">Código</label>
+              <input type="text" th:field="*{Codigo}" class="form-control is-valid"  name = "codigo" placeholder="Ingrese código del equipo" required>
+            </div>
+            <div class = "col-md-4">
+            	<label class="form-label" align = "text-center">Seleccione si el equipo ingresa a los servicios</label>
+            	<div class="form-check mb-3">
+                  <input type="checkbox"th:field="*{Activo}" id = "activoserv"name="activoserv">
+                  <label class="form-check-label" for = "activoserv">Activo</label>
+                </div>
+            </div>
+            <div class = "col-md-4">
+            	<label class="form-label" align = "text-center">Seleccione si requiere mantenimiento de software</label>
+            	<div class="form-check mb-3">
+                  <input type="checkbox"th:field="*{Preventivo_s}" id = "activoserv"name="activoserv">
+                  <label class="form-check-label" for = "activoserv">Mtto software</label>
+                </div>
+            </div>
+            </div>
+            <hr class="featurette-divider">
+
+            <div class="col-12">
+              <div class="btn-group">
+                <button class="w-150 btn btn-dark btn-lg" type="submit">Guardar</button>
+                <button class="w-150 btn btn-dark btn-lg" >Atras</button>
+              </div>
+            </div>
+
+                
+            </div>
+               
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2022 HRCatch</p>
+   
+  </footer>
+</div>
+
+  
+   
+      
+  </body>
+  
+<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+  <script th:inline = "javascript">
+/*<![CDATA[*/
+var service = /*[[${idservice}]]*/ 'default';
+var anoingreso = /*[[${fechaingreso}]]*/ 'default';
+var botonopr = 0;
+if(anoingreso!=null){
+	var ano = document.getElementById("anoinge");
+	ano.value = anoingreso
+	
+}
+var servicio = document.getElementById("service");
+servicio.value = service;
+var diasstr = /*[[${dias}]]*/ 'default';
+$("#rangofecha1").hide();
+$("#rangofecha2").hide();
+$("#rangofecha3").hide();
+$("#rangofecha4").hide();
+
+
+var dias = diasstr.split(',')
+
+var lenghtdias = dias.length
+if(lenghtdias = 1){
+	$("#rangofecha1").show();
+	$("#rangofecha1").prop('disabled', false);
+	var range1 = document.getElementById("rangofecha1")
+	range1.value = dias[0];
+}
+else if(lenghtdias = 2){
+	$("#rangofecha1").show();
+	$("#rangofecha1").prop('disabled', false);
+	var range1 = document.getElementById("rangofecha1")
+	range1.value = dias[0];
+	
+	$("#rangofecha2").show();
+	$("#rangofecha2").prop('disabled', false);
+	var range2 = document.getElementById("rangofecha2")
+	range2.value = dias[1];
+}
+else if(lenghtdias = 3){
+	$("#rangofecha1").show();
+	$("#rangofecha1").prop('disabled', false);
+	var range1 = document.getElementById("rangofecha1")
+	range1.value = dias[0];
+	$("#rangofecha2").show();
+	$("#rangofecha2").prop('disabled', false);
+	var range2 = document.getElementById("rangofecha2")
+	range2.value = dias[1];
+	$("#rangofecha3").show();
+	$("#rangofecha3").prop('disabled', false);
+	var range3 = document.getElementById("rangofecha3")
+	range3.value = dias[2];
+}
+else if(lenghtdias = 4){
+	$("#rangofecha1").show();
+	$("#rangofecha1").prop('disabled', false);
+	var range1 = document.getElementById("rangofecha1")
+	range1.value = dias[0];
+	$("#rangofecha2").show();
+	$("#rangofecha2").prop('disabled', false);
+	var range2 = document.getElementById("rangofecha2")
+	range2.value = dias[1];
+	$("#rangofecha3").show();
+	$("#rangofecha3").prop('disabled', false);
+	var range3 = document.getElementById("rangofecha3")
+	range3.value = dias[2];
+	$("#rangofecha4").show();
+	$("#rangofecha4").prop('disabled', false);
+	var range4 = document.getElementById("rangofecha4")
+	range4.value = dias[3];
+}
+
+$(document).ready(function(){
+  $('#service').select2();
+  $('#anual').on('change',function(){
+	
+	var anual = document.getElementById("anual").checked;
+	var text = document.getElementById("period");
+	
+    if (anual) {
+     text.textContent="Seleccione unicamente un rango."
+     $("#rangofecha1").prop('disabled', false);
+     $("#rangofecha1").show();
+     $("#rangofecha2").prop('disabled', true);
+     $("#rangofecha2").hide();
+     $("#rangofecha3").prop('disabled', true);
+     $("#rangofecha3").hide();
+     $("#rangofecha4").prop('disabled', true);
+     $("#rangofecha4").hide();
+    } else {
+	 text.textContent=""
+	 $("#rangofecha1").hide();
+	 $("#rangofecha1").prop('disabled', true);
+	 $("#rangofecha2").prop('disabled', true);
+	 $("#rangofecha3").prop('disabled', true);
+	 $("#rangofecha4").prop('disabled', true);
+    	
+    }  
+  })
+  $('#trimestral').on('change',function(){
+	
+	var trimestral = document.getElementById("trimestral").checked;
+	var text = document.getElementById("period");
+	
+    if (trimestral) {
+     text.textContent="Seleccione cuatro rangos cada tres meses."
+     $("#rangofecha1").show();
+     $("#rangofecha2").show();
+     $("#rangofecha3").show();
+     $("#rangofecha4").show();
+     $("#rangofecha1").prop('disabled', false);
+     $("#rangofecha2").prop('disabled', false);
+	 $("#rangofecha3").prop('disabled', false);
+	 $("#rangofecha4").prop('disabled', false);
+     
+    } else {
+	 text.textContent=""
+	 $("#rangofecha1").hide();
+     $("#rangofecha2").hide();
+     $("#rangofecha3").hide();
+     $("#rangofecha4").hide();
+     $("#rangofecha1").prop('disabled', true);
+     $("#rangofecha2").prop('disabled', true);
+	 $("#rangofecha3").prop('disabled', true);
+	 $("#rangofecha4").prop('disabled', true);
+    
+    }  
+  })
+  $('#semestral').on('change',function(){
+	
+	var semestral = document.getElementById("semestral").checked;
+	var text = document.getElementById("period");
+	
+    if (semestral) {
+     text.textContent="Seleccione dos rangos cada seis meses."
+     $("#rangofecha1").show();
+     $("#rangofecha2").show();
+     $("#rangofecha3").hide();
+     $("#rangofecha4").hide();
+     $("#rangofecha1").prop('disabled', false);
+	 $("#rangofecha2").prop('disabled', false);
+	 $("#rangofecha3").prop('disabled', true);
+	 $("#rangofecha4").prop('disabled', true);
+     
+    } else {
+	 text.textContent=""
+	 $("#rangofecha1").hide();
+     $("#rangofecha2").hide();
+     $("#rangofecha1").prop('disabled', true);
+	 $("#rangofecha2").prop('disabled', true);
+	 $("#rangofecha3").prop('disabled', true);
+	 $("#rangofecha4").prop('disabled', true);
+    
+    }  
+  })
+  $('#cuatrimestral').on('change',function(){
+	
+	var cuatrimestral = document.getElementById("cuatrimestral").checked;
+	var text = document.getElementById("period");
+	
+    if (cuatrimestral) {
+     text.textContent="Seleccione tres rangos cada cuatro meses."
+     $("#rangofecha1").show();
+     $("#rangofecha2").show();
+     $("#rangofecha3").show();
+     $("#rangofecha4").hide();
+     $("#rangofecha1").prop('disabled', false);
+	 $("#rangofecha2").prop('disabled', false);
+	 $("#rangofecha3").prop('disabled', false);
+	 $("#rangofecha4").prop('disabled', true);
+     
+    } else {
+	 text.textContent=""
+	 $("#rangofecha1").hide();
+     $("#rangofecha2").hide();
+     $("#rangofecha3").hide();
+     $("#rangofecha1").prop('disabled', true);
+	 $("#rangofecha2").prop('disabled', true);
+	 $("#rangofecha3").prop('disabled', true);
+	 $("#rangofecha4").prop('disabled', true);
+    
+    }  
+  })
+  
+  
+});
+
+
+$(function(){
+       
+        $('input[name="daterange"]').daterangepicker({
+		      autoUpdateInput: false,
+		      locale: {
+		          cancelLabel: 'Clear'
+		      }
+		  });
+		 $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+		      $(this).val(picker.startDate.format('DD/MM/YYYY') + '-' + picker.endDate.format('DD/MM/YYYY'));
+		  });
+		
+		  $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+		      $(this).val('');
+		  });
+
+      });
+
+/*]]>*/
+</script>
+ 
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

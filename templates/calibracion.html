@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<meta th:name="_csrf" th:content="${_csrf.token}" />
+	<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+	<title>Calibraciones, validaciones y calificaciones</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+	<script th:src="@{/js/chart.js}"></script>
+
+	<style>
+		.modal-body {
+			height: 200px;
+			width: 100%;
+			overflow-y: auto;
+			overflow-x: auto;
+		}
+
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<main class="container">
+		<form th:action="@{/procesoscalvalfec}" method="post">
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+				<div class="py-4 text-center">
+
+					<h2>Actividades Metrologicas programadas</h2>
+					<p class="lead">Seleccione para visualizar procesos de validación, clasificación y calibración
+						asignados</p>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<h6>Seleccione un mes para visualizar:</h6>
+					</div>
+					<div class="col-md-3">
+						<input th:name="mesSel" type="month" id="mesSel" class="form-control" required>
+					</div>
+					<div class="col-md-1 mb-3">
+						<button type="submit" class="w-200 btn btn-dark btn-sm">Buscar</button>
+					</div>
+
+
+					<div class="col-md-1">
+					</div>
+				</div>
+				<div class="container-xl">
+					<div class="row">
+
+						<div class="bd-example">
+							<nav>
+								<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+									<a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home"
+										role="tab" aria-controls="nav-home" aria-selected="true">Actividades
+										programadas</a>
+
+								</div>
+							</nav>
+							<div class="tab-content" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+									aria-labelledby="nav-home-tab">
+
+									<div class="row">
+										<div class="col-md-3">
+
+										</div>
+										<div class="col-md-6">
+											<b style="color: red;">
+												<label
+													th:text="'Mes actual   ' + ${@utilidades.getNombreMes(mes)} + ' Del ' + ${ano} + ' Actividades metrologicas programadas: ' + ${numCals}"></label>
+											</b>
+										</div>
+										<div class="col-md-3">
+											<div class="input-group">
+												<span th:text="Filtrar  " class="label label-warning"></span>
+												<input id="myInput" onkeyup="myFunction()" class="form-control"
+													placeholder="Serie, Servicio, Mes programado">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div th:if="${#lists.isEmpty(actividadMetrologica)}"
+												class="alert alert-info my-4"
+												th:text="'No hay procesos programados en este rango'">
+											</div>
+											<div class="table-responsive">
+												<table class="table table-sm"
+													th:if="${not #lists.isEmpty(actividadMetrologica)}" id="myTable">
+													<thead>
+														<tr>
+															<th scope="col">Nombre</th>
+															<th scope="col">Marca</th>
+															<th scope="col">Modelo</th>
+															<th scope="col">Serie</th>
+															<th scope="col">Placa</th>
+															<th scope="col">Servicio</th>
+															<th scope="col">Ubicación</th>
+															<th scope="col">Actividad</th>
+															<th scope="col">Mes Pgm.</th>
+															<th scope="col">Reportes</th>
+														</tr>
+													</thead>
+
+													<tbody>
+														<div th:if="${not #lists.isEmpty(calibraciones)}">
+															<tr th:each="cal:${calibraciones}">
+																<td th:text="${cal.equipo.nombre_Equipo}"></td>
+																<td th:text="${cal.equipo.Marca}"></td>
+																<td th:text="${cal.equipo.Modelo}"></td>
+																<td th:text="${cal.equipo.Serie}"></td>
+																<td th:text="${cal.equipo.Placa_inventario}"></td>
+																<td th:text="${cal.equipo.Servicios}"></td>
+																<td th:text="${cal.equipo.Ubicacion}"></td>
+																<td th:text="${cal.Condiciones}"></td>
+																<td
+																	th:text="${@utilidades.getNombreMes(cal.Mes_programado)}">
+																</td>
+																<td th:if="${cal.realizado == true}"> <button
+																		th:onclick="'window.location.href=\''+@{/visualpdfcalibracion/}+${cal.id_Calibracion}+'\''"
+																		type="button" class="btn btn-primary btn-sm">
+																		Realizado</button> </td>
+																<td th:if="${cal.realizado == false}"> <button
+																		th:onclick="'window.location.href=\''+@{/visualizacionreportes/}+${cal.equipo.id_Equipo}+'\''"
+																		type="button"
+																		class="btn btn-dark btn-sm">Programada</button>
+																</td>
+															</tr>
+														</div>
+														</tr>
+											</div>
+											</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+
+
+							</div>
+							<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+								aria-labelledby="nav-profile-tab">
+
+								<article class="my-3" id="progress">
+
+									<div th:switch="${advancecolor}">
+										<div class="bd-example">
+											<div class="progress mb-3" th:case="1">
+												<div class="progress-bar bg-success w-100" role="progressbar"
+													th:aria-valuenow="${porcentaje}" aria-valuemin="0"
+													aria-valuemax="100" th:text="${porcentaje}+'%'"></div>
+											</div>
+											<div class="progress mb-3" th:case="2">
+												<div class="progress-bar bg-info w-75" role="progressbar"
+													th:aria-valuenow="${porcentaje}" aria-valuemin="75"
+													aria-valuemax="100" th:text="${porcentaje}+'%'"></div>
+											</div>
+											<div class="progress mb-3" th:case="3">
+												<div class="progress-bar bg-secondary w-50" role="progressbar"
+													th:aria-valuenow="${porcentaje}" aria-valuemin="50"
+													aria-valuemax="75" th:text="${porcentaje}+'%'"></div>
+											</div>
+											<div class="progress mb-3" th:case="4">
+												<div class="progress-bar bg-warning w-25" role="progressbar"
+													th:aria-valuenow="${porcentaje}" aria-valuemin="25"
+													aria-valuemax="50" th:text="${porcentaje}+'%'"></div>
+											</div>
+											<div class="progress" th:case="5">
+												<div class="progress-bar bg-danger" role="progressbar"
+													th:aria-valuenow="${porcentaje}" aria-valuemin="0"
+													aria-valuemax="25" th:text="${porcentaje}+'%'"></div>
+											</div>
+										</div>
+
+									</div>
+								</article>
+
+								<div class="row">
+									<div class="col-md-3">
+										<div class="d-flex flex-column flex-shrink-0 p-3 bg-light"
+											style="width: 220px;">
+											<ul class="nav nav-pills flex-column mb-auto">
+												<li class="nav-item">
+													<a href="#nav-sinrealizar" id="nav-sinrealizar-tab"
+														class="nav-link active" data-bs-toggle="tab" role="tab"
+														aria-controls="nav-sinrealizar" aria-selected="true"
+														aria-current="page">
+														Mantenimientos sin realizar
+													</a>
+												</li>
+												<li>
+													<a href="#nav-realizado" id="nav-realizado-tab"
+														class="nav-link link-dark" data-bs-toggle="tab" role="tab"
+														aria-controls="nav-realizado" aria-selected="false">
+														Mantenimientos realizados
+													</a>
+												</li>
+											</ul>
+
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="tab-content" id="nav-tabContents">
+											<div class="tab-pane fade show active" id="nav-sinrealizar" role="tabpanel"
+												aria-labelledby="nav-sinrealizar-tab">
+												<p class="lead"
+													th:text="${sinrealizar.size()}+' Procesos sin realizar'">
+													Mantenimientos sin realizar</p>
+
+												<div th:if="${#lists.isEmpty(sinrealizar)} and ${#lists.isEmpty(vsinrealizar)}"
+													class="alert alert-info my-4"
+													th:text="'No hay Procesos programados en este rango'">
+												</div>
+												<div class="table-responsive">
+													<table class="table table-sm"
+														th:if="${not #lists.isEmpty(sinrealizar)} or ${not #lists.isEmpty(vsinrealizar)}">
+														<thead>
+															<tr class="table-danger">
+																<th scope="col">Nombre</th>
+																<th scope="col">Marca</th>
+																<th scope="col">Modelo</th>
+																<th scope="col">Serie</th>
+
+																<th scope="col">Servicio</th>
+
+																<th scope="col">Realizar</th>
+															</tr>
+														</thead>
+
+														<tbody>
+															<tr th:each="cal:${sinrealizar}">
+																<td th:text="${cal.equipo.nombre_Equipo}"></td>
+																<td th:text="${cal.equipo.Marca}"></td>
+																<td th:text="${cal.equipo.Modelo}"></td>
+																<td th:text="${cal.equipo.Serie}"></td>
+
+																<td th:text="${cal.equipo.Servicios}"></td>
+
+
+
+																<td>
+																	<div th:if="${cal.equipo}">
+																		<a class="w-100 btn btn-sm btn-dark"
+																			th:href="@{/nuevacalibracion/}+${cal.id_Calibracion}">Ejecutar</a>
+																	</div>
+																	<div th:unless="${cal.equipo}">
+																		hi
+																	</div>
+
+																</td>
+
+
+															</tr>
+															<tr th:each="val:${vsinrealizar}">
+																<td th:text="${val.equipo.nombre_Equipo}"></td>
+																<td th:text="${val.equipo.Marca}"></td>
+																<td th:text="${val.equipo.Modelo}"></td>
+																<td th:text="${val.equipo.Serie}"></td>
+
+																<td th:text="${val.equipo.Servicios}"></td>
+
+
+
+																<td>
+																	<div th:if="${val.equipo}">
+																		<a class="w-100 btn btn-sm btn-dark"
+																			th:href="@{/nuevavalidacion/}+${val.id_Validacion}">Ejecutar</a>
+																	</div>
+																	<div th:unless="${val.equipo}">
+																		hi
+																	</div>
+
+																</td>
+
+
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="nav-realizado" role="tabpanel"
+												aria-labelledby="nav-realizado-tab">
+
+												<p class="lead"
+													th:text="${realizado.size()}+' Mantenimientos realizados'">
+													Mantenimientos sin realizar</p>
+
+												<div th:if="${#lists.isEmpty(realizado)}" class="alert alert-info my-4"
+													th:text="'No hay procesos hechos hasta el momento'">
+												</div>
+												<div class="table-responsive">
+													<table class="table table-success table-sm"
+														th:if="${not #lists.isEmpty(realizado)} or ${not #lists.isEmpty(vrealizado)}">
+														<thead>
+															<tr>
+																<th scope="col">Nombre</th>
+																<th scope="col">Marca</th>
+
+																<th scope="col">Serie</th>
+																<th scope="col">Número certificado</th>
+																<th scope="col">Calibrado por</th>
+																<th scope="col">Ver reportes</th>
+															</tr>
+														</thead>
+
+														<tbody>
+															<tr th:each="cal:${realizado}">
+																<td th:text="${cal.equipo.nombre_Equipo}"></td>
+																<td th:text="${cal.equipo.Marca}"></td>
+
+																<td th:text="${cal.equipo.Serie}"></td>
+																<td th:text="${cal.Numero_certificado}"></td>
+																<td th:text="${cal.Calibrado_por}"></td>
+																<td><a class="btn btn-success btn-sm"
+																		th:href="@{/visualizacionreportes/}+${cal.equipo.id_Equipo}"
+																		th:text="${cal.equipo.id_Equipo}+R"></a>
+																</td>
+															</tr>
+															<tr th:each="val:${vrealizado}">
+																<td th:text="${val.equipo.nombre_Equipo}"></td>
+																<td th:text="${val.equipo.Marca}"></td>
+
+																<td th:text="${val.equipo.Serie}"></td>
+																<td th:text="${val.Numero_certificado}"></td>
+																<td th:text="${val.Calibrado_por}"></td>
+																<td><a class="btn btn-success btn-sm"
+																		th:href="@{/visualizacionreportes/}+${val.equipo.id_Equipo}"
+																		th:text="${val.equipo.id_Equipo}+R"></a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+								aria-labelledby="nav-contact-tab">
+
+
+
+
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+			</div>
+		</form>
+		<script th:inline="javascript" type="text/javascript">
+			/*<![CDATA[*/
+
+
+
+
+			/*]]>*/
+		</script>
+
+		<script>
+			function myFunction() {
+				var input, filter, div, tr, td, i, txtValue;
+				input = document.getElementById("myInput");
+				filter = input.value.toUpperCase();
+				div = document.getElementById("myTable");
+				tr = div.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td1 = tr[i].getElementsByTagName("td")[0];
+					td2 = tr[i].getElementsByTagName("td")[3];
+					td3 = tr[i].getElementsByTagName("td")[5];
+					td4 = tr[i].getElementsByTagName("td")[8];
+					if (td1 || td2 || td3) {
+						txtValue1 = td1.textContent || td1.innerText;
+						txtValue2 = td2.textContent || td2.innerText;
+						txtValue3 = td3.textContent || td3.innerText;
+						txtValue4 = td4.textContent || td4.innerText;
+						if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else {
+							tr[i].style.display = "none";
+						}
+
+					}
+
+
+				}
+			}
+
+			function myFunctionCorrectivos() {
+				var input, filter, div, tr, td, i, txtValue;
+				input = document.getElementById("myInputcorr");
+				filter = input.value.toUpperCase();
+				div = document.getElementById("tablaCorrectivos");
+				tr = div.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td1 = tr[i].getElementsByTagName("td")[0];
+					td2 = tr[i].getElementsByTagName("td")[1];
+					td3 = tr[i].getElementsByTagName("td")[3];
+					td4 = tr[i].getElementsByTagName("td")[6];
+					if (td1 || td2 || td3) {
+						txtValue1 = td1.textContent || td1.innerText;
+						txtValue2 = td2.textContent || td2.innerText;
+						txtValue3 = td3.textContent || td3.innerText;
+						txtValue4 = td4.textContent || td4.innerText;
+						if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else {
+							tr[i].style.display = "none";
+						}
+
+					}
+
+
+				}
+			}
+		</script>
+
+
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	</main>
+</body>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title th:text="'Frecuencia mantenimiento'"> </title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet"th:href="@{/css/carousel.css}">
+  </head>
+  <body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/usuarios}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+          </ul>
+        </li>          
+        </ul>
+ 
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+<main class="container">  
+
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+  	<form th:action="@{/frecuenciamtto}" method="post">
+    <div class="starter-template text-center py-5 px-3">
+      <h1><medium class="text-muted">Servicios</medium></h1>
+     
+      <p class="lead">A continuación disponga el puntaje de los servicios según corresponda</p>
+     
+    </div>
+      
+    <div class="col-md-12 col-lg-12">
+      <div class="input-group">
+        <input class="form-control" id="myInput"onkeyup="myFunction()" type="text" placeholder="Ingrese el nombre del servicio">
+        <span class="input-group-btn">
+          <div class ="input-group">
+          <button type="button" class="w-200 btn btn btn-dark" onclick="myFunction()">Buscar</button>
+          <button type="submit" class="w-200 btn btn btn-success" onclick="myFunction()">Guardar</button>
+          
+          </div>
+        </span>
+      </div>
+    </div>
+ 
+  
+  <div th:if="${#lists.isEmpty(servicios)}"
+	        	 class="alert alert-info my-4"
+	        	 th:text="'No hay servicios en el momento'">
+  </div>
+  <div class = "table-responsive">
+         <div class="bd-example">
+        <table class="table table-hover" th:if="${not #lists.isEmpty(servicios)}" id = "myTable">
+          <thead>
+          <tr class="table-secondary">
+          
+            <th scope="col">Servicio</th>
+            <th scope="col">Frecuencia de uso</th>
+            <th scope="col">Servicio al que pertenece</th>
+            <th scope="col">Nivel de riesgo de los equipos</th>
+          	<th scope="col">Total</th>           
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="table-light" th:each="servicio:${servicios}">
+          	
+          	
+			
+            <td th:text="${servicio.Nombre_servicio}"></td>
+            <td><input class = "form-control" type = "number"></td>
+            <td><input class = "form-control" type = "number"></td>
+            <td><input class = "form-control" type = "number"></td>
+            <td><input class = "form-control" name = "total" type = "number" readonly></td>
+        
+          </tr>
+
+ 
+          </tbody>
+        </table>
+         </div>
+        </div>
+        </form>
+        </div>
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p> 2021-2022 Company, Inc.</p>
+  </footer>
+</main>
+<script >
+      function myFunction(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTable");
+		tr = div.getElementsByTagName("tr");
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			td2 = tr[i].getElementsByTagName("td")[1];
+			td3 = tr[i].getElementsByTagName("td")[2];
+			td4 = tr[i].getElementsByTagName("td")[3];
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				txtValue4 = td4.textContent || td4.innerText;
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+	$('table input').on('input', function() {
+	  var $tr = $(this).closest('tr'); // get tr which contains the input
+	  var tot = 0; // variable to sore sum
+	  var count = 0;
+	  $('input', $tr).each(function() { // iterate over inputs
+	    count+=1
+	    if(count!=4){
+			tot += Number($(this).val()) || 0; // parse and add value, if NaN then add 0
+	}
+	    
+	  });
+	
+	  $('input:last', $tr).val(tot); // update last column value
+	}).trigger('input'); // trigger input to set initial value in column
+    </script>
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    
+      
+  </body>
+</html>

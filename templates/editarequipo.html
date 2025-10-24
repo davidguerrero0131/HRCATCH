@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Editar equipo</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../static/css/form-validation.css" rel="stylesheet" th:href = "@{/css/form-validation.css}">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" th:href="@{/usuarios}">Usuarios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Más opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+              
+            </ul>
+          </li>
+        </ul>
+        <form>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </form>
+      </div>
+    </div>
+  </nav>      
+<div class="container">
+  <main>
+    <div class="py-4 text-center">
+     
+      <h2>Editar equipo</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+    </div>
+    <div class="row g-3">
+        <h4 class="mb-3">Datos del equipo</h4>
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-4">
+              <label for="NumReporte" class="form-label">Serie</label>
+              <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                Número de serie requerido
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="placainventario" class="form-label">Equipo</label>
+              <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                Ingrese el nombre del equipo
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="marcahv" class="form-label">Marca</label>
+              <input type="text" class="form-control" id="marcahv" placeholder=""value=""required>
+              <div class="invalid-feedback">
+                Ingrese la marca del equipo
+              </div>
+
+            </div>
+            <div class="col-md-4">
+              <label for="marcahv" class="form-label">Modelo</label>
+              <input type="text" class="form-control" id="marcahv" placeholder=""value=""required>
+              <div class="invalid-feedback">
+                Ingrese el modelo del equipo
+              </div>
+                
+            </div>
+            <div class="col-sm-4">
+              <label for="marcahv" class="form-label">Año de fabricación</label>
+              <input type="text" class="form-control" id="datepicker" placeholder=""value=""required>
+              <div class="invalid-feedback">
+                Ingrese el modelo del equipo
+              </div>
+                
+            </div>
+            <div class="col-md-4">
+              <label for="marcahv" class="form-label" align= "text-center">Placa inventario</label>
+              <input type="text" class="form-control" id="marcahv" placeholder=""value=""required>
+              
+                
+            </div>
+            </div>
+             <hr class="featurette-divider">
+            <h4>Datos de la compra</h4>
+            <div class="row g-3">
+              <div class="col-md-3">
+              <div class="md-form md-outline input-with-post-icon datepicker" id="translat">
+                <label for= "translat-example">Fecha de compra</label>
+                <input placeholder="Seleccione la fecha" type="text" id="translat-example" class="form-control">
+                
+                <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="md-form md-outline input-with-post-icon datepicker" id="translat">
+                <label for= "translat-example">Fecha de instalación</label>
+                <input placeholder="Seleccione la fecha" type="text" id="translat-example" class="form-control">
+                
+                <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="md-form md-outline input-with-post-icon datepicker" id="translat">
+                <label for= "translat-example">Fecha de inicio de operación</label>
+                <input placeholder="Seleccione la fecha" type="text" id="translat-example" class="form-control">
+                
+                <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="md-form md-outline input-with-post-icon datepicker" id="translat">
+                <label for= "translat-example">Fecha vencimiento de garantía</label>
+                <input placeholder="Seleccione la fecha" type="text" id="translat-example" class="form-control">
+                
+                <i class="fas fa-calendar input-prefix" tabindex=0></i>
+                
+              </div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="marcahv" class="form-label" align= "text-center">Costo en miles de pesos</label>
+                <input type="text" class="form-control" id="marcahv" placeholder=""value=""required>
+      
+            </div>                         
+          </div>
+          <hr class="featurette-divider">
+          <h4 class="mb-3">Datos institución</h4>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Departamento</label>
+                    <input type="text" class="form-control" id="Departamento" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el nombre del departamento
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Municipio</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el nombre del municipio
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese la dirección
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el telefono
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Ubicación</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese la ubicación
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Cod. Internacional</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el código internacional
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">Servicio</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                      
+                </div>
+                <div class="col-md-3">
+                    <label for="placainventario" class="form-label">E-Mail</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el E-mail
+                    </div>      
+                </div>
+
+              </div>
+          <hr class="featurette-divider">
+              <div class="row g-3">
+              <h4 class="mb-3">Forma de adquisición</h4>
+              <div class="my-1">
+                <div class="form-check">
+                  <input id ="Compra_directa" type="radio" name="metodoadquisicion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="compradirecta">Compra directa</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Convenio" type="radio" name="metodoadquisicion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="convenio">Convenio</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Donado" type="radio" name="metodoadquisicion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="donado">Donado</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Asignadom" type="radio" name="metodoadquisicion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="ministerio">Asignado por el ministerio</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Asignadog" type="radio" name="metodoadquisicion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="gobernacion">Asignado por la gobernación</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Comodato" type="radio" name="metodoadquisicion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="comodato">Comodato</label>
+                  </input>
+                </div>    
+                                                                                                    
+              </div>
+      </div>
+                <div class="col-md-3">
+                    <label for="contrato" class="form-label">Modo Compra: Contrato</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese los datos del contrato
+                    </div>      
+                </div>
+          </div>          
+          <hr class="featurette-divider">
+    <div class="container">
+ 
+          <div class="row g-3">
+              <h4 class="mb-3">Fuente de alimentación</h4>
+              <div class="my-1">
+                <div class="form-check">
+                  <input id ="Electricidad" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="electricidad">Electricidad</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Energiasolar" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="energiasolar">Energia solar</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Agua" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="agua">Agua</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Gas" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="gas">Gas</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Vapor_agua" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="vaporagua">Vapor de agua</label>
+                  </input>
+                </div>
+                <div class="form-check">
+                  <input id ="Derivados" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="derivados">Derivados del petroleo</label>
+                  </input>
+                </div>    
+                <div class="form-check">
+                  <input id ="Otros" type="radio" name="metodoalimentacion" class="form-check-input" checked required>
+                  <label class="form-check-label" for="otros">Otros</label>
+                  </input>
+                </div>                                                                            
+        
+                
+          <hr class="featurette-divider">
+          <h4 class="mb-3">Datos regulatorios</h4>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="registroinvima" class="form-label">Registro INVIMA</label>
+                    <input type="text" class="form-control" id="registroinvima" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el registro INVIMA del equipo.
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="fabricante" class="form-label">Fabricante</label>
+                    <input type="text" class="form-control" id="fabricante" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el fabricante del equipo.
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="paisp" class="form-label">Pais</label>
+                    <input type="text" class="form-control" id="paisp" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el pais del fabricante del equipo.
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="proveedor" class="form-label">Proveedor</label>
+                    <input type="text" class="form-control" id="proveedor" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el proveedor del equipo.
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="telefono" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="telefono" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el telefono del proveedor del equipo.
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="correop" class="form-label">Correo</label>
+                    <input type="text" class="form-control" id="correop" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Ingrese el correo del proveedor del equipo.
+                    </div>      
+                </div>
+                <div class="col-md-3">
+                    <label for="ciudadp" class="form-label">Ciudad</label>
+                    <input type="text" class="form-control" id="ciudadp" placeholder="" value="" required>
+                      
+                </div>
+                <div class="col-md-3">
+                    <label for="representantep" class="form-label">Representante</label>
+                    <input type="text" class="form-control" id="representantep" placeholder="" value="" required>
+                         
+                </div>
+                <div class="col-md-3">
+                    <label for="telefono2" class="form-label">Telefono2(opcional)</label>
+                    <input type="text" class="form-control" id="telefono2" placeholder="" value="" required>
+                         
+                </div>
+              </div>    
+
+      
+           <hr class="featurette-divider">
+           <div class="py-4 text-center">
+     
+              <h3>Registro de apoyo técnico</h3>
+            </div>
+        
+               
+                        
+            <div class="my-3">
+              
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <h6 class="mb-3">Riesgo</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input id="I" name="metodoriesgo" type="radio" class="form-check-input" checked required>
+                      <label class="form-check-label" for="riesgo1">I &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input id="IIA" name="metodoriesgo" type="radio" class="form-check-input" required>
+                      <label class="form-check-label" for="riesgo2">IIA &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input id="IIB" name="metodoriesgo" type="radio" class="form-check-input" required>
+                      <label class="form-check-label" for="riesgo3">IIB &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input id="III" name="metodoriesgo" type="radio" class="form-check-input" required>
+                      <label class="form-check-label" for="riesgo4">III &nbsp</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h6 class="mb-3">Manuales</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodomanuales" id = "operacional" class="form-check-input" required>
+                      <label class="form-check-label" for = "operacional">Operacional-Usuario &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodomanuales" id ="tecnico" class="form-check-input"required>
+                      <label class="form-check-label" for = "tecnico">Técnico</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodomanuales" id ="ambos" class="form-check-input"required>
+                      <label class="form-check-label" for = "ambos">Ambos</label>
+                    </div>                    
+                  </div>
+ 
+                </div>
+
+                <div class="col-md-4">
+                  <h6 class="mb-3">Uso</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodouso" id = "medico" class="form-check-input" required>
+                      <label class="form-check-label" for = "medico">Medico &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodouso" id = "basico" class="form-check-input" required>
+                      <label class="form-check-label" for = "basico">Básico &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodouso" id = "apoyo" class="form-check-input" required>
+                      <label class="form-check-label" for = "apoyo">Apoyo</label>
+                    </div>
+                  </div>
+                </div>
+                <hr class="featurette-divider">
+                <div class="py-4 text-center">
+     
+                  <h3>Datos de mantenimiento, validación y/o calibración</h3>
+                </div>                
+                <div class="col-md-6">
+                  <h6 class="mb-3">Periodicidad del mantenimiento</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodoPeriodicidadMantenimiento" id= "trimestral" class="form-check-input"  required>
+                      <label class="form-check-label" for ="trimestral">Trimestral  &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoPeriodicidadMantenimiento" id ="cuatrimestral" class="form-check-input" required> 
+                      <label class="form-check-label" for = "cuatrimestral">Cuatrimestral  &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoPeriodicidadMantenimiento" id = "semestral" class="form-check-input" required>
+                      <label class="form-check-label" for ="semestral">Semestral  &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoPeriodicidadMantenimiento" id = "anual" class="form-check-input" required>
+                      <label class="form-check-label" for ="anual">Anual  &nbsp</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="mb-3">Propiedad</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodopropiedad" id = "hospital" class="form-check-input" required>
+                      <label class="form-check-label" for = "hospital">Hospital &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodopropiedad" id = "proveedorpropiedad" class="form-check-input" required>
+                      <label class="form-check-label" for = "proveedorpropiedad">Proveedor &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodopropiedad" id= "propiedadOtros" class="form-check-input" required>
+                      <label class="form-check-label" for = "propiedadOtros">Otros &nbsp</label>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <h6 class="mb-3">Matenimiento actual</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodomttoactual" id = "propio" class="form-check-input" required>
+                      <label class="form-check-label" for = "propio">Propio &nbsp </label>      
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodomttoactual" id = "contratado" class="form-check-input" required>
+                      <label class="form-check-label" for = "contratado">Contratado &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodomttoactual" id = "comodato" class="form-check-input" required>
+                      <label class="form-check-label" for = "comodato">Comodato &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodomttoactual" id = "garantiam" class="form-check-input"required>
+                      <label class="form-check-label"for="garantiam">Garantía &nbsp</label>
+                    </div>
+                  </div>
+                </div> 
+                <div class = "col-md-4">
+                  <h6 class="mb-3">Equipo</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodomovil" id= "fijo" class="form-check-input" required>
+                      <label class="form-check-label" for= "fijo">Fijo &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodomovil" id ="portatil" class="form-check-input" required>
+                      <label class="form-check-label" for = "portatil">Portatil</label>
+                    </div>
+
+                  </div>
+                </div>
+                <div class = "col-md-6">
+                  <h6 class="mb-3">Requiere calibración y/o validación</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodocalibracion" id= "sirequiere" class="form-check-input" required>
+                      <label class="form-check-label" for= "fijo">Si &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodocalibracion" id ="norequiere" class="form-check-input" required>
+                      <label class="form-check-label" for = "norequiere">No</label>
+                    </div>
+
+                  </div>
+                </div>
+                <div class = "col-md-6">
+                  <h6 class="mb-3">Periodicidad calibración y/o validación</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodoperiodicidadValidacion" id= "semestralval" class="form-check-input" required>
+                      <label class="form-check-label" for= "semestralval">Semestral &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoperiodicidadValidacion" id ="Anualval" class="form-check-input" required>
+                      <label class="form-check-label" for = "Anualval">Anual</label>
+                    </div>
+
+                  </div>
+                </div>                
+
+                <hr class="featurette-divider">
+                <div class="py-4 text-center">
+     
+                  <h3>Clasificación del equipo</h3>
+                </div>
+
+                <div class="col-12">
+                  <h6 class="mb-3">Clases de tecnología</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "electrico" class="form-check-input" required>
+                      <label class="form-check-label" for = "electrico">Eléctrico &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "electronico" class="form-check-input" required>
+                      <label class="form-check-label" for = "electronico">Eléctronico &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "mecanico" class="form-check-input" required>
+                      <label class="form-check-label" for = "mecanico">Mecánico &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "electromecanico" class="form-check-input" required>
+                      <label class="form-check-label" for = "electromecanico">Electromecánico &nbsp</label>
+                    </div>
+                   <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "hidraulico" class="form-check-input" required>
+                      <label class="form-check-label" for = "hidraulico">Hidraúlico &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "neumatico" class="form-check-input" required>
+                      <label class="form-check-label" for = "neumatico">Neumático &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "vaportec" class="form-check-input" required>
+                      <label class="form-check-label" for = "vaportec">Vapor &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClaseTecnologia" id = "solar" class="form-check-input" required>
+                      <label class="form-check-label" for = "solar">Solar &nbsp</label>
+                    </div>                                        
+                  </div>
+                </div>
+
+
+                <div class="col-md-14">
+                  <h6 class="mb-3">Clasificación biomédica</h6>
+                  <div class="input-group">
+                    <div class="form-check">
+                      <input type="radio" name="metodoClasificacionBiomedica" id = "diagnostico" class="form-check-input" required>
+                      <label class="form-check-label" for= "diagnostico">Diagnóstico &nbsp</label>
+
+
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClasificacionBiomedica" id = "tratamiento" class="form-check-input" required>
+                      <label class="form-check-label"for= "tratamiento">Tratamiento y<br> mtto. a la vida &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClasificacionBiomedica"id="rehabilitacion" class="form-check" required>
+                      <label class="form-check-label" for = "rehabilitacion">Rehabilitación &nbsp</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClasificacionBiomedica" id = "prevencion" class="form-check" required>
+                      <label class="form-check-label" for= "prevencion">Prevención &nbsp</label>
+
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" name="metodoClasificacionBiomedica" id = "analisislab" class="form-check" required>
+                      <label class="form-check-label" for="analisislab">Análisis de<br> laboratorio &nbsp</label>
+                    </div>
+                  </div>
+
+                </div>                                   
+              </div>
+            </div>
+                     
+
+        
+        <hr class="featurette-divider">
+        <h4 class="mb-3">Datos técnicos</h4>
+          <div class="row g-3">
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Vmax" class="form-label">Voltaje máximo:&nbsp &nbsp &nbsp</label>
+                  <input type="text" class="form-control" id="Vmax" placeholder="" value="" required>
+                  <span class="input-group-text">V</span>
+                  <div class="invalid-feedback">
+                      Ingrese el voltaje máximo del equipo.
+                  </div>
+                </div>      
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Vmin" class="form-label">Voltaje mínimo:&nbsp &nbsp &nbsp  &nbsp &nbsp </label>
+                  <input type="text" class="form-control" id="Vmin" placeholder="" value="" required>
+                  <span class="input-group-text">V</span>
+                  <div class="invalid-feedback">
+                      Ingrese el voltaje mínimo del equipo.
+                  </div>
+                </div>      
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Imax" class="form-label">Corriente máxima: &nbsp </label>
+                  <input type="text" class="form-control" id="Imax" placeholder="" value="" required>
+                  <span class="input-group-text">A</span>
+                  <div class="invalid-feedback">
+                      Ingrese la corriente máxima del equipo.
+                  </div> 
+                </div>     
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Imin" class="form-label">Corriente mínima: &nbsp   </label>
+                  <input type="text" class="form-control" id="Imin" placeholder="" value="" required>
+                  <span class="input-group-text">A</span>
+                  <div class="invalid-feedback">
+                      Ingrese la corriente mínima del equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="potencia" class="form-label">Potencia consumida: &nbsp  </label>
+                  <input type="text" class="form-control" id="potencia" placeholder="" value="" required>
+                  <span class="input-group-text">W</span>
+                  <div class="invalid-feedback">
+                      Ingrese la potencia consumida por el equipo.
+                  </div>     
+                </div> 
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="frecuencia" class="form-label">Frecuencia: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp</label>
+                  <input type="text" class="form-control" id="frecuencia" placeholder="" value="" required>
+                  <span class="input-group-text">Hz</span>
+                  <div class="invalid-feedback">
+                      Ingrese la frecuencia a la que trabaja el equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="presion" class="form-label">Presión: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</label>
+                  <input type="text" class="form-control" id="presion" placeholder="" value="" required>
+                  <span class="input-group-text">PSI</span>
+                  <div class="invalid-feedback">
+                      Ingrese la presión a la que trabaja el equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="velocidad" class="form-label">Velocidad: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</label>
+                  <input type="text" class="form-control" id="velocidad" placeholder="" value="" required>
+                  <span class="input-group-text">RPM</span>
+                  <div class="invalid-feedback">
+                      Ingrese la velocidad a la que trabaja el equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="temperatura" class="form-label">Temperatura: &nbsp &nbsp &nbsp &nbsp &nbsp</label>
+                  <input type="text" class="form-control" id="temperatura" placeholder="" value="" required>
+                  <span class="input-group-text">°C</span>
+                  <div class="invalid-feedback">
+                      Ingrese la temperatura a la que trabaja el equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="peso" class="form-label">Peso: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</label>
+                  <input type="text" class="form-control" id="peso" placeholder="" value="" required>
+                  <span class="input-group-text">Kg</span>
+                  <div class="invalid-feedback">
+                      Ingrese el peso del equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="capacidad" class="form-label">Capacidad: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</label>
+                  <input type="text" class="form-control" id="capacidad" placeholder="" value="" required>
+                  <span class="input-group-text">L</span>
+                  <div class="invalid-feedback">
+                      Ingrese la capacidad del equipo.
+                  </div>      
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="otrosc" class="form-label">Otros: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp</label>
+                  <input type="text" class="form-control" id="otrosc" placeholder="" value="" required>
+                  
+                  
+                </div>
+              </div>
+                  
+              </div>                                                                      
+
+            </div>
+      
+
+        <hr class="featurette-divider">
+
+ 
+          <h4 class="mb-3">Accesorios</h4>
+          <div class="input-group">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-text">1</span>
+                <input type="text" name="" class="form-control" id = "accesorio1" placeholder="Introduzca el accesorio 1" value=""required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-text">2</span>
+                <input type="text" name="" class="form-control" id = "accesorio2" placeholder="Introduzca el accesorio 2" value=""required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-text">3</span>
+                <input type="text" name="" class="form-control" id = "accesorio3" placeholder="Introduzca el accesorio 3" value=""required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-text">4</span>
+                <input type="text" name="" class="form-control" id = "accesorio4" placeholder="Introduzca el accesorio 4" value=""required>
+              </div>
+            </div>                                    
+          </div>
+
+          
+          <div class = "col-md-12">     
+
+          <hr class="my-4">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same-address">
+            <label class="form-check-label" for="same-address">Complete si no tiene accesorios</label>
+          </div>
+
+
+  
+
+          <hr class="my-4">
+          <div class="input-group">
+            <h4 class="mb-3">Foto del equipo</h4>
+            <div class="container kv-main">
+              <form enctype="multipart/form-data">
+                <div class="file-loading">
+                  <input type="file" name="image" id = "kv-explorer" multiple>
+                
+                </div>
+                <br>
+                <div class="btn-group">
+                  <button type="submit" class="w-100 btn btn-secondary">Subir</button>
+                  <button type="reset" class="w-100 btn btn-secondary">Eliminar</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <hr class="featurette-divider">
+              
+
+
+          
+          <div class="btn-group">
+            <button class="w-150 btn btn-dark btn-lg" type="submit">Guardar</button>
+          
+            <button class="w-150 btn btn-dark btn-lg" type="submit">  Cancelar</button>
+          </div>    
+               
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2021 Company Name</p>
+    
+  </footer>
+</div>
+
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src ="@{/js/newequipo.js}"></script>
+      <script th:src="@{/js/form-validation.js}"></script>
+  </body>
+</html>

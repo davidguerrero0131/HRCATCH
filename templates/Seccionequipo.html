@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Otros reportes</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+        
+      }
+      .containers{
+		position:relative;
+		max-width:650px;
+		margin: 0px auto;
+		margin-top:50px;
+	  }
+      .comment{
+		float:left;
+		width:100%;
+		height:auto;
+	  }
+	  .commenter{
+		float:left;
+	  }
+	  .commenter img{
+		width:35px;
+		height:35px;
+	  }
+	  .commenter-text-area{
+		float:left;
+		width:auto;
+		
+		height:auto;
+	  }
+	  .textinput{
+		float:left;
+		width:100%;
+		min-height:75px;
+		outline: none;
+		resize:none;
+		border:1px solid grey;
+	  }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+  </head>
+  <body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/periodicidad}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+<main class="container">  
+<form th:action="@{/visualizacionotrosreportes}" method="post">
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+  	
+    <div class="starter-template text-center py-5 px-3">
+  
+     
+      <p class="lead">A continuación podra visualizar todos los otros reportes</p>
+      <p th:text="'De '+${fecha1}+' a '+${fecha2}"></p>
+    </div>
+
+      <div class = "row">
+      	<div class="col-md-3">
+  			<label for = "fechainicialind">Fecha inicial</label>
+            <input th:name="fecha_inicial" type = "date"id="fechainicialind" class = "form-control" required>
+  		</div>
+  		<div class="col-md-3">
+  			<label for = "fechafinalind">Fecha final</label>
+            <input th:name="fecha_final" type = "date"id="fechafinalind" class = "form-control" required>
+  		</div>
+  		<div class = "col-md-3">
+  		</div>
+  		<div class = "col-md-3">
+  			<button type="submit" class="w-200 btn btn-sm btn-dark">Buscar</button>
+  		</div>
+      </div>
+      
+      <div class="col-md-12 col-lg-12">
+        <div class="input-group">
+          <input class="form-control"id="myInput"onkeyup="myFunction()" type="text" placeholder="Ingrese por quien fue realizado, el número o la fecha del reporte" aria-label="Search">
+          <span class="input-group-btn">
+            <button type="button" class="w-200 btn btn-lg btn-dark" onclick="myFunction()">Buscar</button>
+          </span>
+        </div>
+      </div>
+ 
+      
+      
+         <div class="bd-example">
+	        <div th:if="${#lists.isEmpty(reportes)}"
+	        	 class="alert alert-info my-4"
+	        	 th:text="'No existen reportes en este rango de fechas'">
+	        </div>
+	    <div class="table-responsive" >
+	    
+        <table class="table table-hover"th:if="${not #lists.isEmpty(reportes)}" id= "myTable">
+          <thead>
+          <tr class="table-secondary">
+            <th scope="col">Fecha</th>
+            <th scope="col">N°</th>
+
+            <th scope="col">Total de horas</th>
+            <th scope="col">Tipo de mtto</th>
+            <th scope="col">Tipo de falla</th>
+
+            <th scope="col">Realizado por</th>
+            <th scope="col">Recibido por</th>
+            <th scope="col">Observaciones</th>
+            <th scope="col">Reporte completo</th>
+           
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="table-light" th:each="reporte,iter:${reportes}">
+         
+            <th th:text="${reporte.Fecha}"></th>
+            <td th:text="${reporte.Numero_reporte}"></td>
+            <td th:text="${reporte.Total_horas}"></td>
+            <td th:text="${reporte.Tipo_mantenimiento}"></td>
+            <td th:text="${reporte.Tipo_falla}"></td>
+            <td th:text="${reporte.Autor_realizado}"></td>
+
+            <td th:text="${reporte.Autor_recibido}"></td>
+          
+            <td th:text="${reporte.Observaciones}"></td>
+            
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${reporte.id_Reporte}">
+                Más
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" th:id="'staticBackdrop'+${reporte.id_Reporte}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel" th:text= "${reporte.Numero_reporte}"></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <div class="bd-example">
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Fecha</li>
+                              <li class="list-group-item">Hora de llamado</li>
+                              <li class="list-group-item">Hora inicio</li>
+                              <li class="list-group-item">Hora terminación</li>
+                              <li class="list-group-item">Total horas</li>
+                              <li class="list-group-item">Comprobante de ingreso</li>
+                            </ul>
+                            </div>                            
+                          </div>
+                          <div class="col-md-2">
+                            <div class="bd-example">
+                            <ul class="list-group ">
+                              <li class="list-group-item" th:text="${reporte.Fecha}">&nbsp</li>
+                              <li class="list-group-item" th:text="${reporte.Hora_llamado}">&nbsp</li>
+                              <li class="list-group-item" th:text="${reporte.Hora_inicio}">&nbsp</li>
+                              <li class="list-group-item" th:text="${reporte.Hora_terminacion}">&nbsp</li>
+                              <li class="list-group-item" th:text="${reporte.Total_horas}">&nbsp</li>
+                              <li class="list-group-item" th:text="${reporte.Comprobante_ingreso}">&nbsp</li>
+                            </ul>
+                            </div>                            
+                          </div>
+                          <div class="col-md-8">
+                          <div class = "table-responsive-sm">
+                            <table class="table table-hover">
+                              <thead>
+                                <tr class="table-primary">
+                                  <th scope="col">Datos</th>
+                                  <th scope="col">Equipo</th>
+                                  <th scope="col">Datos</th>
+                                  <th scope="col">Equipo</th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="table-white">
+                                  <td scope="row" ><span class="badge bg-danger">Equipo:</span></td>
+                                  <td th:text="${reporte.Nombre_equipo}"></td>                                   
+                                  <td scope="row"><span class="badge bg-danger">Marca:</span></td>
+                                  <td th:text="${reporte.Marca}"></td>
+                                </tr>
+                                <tr class="table-white">
+                                  <td scope="row" ><span class="badge bg-danger">Modelo:</span></td>
+                                  <td th:text="${reporte.Modelo}"></td>                                  
+                                  <td scope="row"><span class="badge bg-danger">Serie:</span></td>
+                                  <td th:text="${reporte.Serie}"></td>                                  
+                                </tr>
+                                <tr>
+                                  <td scope="row" ><span class="badge bg-danger">Placa inventario:</span></td>
+                                  <td th:text="${reporte.Placa_inventario}"></td>                                 
+                                  <td scope="row"><span class="badge bg-danger">Servicio:</span></td>
+                                  <td th:text="${reporte.Servicio}"></td>   
+                                </tr>
+                                <tr>
+                                  
+                                  <td scope="row" ><span class="badge bg-danger">Ubicación:</span></td>
+                                  <td th:text="${reporte.Ubicacion}"></td>                                
+                                  </tr>
+
+
+                              </tbody>
+                              
+                            </table> 
+                          </div>
+                            
+                            <div class="input-group">
+                            <div class="col-md-8">
+                              <div class="starter-template text-center py-2" th:id="${reporte.id_Reporte}">
+                                <label for="disabledSelectrealizado" class="form-label">Tipo de mantenimiento</label>
+                                <fieldset class="mb-3">
+                                  <div class="mb-3 form-check form-check-inline" th:if="${reporte.Tipo_mantenimiento==4}">
+                                    <input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtto4'+${reporte.id_Reporte}" checked disabled><label class="form-check-label" th:for="'permtto4'+${reporte.id_Reporte}">Predictivo</label>
+                                  </div>
+                                  <div class = "mb-3 form-check form-check-inline" th:unless="${reporte.Tipo_mantenimiento==4}">
+                                  	<input type="checkbox" name = "radiostm" class = "form-check-input" th:id="'permtto4n'+${reporte.id_Reporte}" disabled><label class="form-check-label" th:for="'permtto4n'+${reporte.id_Reporte}">Predictivo</label>
+                                  </div>
+                                  <div class="mb-3 form-check form-check-inline" th:if="${reporte.Tipo_mantenimiento==3}">
+                                    <input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtto3'+${reporte.id_Reporte}"  checked disabled><label class="form-check-label" th:for="'permtto3'+${reporte.id_Reporte}">Preventivo</label>
+                                  </div>
+                                  <div class = "mb-3 form-check form-check-inline" th:unless="${reporte.Tipo_mantenimiento==3}">
+                                  	<input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtto3n'+${reporte.id_Reporte}"  disabled><label class="form-check-label" th:for="'permtto3n'+${reporte.id_Reporte}">Preventivo</label>
+                                  
+                                  </div>
+                                  <div class="mb-3 form-check form-check-inline" th:if="${reporte.Tipo_mantenimiento==2}">
+                                    <input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtto2'+${reporte.id_Reporte}"  checked disabled><label class="form-check-label" th:for="'permtto2'+${reporte.id_Reporte}">Correctivo</label>
+                                  </div>
+                                  <div class="mb-3 form-check form-check-inline" th:unless="${reporte.Tipo_mantenimiento==2}">
+                                    <input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtto2n'+${reporte.id_Reporte}"  disabled><label class="form-check-label" th:for="'permtto2n'+${reporte.id_Reporte}">Correctivo</label>
+                                  </div>                                  
+                                  <div class="mb-3 form-check form-check-inline" th:if="${reporte.Tipo_mantenimiento==1 OR reporte.Tipo_mantenimiento==0}">
+                                    <input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtto'+${reporte.id_Reporte}"  checked disabled><label class="form-check-label" th:for="'permtto'+${reporte.id_Reporte}">Otro</label>
+                                  </div>   
+                                  <div class="mb-3 form-check form-check-inline" th:unless="${reporte.Tipo_mantenimiento==1 OR reporte.Tipo_mantenimiento==0}">
+                                    <input type="checkbox" name="radiostm" class="form-check-input" th:id = "'permtton'+${reporte.id_Reporte}"  disabled><label class="form-check-label" th:for="'permtton'+${reporte.id_Reporte}">Otro</label>
+                                  </div>                                                                    
+                                </fieldset>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              
+                                
+                                <fieldset disabled aria-label="Disabled fieldset example">  
+                                                                  
+                                  <div class="mb-3">
+                                    <label for="disabledSelectrealizado" class="form-label">Tipo de falla</label>
+                                    <select id="disabledSelectrealizado" class="form-select">
+                                      <option th:text="${reporte.Tipo_falla}"></option>
+                                    </select>
+                                  
+                                  </div>
+                                </fieldset>  
+                              
+                            </div>
+                          </div>
+                          </div>
+                       
+                          <div class="starter-template text-center py-3 px-3">
+                            <div class="input-group">
+                              <div class="col-md-8">
+                               	<div class="form-group">
+                                	<h5>Trabajo realizado</h5>
+                                
+                                	<textarea class= "form-control" rows = "6" th:text="${reporte.Trabajo_realizado}"disabled ></textarea>
+                               	</div>
+								
+                                <div class="mb-4">
+                                  <label for= "observcacionesrepo" class="form-label" ><b>Observaciones</b></label>
+	
+                                  <input  id = "observcacionesrepo" type="text" th:placeholder="${reporte.Observaciones}" class="form-control" readonly>
+                                </div>                              
+                       
+                             	
+                             
+                              </div>
+                              <div class="col-md-4">
+                                <fieldset disabled aria-label="Disabled fieldset example">
+                                <h5>Repuesto cambiado</h5>
+                                <input class="form-control" type="text" th:placeholder="${reporte.Repuesto_cambiado}" readonly>                                  
+                                  <div class="mb-3">
+                                    <label for="disabledSelectrealizado" class="form-label">Realizado por</label>
+                                    <select id="disabledSelectrealizado" class="form-select">
+                                      <option th:text="${reporte.Autor_realizado}"></option>
+                                    </select>
+                                  </div>
+                                                                  
+                                <div class="mb-3">
+                                  <label for= "recibidoporr" class="form-label" >Recibido por</label>
+
+                                  <input id = "recibidoporr" type="text" th:placeholder="${reporte.Autor_recibido}" class="form-control" readonly>
+                                  
+                                  </div> 
+                                </fieldset>                                  
+                              
+                              </div>
+                              
+                            </div>
+                          </div>
+
+                          
+
+                        </div>
+                       
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      <button th:onclick = "'window.location.href=\''+@{/formatoreporte/}+${reporte.id_Reporte}+'\''"type="button" class="btn btn-primary" >Generar formato</button>
+                                                 
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>     
+
+          </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+</form>
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p> 2021-2022 Company, Inc. </p>
+  </footer>
+  
+</main>
+<script >
+      function myFunction(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTable");
+		tr = div.getElementsByClassName("table-light");
+		console.log(tr.length)
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			td2 = tr[i].getElementsByTagName("td")[4];
+			td3 = tr[i].getElementsByTagName("td")[5];
+			th = tr[i].getElementsByTagName("th")[0];
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				txtValue4 = th.textContent || th.innerText;
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+    </script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>      
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title th:text="${equipo.Serie}+' Rutina de mantenimiento'">Rutina de mantenimiento</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/form-validation.css" rel="stylesheet" th:href = "@{/css/form-validation.css}">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/periodicidad}">Reportes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" th:href="@{/usuarios}">Usuarios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Más opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>      
+
+  <main>
+  <div class="container">
+    <div class="py-5 text-center">
+     
+      <h2>Rutina de mantenimiento preventivo</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+    </div>
+ <form class="needs-validation" validate th:action="@{/rutinamtto/}+${equipo.id_Equipo}+'/'+${idmtto}" method="post">  
+    
+    <class="row g-3 mb-3">
+    	<h4  th:text= "${equipo.nombre_Equipo}" align = "center"></h4>
+    	<div class = "col-md-12">
+		    <div class = "table-responsive">
+		    	<table class="table table-hover">
+	                <thead>
+	                  <tr class="table-secondary">
+	                    <th scope="col">Marca</th>
+	                    <th scope="col">Modelo</th>
+	                    <th scope="col">Serie</th>
+	                    <th scope="col">N°Activo</th>
+	                    <th scope="col">Servicio</th>
+	              
+	                  </tr>
+	                </thead>                
+	                <tbody>
+	                  <tr class="table-light">
+	                    <td th:text="${equipo.Marca}"></td>
+	                    <td th:text="${equipo.Modelo}"> </td> 
+	                    <td th:text="${equipo.Serie}"></td> 
+	                    <td th:text="${equipo.Placa_inventario}"></td>
+	                    <td th:text="${equipo.Servicios}"></td>
+	                                                         
+	                  </tr>
+	                                                                                                                                   
+	                </tbody>
+	              </table>
+		    </div>
+    	</div>
+    	<div class = "row">
+	    	<div class = "col-md-4">
+		    	<p class="lead"> <small> Es necesario</small></p>
+		    	<big><b><label>Material consumible:</label></b></big>
+		    	<div th:each= "material:${materiales}">
+		    		<p th:text= "${material}"></p>
+		    	</div>
+		    	
+		    	<big><b><label>Herramientas y equipos:</label></b></big>
+		    	<div th:each = "herramienta:${herramientas}">
+		    		<p th:text= "${herramienta}"></p>
+		    	</div>
+		    	
+		    	<big><b><label>Repuestos mínimos:</label></b></big>
+		    	<div th:each= "repuesto:${repuestos}">
+		    		<p th:text= "${repuesto}"></p>
+		    	</div>
+		    	
+		    	
+		    	<big><b><label>Tiempo estimado:</label></b></big>
+		    	<p th:text= "${equipo.tipo_equipo.Tiempo_minutos}+' minutos'"></p>
+		    	
+		    	
+		    	<big><b><label class = "mb-3">Código del equipo:</label></b></big>
+		    	
+		    	<input type="text" class="form-control mb-3"name = "codigo" placeholder="Ingrese el código de verificación del equipo" required>
+                  
+		    	<button class="w-150 btn btn-dark btn-lg" type="submit">Guardar</button>
+		    	
+	    	</div>
+	    	<div class = "col-md-8">
+	    		<div class = "table-responsive">
+			    	<table class="table table-sm">
+		                <thead>
+		                  <tr class="table-primary">
+		                  	<th scope="col">Paso</th>
+		                    <th scope="col">Protocolo establecido</th>
+		                    <th scope="col">Cumple</th>
+    
+		                  </tr>
+		                </thead>                
+		                <tbody>
+		                  <tr class="table-light" th:each= "protocolo,iter:${protocolos}">
+		                  	<td th:text= "${iter.index}"></td>
+		                    <td th:text="${protocolo.Paso}"></td>
+		                    <td required> 
+		                    	<div class="form-check">
+		                    		<div th:if="${iter.index==0}">
+		                    			<input type="checkbox" th:name="cumplimientos" th:value=${iter.index} class="form-check-input" required>
+		                    		</div>
+		                    		<div th:unless="${iter.index==0}">
+		                    			<input type="checkbox" th:name="cumplimientos" th:value=${iter.index} class="form-check-input">
+		                    		
+		                    		</div>
+		                    		
+		                       </div> 
+		                    </td> 		                                                      
+		                  </tr>
+		                                                                                                                                   
+		                </tbody>
+		              </table>
+			    </div>
+	    		
+	    	</div>
+    	</div>
+	    	
+    </div>
+      
+               
+</form>
+     
+    </div>
+  
+  </main>
+  
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2023 HRCatch</p>
+    
+  </footer>
+</div>
+
+	
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+   
+  </body>
+</html>

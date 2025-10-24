@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title>Funciones de usuario</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/syshome}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/syshome}">Atras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/systipos}">Inventario</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/sysmantenimiento}">Mantenimiento</a>
+
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<main class="container-fluid">
+
+		<div class="my-3 p-3 bg-body rounded shadow-sm">
+			<div class="starter-template text-center py-5 px-3">
+				<div class="py-4 text-center">
+
+					<h2>Funciones de usuario</h2>
+					<p class="lead">A continuación puede crear nuevos equipos, hojas de vida fuera del inventario,
+						listar usuarios y más</p>
+				</div>
+
+				<div class="row mb-3">
+					<form autocomplete="off" th:action="@{/sysnuevoequipobytipo}" method="post">
+
+
+						<div class="col-md-3">
+
+							<label class="label label-secondary" style="text-align: left;">Presione para crear un nuevo
+								equipo con su planeación</label>
+						</div>
+						<div class="col-md-2">
+							<div class="autocomplete">
+								<input id="myInput" name="myTipo" type="text" class="form-control"
+									placeholder="Tipo de equipo">
+
+							</div>
+						</div>
+						<div class="col-md-2">
+							<button class="w-200 btn btn btn-dark" type="submit">Nuevo equipo</button>
+
+						</div>
+						<div class="col-md-3">
+							<a class="btn btn-dark" th:href="@{/sysnuevosrepuestos}">Nuevos repuestos</a>
+						</div>
+					</form>
+
+				</div>
+
+				<div class="input-group">
+					<label><span class="label label-primary"></span>Equipos Dados de baja: &nbsp</label>
+					<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Ver equipos
+					</button>
+				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-xl">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">
+									<b>Equipos dados de baja</b>
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<table class="table" id="tablaBajas">
+									<thead>
+										<tr>
+											<th scope="col">No Baja</th>
+											<th scope="col">Fecha Baja</th>
+											<th scope="col">Tipo de equipo</th>
+											<th scope="col">Placa de inventario</th>
+											<th scope="col">Marca</th>
+											<th scope="col">Modelo</th>
+											<th scope="col">Serie</th>
+											<th scope="col">Justificación</th>
+											<th scope="col">Repuestos</th>
+											<th scope="col">Realizo</th>
+										</tr>
+									</thead>
+									<tbody>
+										<div th:each="baja:${sysBajas}">
+											<tr>
+												<th>
+													<a th:text="${baja.getEquipo().getId_Sysequipo()}" class="btn btn-dark" th:href="@{/sysreportes/} + ${baja.getEquipo().getId_Sysequipo()}">Nuevos repuestos</a>
+												</th>
+												<td th:text="${baja.getFechaBaja()}"></td>
+												<td
+													th:text="${baja.getEquipo().getTipo_equipo().getNombre_Tipo_equipo()}">
+												</td>
+												<td th:text="${baja.getEquipo().getPlaca_inventario()}"></td>
+												<td th:text="${baja.getEquipo().getMarca()}"></td>
+												<td th:text="${baja.getEquipo().getModelo()}"></td>
+												<td th:text="${baja.getEquipo().getSerie()}"></td>
+												<td th:text="${baja.getJustificacionBaja()}"></td>
+												<td th:text="${baja.getAccesoriosRecuperados()}"></td>
+												<td th:text="${baja.getUsuario().getNombreCompleto()}"></td>
+
+											</tr>
+										</div>
+									</tbody>
+								</table>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+								<button type="button" class="btn btn-primary"
+									th:onclick="exportTableToExcel('tablaBajas', 'BajasSistemas')">Desacargar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<p></p>
+
+				<div class="input-group">
+					<label><span class="label label-primary"></span>Equipos Inactivos (En Bodega): &nbsp</label>
+					<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+						Ver equipos
+					</button>
+				</div>
+
+
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
+					aria-hidden="true">
+					<div class="modal-dialog modal-xl">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel2">
+									<b>Equipos Inactivos (Bodega Sistemas)</b>
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+
+								<table class="table" id="tablaInactivos">
+									<thead>
+										<tr>
+											<th scope="col">Nombre</th>
+											<th scope="col">Marca</th>
+											<th scope="col">Modelo</th>
+											<th scope="col">Serie</th>
+											<th scope="col">Placa</th>
+										</tr>
+									</thead>
+									<tbody>
+										<div th:each="equipo:${sysInactivos}">
+											<tr>
+												<th th:text="${equipo.getNombre_equipo()}"></th>
+												<td th:text="${equipo.getMarca()}">
+												</td>
+												<td th:text="${equipo.getModelo()}"></td>
+												<td th:text="${equipo.getSerie()}"></td>
+												<td th:text="${equipo.getPlaca_inventario()}"></td>
+
+											</tr>
+										</div>
+									</tbody>
+								</table>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+								<button type="button" class="btn btn-primary"
+									th:onclick="exportTableToExcel('tablaInactivos', 'InactivosSistemas')">Desacargar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div sec:authorize="hasAnyAuthority('ADMIN')">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="input-group">
+								<label><span class="label label-primary"></span>Inventario ADMIN: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportSysinvadmin}">Excel</a>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<form class="needs-validation" validate method="post" th:action="@{/asignsystem}">
+
+								<label><span class="label label-primary"></span>Asignar equipos</label>
+								<button type="submit" class="btn btn-success">Ejecutar</button>
+							</form>
+						</div>
+
+
+					</div>
+				</div>
+
+
+			</div>
+
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row">
+						<p class="lead"> Genere los documentos de excel segun corresponda</p>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<label><span class="label label-primary"></span>Inventario: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportSysinvadmin}">Excel</a>
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<label><span class="label label-primary"></span>Plan: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/sysexportplan}">Excel</a>
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+
+						</div>
+						<form th:action="@{/exportsysmovs}" method="post">
+							<div class="row">
+								<div class="col-md-2">
+									<br>
+									<label><span class="label label-primary"></span>Entregas</label>
+								</div>
+								<div class="col-md-4">
+									<label for="fechainicialind">Fecha inicial</label>
+									<input th:name="fecha_inicial" type="date" class="form-control" required>
+								</div>
+								<div class="col-md-4">
+									<label for="fechafinalind">Fecha final</label>
+									<input th:name="fecha_final" type="date" class="form-control mb-3" required>
+								</div>
+								<div class="col-md-2">
+									<br>
+									<button type="submit" class="btn btn-success">Excel</button>
+								</div>
+							</div>
+
+						</form>
+
+
+					</div>
+
+					<p class="lead">Usuarios registrados</p>
+					<div class="table-responsive">
+						<table class="table table-hover" style="text-align: left;">
+							<thead>
+								<tr>
+									<th scope="col">Nombre completo</th>
+
+									<th scope="col">Tipo de cargo</th>
+									<th scope="col">Cedula</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="usuario:${usuarios}">
+									<div th:if="${usuario.Tipo_cargo_usuario!='1'}">
+										<td th:text="${usuario.Nombre} +' '+${usuario.Apellido}"></td>
+
+										<div th:switch="${usuario.Tipo_cargo_usuario}">
+											<td th:case="'1'">ADMIN</td>
+											<td th:case="'2'">Coordinador sistemas</td>
+											<td th:case="'5'">Técnico sistemas</td>
+											<td th:case="'4'">Auxiliar sistemas</td>
+											<td th:case="'7'">Profesional especializado</td>
+											<td th:case="'6'">Profesional universitario</td>
+											<td th:case="*">Otro cargo</td>
+										</div>
+										<td th:text="${usuario.Cedula}"></td>
+									</div>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<p class="lead">Repuestos cambiados en las últimas dos semanas</p>
+					<div class="table-responsive">
+						<div th:if="${#lists.isEmpty(repuestos)}" class="alert alert-info my-4"
+							th:text="'No hay repuestos cambiados recientemente'">
+						</div>
+						<table class="table table-info" th:if="${not #lists.isEmpty(repuestos)}">
+							<thead>
+								<tr>
+									<th scope="col">Repuesto</th>
+									<th scope="col">Nombre</th>
+									<th scope="col">Serie</th>
+									<th scope="col">Responsable</th>
+									<th scope="col">Fecha</th>
+									<th scope="col">Ver reporte</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="repuesto:${repuestos}">
+
+									<td th:text="${repuesto.Repuesto_cambiado}"></td>
+									<td th:text="${repuesto.Nombre_equipo}"></td>
+									<td th:text="${repuesto.Serie}"></td>
+									<td th:text="${repuesto.Autor_realizado}"></td>
+									<td th:text="${repuesto.Fecha}"></td>
+									<td> <button
+											th:onclick="'window.location.href=\''+@{/formatoreporte/}+${repuesto.id_Reporte}+'\''"
+											type="button" class="btn btn-primary">Reporte</button>
+									</td>
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<p class="lead">
+						Formatos
+					</p>
+
+					<a class="btn btn-danger" th:href="@{/formatohvsyspdf}">HV</a>
+					<a class="btn btn-danger" th:href="@{/formatomphpdf}">MPH</a>
+					<a class="btn btn-danger" th:href="@{/formatompspdf}">MPS</a>
+					<a class="btn btn-danger" th:href="@{/formatoentregapdf}">ENTREGA</a>
+					<a class="btn btn-danger" th:href="@{/formatocorrectivopdf}">CORRECTIVO</a>
+					<a class="btn btn-danger" th:href="@{/formatodanospdf}">DAÑOS</a>
+					<a class="btn btn-danger" th:href="@{/formatobackuppdf}">FORMATO-BACKUPS</a>
+
+				</div>
+			</div>
+
+		</div>
+		</div>
+
+	</main>
+
+	<script type="text/javascript">
+		function exportTableToExcel(tableID, filename = '') {
+			var downloadLink;
+			var dataType = 'application/vnd.ms-excel';
+			var tableSelect = document.getElementById(tableID);
+			var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+			// Specify file name
+			filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+			// Create download link element
+			downloadLink = document.createElement("a");
+
+			document.body.appendChild(downloadLink);
+
+			if (navigator.msSaveOrOpenBlob) {
+				var blob = new Blob(['ufeff', tableHTML], {
+					type: dataType
+				});
+				navigator.msSaveOrOpenBlob(blob, filename);
+			} else {
+				// Create a link to the file
+				downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+				// Setting the file name
+				downloadLink.download = filename;
+
+				//triggering the function
+				downloadLink.click();
+			}
+		}
+	</script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var dicttipos = /*[[${tipos}]]*/ 'default';
+		var listnamestipo = [];
+		for (tipo of dicttipos) {
+			listnamestipo.push(tipo.nombre_Tipo_equipo)
+
+		}
+		$(document).ready(function () {
+			$('#services').select2();
+
+		});
+		function autocomplete(inp, arr) {
+			/*the autocomplete function takes two arguments,
+			the text field element and an array of possible autocompleted values:*/
+			var currentFocus;
+			/*execute a function when someone writes in the text field:*/
+			inp.addEventListener("input", function (e) {
+				var a, b, i, val = this.value;
+				/*close any already open lists of autocompleted values*/
+				closeAllLists();
+				if (!val) {return false;}
+				currentFocus = -1;
+				/*create a DIV element that will contain the items (values):*/
+				a = document.createElement("DIV");
+				a.setAttribute("id", this.id + "autocomplete-list");
+				a.setAttribute("class", "autocomplete-items");
+				/*append the DIV element as a child of the autocomplete container:*/
+				this.parentNode.appendChild(a);
+				/*for each item in the array...*/
+				for (i = 0; i < arr.length; i++) {
+					/*check if the item starts with the same letters as the text field value:*/
+					if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+						/*create a DIV element for each matching element:*/
+						b = document.createElement("DIV");
+						/*make the matching letters bold:*/
+						b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+						b.innerHTML += arr[i].substr(val.length);
+						/*insert a input field that will hold the current array item's value:*/
+						b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+						/*execute a function when someone clicks on the item value (DIV element):*/
+						b.addEventListener("click", function (e) {
+							/*insert the value for the autocomplete text field:*/
+							inp.value = this.getElementsByTagName("input")[0].value;
+							/*close the list of autocompleted values,
+							(or any other open lists of autocompleted values:*/
+							closeAllLists();
+						});
+						a.appendChild(b);
+					}
+				}
+			});
+			/*execute a function presses a key on the keyboard:*/
+			inp.addEventListener("keydown", function (e) {
+				var x = document.getElementById(this.id + "autocomplete-list");
+				if (x) x = x.getElementsByTagName("div");
+				if (e.keyCode == 40) {
+					/*If the arrow DOWN key is pressed,
+					increase the currentFocus variable:*/
+					currentFocus++;
+					/*and and make the current item more visible:*/
+					addActive(x);
+				} else if (e.keyCode == 38) { //up
+					/*If the arrow UP key is pressed,
+					decrease the currentFocus variable:*/
+					currentFocus--;
+					/*and and make the current item more visible:*/
+					addActive(x);
+				} else if (e.keyCode == 13) {
+					/*If the ENTER key is pressed, prevent the form from being submitted,*/
+					e.preventDefault();
+					if (currentFocus > -1) {
+						/*and simulate a click on the "active" item:*/
+						if (x) x[currentFocus].click();
+					}
+				}
+			});
+			function addActive(x) {
+				/*a function to classify an item as "active":*/
+				if (!x) return false;
+				/*start by removing the "active" class on all items:*/
+				removeActive(x);
+				if (currentFocus >= x.length) currentFocus = 0;
+				if (currentFocus < 0) currentFocus = (x.length - 1);
+				/*add class "autocomplete-active":*/
+				x[currentFocus].classList.add("autocomplete-active");
+			}
+			function removeActive(x) {
+				/*a function to remove the "active" class from all autocomplete items:*/
+				for (var i = 0; i < x.length; i++) {
+					x[i].classList.remove("autocomplete-active");
+				}
+			}
+			function closeAllLists(elmnt) {
+				/*close all autocomplete lists in the document,
+				except the one passed as an argument:*/
+				var x = document.getElementsByClassName("autocomplete-items");
+				for (var i = 0; i < x.length; i++) {
+					if (elmnt != x[i] && elmnt != inp) {
+						x[i].parentNode.removeChild(x[i]);
+					}
+				}
+			}
+			/*execute a function when someone clicks in the document:*/
+			document.addEventListener("click", function (e) {
+				closeAllLists(e.target);
+			});
+		}
+		autocomplete(document.getElementById("myInput"), listnamestipo);
+		autocomplete(document.getElementById("myInputedit"), listnamestipo);
+/*]]>*/
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+		integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+		crossorigin="anonymous"></script>
+
+</body>
+
+</html>

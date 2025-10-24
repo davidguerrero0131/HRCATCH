@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${serieequipo}+' Nuevo reporte'">Nuevo reporte</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="../static/css/form-validation.css" rel="stylesheet" th:href="@{/css/form-validation.css}">
+</head>
+
+<body class="bg-light">
+	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/periodicidad}">Reportes</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06"
+				aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExample06">
+				<ul class="navbar-nav me-auto mb-2 mb-xl-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
+							aria-expanded="false">Más opciones</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown06">
+							<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+									reclamos</a></li>
+							<li><a class="dropdown-item"
+									href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+									tuto</a></li>
+
+						</ul>
+					</li>
+				</ul>
+				<form>
+					<input class="form-control" type="text" placeholder="Search" aria-label="Search">
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container">
+			<div class="py-5 text-center">
+
+				<h2>Nuevo reporte</h2>
+				<p class="lead">Complete los datos correspondientes</p>
+			</div>
+			<form class="needs-validation" validate th:action="${equipo.tipo_equipo.id_Tipo_equipo} == 9 ? @{/nuevopreventivoMSV/}+${idequipo}+'/'+${idmtto} : @{/nuevopreventivo/}+${idequipo}+'/'+${idmtto}"
+			
+				th:object="${reporte}" method="post">
+
+				<div class="row g-3 mb-3">
+					<div class="col-md-5 col-lg-4 order-md-last">
+						<h4 class="d-flex justify-content-between align-items-center mb-3">
+							<span class="text-muted">Seccion de datos</span>
+							<span class="badge bg-secondary rounded-pill" th:text="${idequipo}"></span>
+						</h4>
+						<ul class="list-group mb-3">
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+
+								<h6 class="my-0">Periodicidad</h6>
+
+								<div th:if="${periodicidad==4}">
+									<small class="text-muted">CUATRIMESTRAL</small>
+								</div>
+
+								<div th:if="${periodicidad==3}">
+									<small class="text-muted">TRIMESTRAL</small>
+								</div>
+								<div th:if="${periodicidad==2}">
+									<small class="text-muted">SEMESTRAL</small>
+								</div>
+								<div th:if="${periodicidad==1}">
+									<small class="text-muted">ANUAL</small>
+								</div>
+
+
+
+								<span class="text-muted" th:text="${periodicidad}"></span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Tipo de equipo</h6>
+									<small class="text-muted" th:text="${nombreequipo}"></small>
+								</div>
+
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Servicio/Ubicación</h6>
+									<small class="text-muted"
+										th:text="${servicioequipo}+'/'+${ubicacionequipo}"></small>
+								</div>
+
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div class="text-muted">
+									<h6 class="my-0">ID reporte</h6>
+									<small>Ejemplo 123</small>
+								</div>
+
+							</li>
+
+						</ul>
+					</div>
+
+
+
+					<div class="col-md-7 col-lg-8">
+						<h4 class="mb-3">Datos de reporte</h4>
+
+						<div class="row g-3">
+							<div class="col-sm-4">
+								<label for="NumReporte" class="form-label">Número de reporte</label>
+								<input th:placeholder="${numeroreporte}" type="text" class="form-control"
+									id="NumReporte" disabled>
+
+							</div>
+
+							<div class="col-sm-4">
+								<label for="placainventario" class="form-label">Placa inventario</label>
+								<input type="text" class="form-control" id="placanew" th:placeholder="${placa}" value=""
+									disabled>
+
+							</div>
+							<div class="col-md-4">
+								<label for="servicio" class="form-label">Servicio</label>
+								<select class="form-select" id="country" disabled>
+									<option th:text="${servicioequipo}"></option>
+
+								</select>
+
+							</div>
+							<div class="col-7">
+								<label for="fechareport">Fecha</label>
+								<input th:name="fecha" type="date" id="fechareport" class="form-control" required>
+							</div>
+
+
+							<div class="col-md-5">
+								<label for="country" class="form-label">Ubicación</label>
+								<select class="form-select" id="country" disabled>
+									<option value="" th:text="${ubicacionequipo}"></option>
+								</select>
+
+							</div>
+							<div class="col-md-4">
+								<label for="llamadotime" class="form-label">Hora de llamado</label>
+								<input th:name="hora_llamado" placeholder="Selected time" type="time" id="llamadotime"
+									value="" class="form-control timepicker"></input>
+							</div>
+							<div class="col-md-4">
+								<label for="input_starttime" class="form-label">Hora de inicio</label>
+								<input th:name="hora_inicio" placeholder="Selected time" type="time"
+									id="input_starttime" class="form-control timepicker" required></input>
+							</div>
+							<div class="col-md-4">
+								<label for="input_finaltime" class="form-label">Hora de terminación</label>
+								<input th:name="hora_finalizacion" placeholder="Selected time" type="time"
+									id="input_finaltime" class="form-control timepicker" required></input>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<h4 class="mb-3">Tipo de mantenimiento</h4>
+						<div class="my-3">
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="Predictivo" value=4 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Predictivo">Predictivo</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="Preventivo" value=3 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Preventivo">Preventivo</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="Correctivo" value=2 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Correctivo">Correctivo</label>
+							</div>
+
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="Otro" value=1 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Otro">Otro</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-5">
+						<h4 class="mb-3">Tipo de falla</h4>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio1" value=1 required>
+							<label class="= form-check-label" for="inlineRadio1">1</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio2" value=2 required>
+							<label class="= form-check-label" for="inlineRadio2">2</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio3" value=3 required>
+							<label class="= form-check-label" for="inlineRadio3">3</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio4" value=4 required>
+							<label class="= form-check-label" for="inlineRadio4">4</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio5" value=5 required>
+							<label class="= form-check-label" for="inlineRadio5">5</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio6" value=6 required>
+							<label class="= form-check-label" for="inlineRadio6">6</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio7" value=7 required>
+							<label class="= form-check-label" for="inlineRadio7">7</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						1. Desgaste<br>
+						2. Operación indebida<br>
+						3. Causa externa<br>
+						4. Accesorios<br>
+						5. Desconocido<br>
+						6. Sin fallas<br>
+						7. Otro
+
+					</div>
+				</div>
+
+				<P>
+					&nbsp;
+				</P>
+
+
+				<div th:if="${equipo.tipo_equipo.id_Tipo_equipo} == 9">
+					<div class="row">
+						<div class="col-md-12" style="text-align: center;">
+							<b>
+								<h5 class="mb-3">DATOS SIMULACION PACIENTE
+								</h5>
+							</b>
+						</div>
+					</div>
+					<div>
+						<div class="row">
+							<div class="col-md-2" style="background-color: black; color: white; text-align: center;">
+								VALOR
+							</div>
+							<div class="col-md-4" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">SPO2(%)</label>
+							</div>
+							<div class="col-md-6" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">ECG(LPM)</label>
+							</div>
+						</div>
+						<div class="row">
+
+							<div class="col-md-2">
+								<div>
+									<div style="text-align: center;">
+										<h3></h3>
+										<label for="inputA" class="form-label">COLOCADO:</label>
+									</div>
+									<div style="text-align: center;">
+										<label for="inputA" class="form-label"> MEDIDO:</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="65" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="65medidoSPO2" name="65medidoSPO2"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="75" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="75medidoSPO2" name="75medidoSPO2"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="100"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="100medidoSPO2" name="100medidoSPO2"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="45" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="45medidoECG" name="45medidoECG"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="60" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="60medidoECG" name="60medidoECG"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="120"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="120medidoECG" name="120medidoECG"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="180"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="180medidoECG" name="180medidoECG"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<P>
+						&nbsp;
+					</P>
+
+					<div class="row">
+						<div class="col-md-12" style="text-align: center;">
+							<b>
+								<h5 class="mb-3">NIBP(mmHg)
+								</h5>
+							</b>
+						</div>
+					</div>
+
+					<div>
+						<div class="row">
+							<div class="col-md-2" style="background-color: black; color: white; text-align: center;">
+								VALOR
+							</div>
+							<div class="col" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">SISTOLICA</label>
+							</div>
+							<div class="col" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">DIASTOLICA</label>
+							</div>
+							<div class="col" style="background-color: black; color: white; text-align: center;">
+								MEDIA
+							</div>
+							<div class="col-md-2" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">VALOR</label>
+							</div>
+							<div class="col" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">SISTOLICA</label>
+							</div>
+							<div class="col" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">DIASTOLICA</label>
+							</div>
+							<div class="col" style="background-color: black; color: white; text-align: center;">
+								<label for="inputA" class="form-label">MEDIA</label>
+							</div>
+						</div>
+						<div class="row">
+
+							<div class="col-md-2">
+								<div>
+									<div style="text-align: center;">
+										<h3></h3>
+										<label for="inputA" class="form-label">COLOCADO:</label>
+									</div>
+									<div style="text-align: center;">
+										<label for="inputA" class="form-label"> MEDIDO:</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="120"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="120medidoSistolica"
+											name="120medidoSistolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="80" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="80medidoDiastolica"
+											name="80medidoDiastolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="92" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="92medidoMedia" name="92medidoMedia"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div>
+									<div style="text-align: center;">
+										<h3></h3>
+										<label for="inputA" class="form-label">COLOCADO:</label>
+									</div>
+									<div style="text-align: center;">
+										<label for="inputA" class="form-label"> MEDIDO:</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="200"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="200medidoSistolica"
+											name="200medidoSistolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="150"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="150medidoDiastolica"
+											name="150medidoDiastolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="167"
+											style="text-align: center;" disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="167medidoMedia"
+											name="167medidoMedia" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+
+							<div class="col-md-2">
+								<div>
+									<div style="text-align: center;">
+										<h3></h3>
+										<label for="inputA" class="form-label">COLOCADO:</label>
+									</div>
+									<div style="text-align: center;">
+										<label for="inputA" class="form-label"> MEDIDO:</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="60" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="60medidoSistolica"
+											name="60medidoSistolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="30" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="30medidoDiastolica"
+											name="30medidoDiastolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="40" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="40medidoMedia" name="40medidoMedia"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div>
+									<div style="text-align: center;">
+										<h3></h3>
+										<label for="inputA" class="form-label">COLOCADO:</label>
+									</div>
+									<div style="text-align: center;">
+										<label for="inputA" class="form-label"> MEDIDO:</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="80" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="80medidoSistolica"
+											name="80medidoSistolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="50" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="50medidoDiastolica"
+											name="50medidoDiastolica" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<div>
+										<input type="text" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" th:placeholder="60" style="text-align: center;"
+											disabled>
+									</div>
+									<div>
+										<input type="text" class="form-control" id="60medidoMedia" name="60medidoMedia"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<p>
+					&nbsp;
+				</p>
+				<div class="row">
+					<div class="col-md-6">
+						<h4 class="mb-3">Motivo del llamado</h4>
+						<textarea class="form-control" rows="3" onkeyup="mayus(this);" th:field="*{Motivo}"
+							required></textarea>
+					</div>
+					<div class="col-md-6">
+						<h4 class="mb-3">Trabajo realizado</h4>
+						<textarea class="form-control" onkeyup="mayus(this);" rows="3" th:field="*{Trabajo_realizado}"
+							required></textarea>
+					</div>
+					<div class="col-md-6">
+						<h4 class="mb-3">Repuesto cambiado</h4>
+						<textarea class="form-control" onkeyup="mayus(this);" rows="3"
+							th:field="*{Repuesto_cambiado}"></textarea>
+
+					</div>
+
+
+					<div class="col-md-6">
+						<label for="address" class="form-label">Comprobante de egreso</label>
+						<input th:field="*{Comprobante_ingreso}" type="text" onkeyup="mayus(this);" class="form-control"
+							id="Comprobante" placeholder="Ingrese el comprobante">
+						<label for="Realizado" class="form-label">Realizado por</label>
+						<input th:field="*{Autor_realizado}" type="text" onkeyup="mayus(this);" class="form-control"
+							id="Realizado" placeholder="Por quien fue realizado" required>
+
+						</select>
+						<div class="invalid-feedback">
+							Complete por quien fue relizado
+						</div>
+						<label for="Recibido" class="form-label">Recibido por
+							<input th:field="*{Autor_recibido}" type="text" onkeyup="mayus(this);" class="form-control"
+								id="Recibido_por" placeholder="Recibido por" value="" required>
+							<div class="invalid-feedback">
+								Complete por quien fue recibido
+							</div>
+					</div>
+
+					<div class="col-md-6">
+						<h4 class="mb-3">Observaciones</h4>
+						<textarea class="form-control" onkeyup="mayus(this);" rows="3"
+							th:field="*{Observaciones}"></textarea>
+					</div>
+				</div>
+				<div class="col-md-12">
+
+					<hr class="my-4">
+					<div class="form-check">
+						<input type="checkbox" th:field="*{Comodato}" class="form-check-input" id="same-address">
+						<label class="form-check-label" for="same-address">Complete si es comodato</label>
+					</div>
+
+
+
+					<hr class="my-4">
+				</div>
+
+
+				<div class="btn-group">
+					<button class="w-150 btn btn-dark btn-lg" type="submit" value="Guardar">Guardar</button>
+
+					<button th:onclick="'window.location.href = \''+@{/todoslosequipos}+'\''" type="button"
+						class="w-150 btn btn-dark btn-lg">Nuevo reporte</button>
+
+				</div>
+
+			</form>
+
+		</div>
+
+	</main>
+
+
+	<footer class="my-5 pt-5 text-muted text-center text-small">
+		<p class="mb-1">&copy; 2021 HRCatch</p>
+
+	</footer>
+	</div>
+	<script>
+		function mayus(e) {
+			e.value = e.value.toUpperCase();
+		}
+	</script>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>

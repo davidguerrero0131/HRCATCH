@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Semaforizacion</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" th:href="@{/font/bootstrap-icons.css}">
+    <link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+  </head>
+  <body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+                        
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="starter-template text-center py-5 px-3">
+    <h1>Semaforización</h1>
+    <p class="lead">Esta aplicación clasifica el estado de la vida útil de los equipos, seleccione para realizar el análisis según corresponda.<br>Diríjase a clasificación para revisar los criterios y más información relacionada. </p>
+  </div>
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      
+      <div class="col-lg-4">
+        <div class="icon">
+        	<i class="bi bi-display"></i>
+        			      
+		</div>
+        <h2>Tipos de equipo</h2>
+        <p>Realice un nuevo análisis de los equipos por tipo</p>
+        <p><a class="btn btn-secondary" th:href="@{/semaforizacionportipoequipo}">Ejecutar &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <div class="icon">
+        	<i class="bi bi-grid-3x3-gap"></i>
+        	<i class="bi bi-building"></i>		      
+		</div>
+        <h2>Servicio</h2>
+        <p>Realice un nuevo análisis de los equipos por servicio</p>
+        <p><a class="btn btn-secondary" th:href="@{/semaforizacionporservicio}">Ejecutar &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class = "col-lg-4">
+      	<div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	        <h4 class="my-0 fw-normal">Ultimos análisis</h4>
+	      </div>
+	      <div class="card-body">
+	        
+	        <ul class="list-unstyled mt-3 mb-4"> 
+	        	<li>
+	        		<div class="icon">
+	        			<i class="bi bi-stopwatch"></i>
+			        	<i class="bi bi-archive-fill"></i>			        			      
+					</div>
+	        	</li>        
+	          <li>Lista de equipos con su última evaluación</li>
+	          
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/buscarultimaevaluacion}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>	        
+	     
+	      </div>
+	    </div>
+      </div>
+      <div class = "col-lg-4">
+      	<div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	        <h4 class="my-0 fw-normal">Revise todos los análisis realizados</h4>
+	
+	      </div>
+	      <div class="card-body">
+	        
+	        <ul class="list-unstyled mt-3 mb-4">
+	        	<li>
+	        		<div class="icon">
+	        			<i class="bi bi-stoplights-fill"></i>
+			        	<i class="bi bi-archive"></i>			        			      
+					</div>
+	        	</li>
+	        	<li>Todas las evaluaciónes ejecutadas</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/resultadosevaluacionporequipos}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>	        
+	      </div>
+	    </div>
+      </div>
+      <div class="col-lg-4">
+            <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	        <h4 class="my-0 fw-normal">Verifique los equipos dados de baja</h4>
+	
+	      </div>
+	      <div class="card-body">
+	        
+	        <ul class="list-unstyled mt-3 mb-4">
+	        	<li>
+	        		<div class="icon">
+	        			<i class="bi bi-stoplights-fill"></i>
+			        	<i class="bi bi-sort-down"></i>			        			      
+					</div>
+	        	</li>
+	        	<li>Revise o elimine los equipos dados de baja</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/listarbajas}+'\''"type="button" class="w-100 btn btn-lg btn-danger">Buscar</button>	        
+	     
+	      </div>
+	    </div>
+      
+   
+      </div>
+      <div class="col-lg-4">
+           
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	        <h4 class="my-0 fw-normal">Busque los equipos para dar de baja</h4>
+	
+	      </div>
+	      <div class="card-body">
+	        
+	        <ul class="list-unstyled mt-3 mb-4">
+	        	<li>
+	        		<div class="icon">
+	        			<i class="bi bi-laptop"></i>
+			        	<i class="bi bi-hand-thumbs-down-fill"></i>			        			      
+					</div>
+	        	</li>
+	        	<li>Seleccione el equipo a dar de baja</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/paradarbaja}+'\''"type="button" class="w-100 btn btn-lg btn-danger">Buscar</button>	        
+	     
+	      </div>
+	    </div>
+   
+      </div>
+      <!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-9">
+        <h2 class="featurette-heading">Clasificación estado de alerta alta</span></h2>
+        <p class="lead">Es necesario verificar y considerar la reposición del equipo médico,pues su vida útil expiro, por criterios técnicos, entre otros. </p>
+      </div>
+      <div class="col-md-3">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">Rojo</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-9">
+        <h2 class="featurette-heading">Clasificación estado aceptable, para analizar nuevamente en un corto tiempo. </h2>
+        <p class="lead">El equipo se encuentra en un estado aceptable, pero pueden existir acciones de mejora para la recuperación de la vida útil y operacion en buenas condiciones.</p>
+      </div>
+      <div class="col-md-3">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">Amarillo</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-9">
+        <h2 class="featurette-heading">Clasificación en buen estado, operación adecuada.</h2>
+        <p class="lead">El equipo se encuentra en buenas condiciones, por lo que no es necesario realizar acciones aparte de las planeadas de forma preventiva o predictiva</p>
+      </div>
+      <div class="col-md-3">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">Verde</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>&copy; 2017–2021 Company, Inc.</p>
+  </footer>
+</main>
+
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+      
+  </body>
+</html>

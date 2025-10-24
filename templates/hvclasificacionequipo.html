@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit = no">
+
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Clasificaciones del equipo</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/offcanvas/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+   
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/offcanvas.css" rel="stylesheet"th:href="@{/css/offcanvas.css}">
+
+  </head>
+  <body class="bg-light">
+
+    <div class="d-flex">
+          <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+            
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+    </header>
+      <div id ="sidebar-container" class="bg-white">
+        <div class="Datos hoja de vida">
+          <h4 class="text-dark font-weigth-bold">Datos hoja de vida</h4>
+        </div>
+        <div class="menu">
+          <hr class="featurette-divider">
+          <a th:href = "@{/matrizhv/}+${idequipo}" class="dropdown-item text-secondary p-2"><i class="icon ion-md-apps"></i>Resumen</a>
+		  <a th:href = "@{/hvdocumentosequipo/}+${idequipo}" class="dropdown-item text-secondary p-2"><i class="icon ion-md-apps"></i>Documentos</a>
+          <a th:href = "@{/hvdatosequipo/}+${idequipo}" class="dropdown-item text-secondary p-2"><i class="icon ion-md-apps"></i>Datos generales</a>
+ 
+          <a th:href = "@{/hvdatoscompra/}+${idequipo}" class="dropdown-item text-secondary p-2">Datos de la compra</a>
+          <a th:href = "@{/hvdatostecnicos/}+${idequipo}" class="dropdown-item text-secondary p-2">Datos técnicos</a>
+      
+    
+          <a th:href = "@{/hvdatosregulatorios/}+${idequipo}" class="dropdown-item text-secondary p-2">Datos regulatorios y apoyo técnico</a>
+          <a th:href = "@{/hvclasificacionequipo/}+${idequipo}" class="dropdown-item text-secondary p-2">Clasificación del equipo</a>
+          
+          <a th:href = "@{/hvmantenimientoequipo/}+${idequipo}" class="dropdown-item text-secondary p-2">Mantenimiento</a>
+          <a th:href = "@{/hvaccesorios/}+${idequipo}" class="dropdown-item text-secondary p-2">Accesorios</a>
+
+        </div>
+      </div>
+      <div id = "content">
+      <main class="container">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <div class="starter-template py-4 px-3">        
+            <h1>Clasificación biomédica</h1>
+            <div class="bd-example">
+              <fieldset class="mb-3" th:each="hoja_vida:${hoja_vidac}">
+              	
+              	<div class="mb-3 form-check" th:if="${hoja_vida.Biomedicdiagnostico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvbiodi'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvbiodi'+${hoja_vida.id_Hoja_vida}">Diagnóstico</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Biomedicdiagnostico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvbiodin'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvbiodin'+${hoja_vida.id_Hoja_vida}">Diagnóstico</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Biomedictratamiento==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvbiotra'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvbiotra'+${hoja_vida.id_Hoja_vida}">Tratamiento y mantenimiento a la vida</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Biomedictratamiento==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvbiotran'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvbiotran'+${hoja_vida.id_Hoja_vida}">Tratamiento y mantenimiento a la vida</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Biomedicrehabilitacion==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvrehab'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvrehab'+${hoja_vida.id_Hoja_vida}">Rehabilitación</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Biomedicrehabilitacion==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvrehabn'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvrehabn'+${hoja_vida.id_Hoja_vida}">Rehabilitación</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Biomedicprevencion==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvpre'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvpre'+${hoja_vida.id_Hoja_vida}">Prevención</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Biomedicprevencion==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvpren'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvpren'+${hoja_vida.id_Hoja_vida}">Prevención</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Biomedicanalisis==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvanal'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvanal'+${hoja_vida.id_Hoja_vida}">Análisis de laboratorio</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Biomedicanalisis==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvanaln'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvanaln'+${hoja_vida.id_Hoja_vida}">Análisis de laboratorio</label>
+	            </div>
+                                                          
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+                  
+    <div id = "content">
+      <main class="container">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <div class="starter-template py-4 px-3">        
+            <h1>Clase de tecnología predominante</h1>
+
+            <div class = "input-group">
+            <div class="col-md-6">
+               <fieldset class="mb-3" th:each="hoja_vida:${hoja_vidac}">
+                <h5>Clases de tecnología</h5>
+                <div class="mb-3 form-check" th:if="${hoja_vida.Claseelectrico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcelectrico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcelectrico'+${hoja_vida.id_Hoja_vida}">Eléctrico</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Claseelectrico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcelectricon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcelectricon'+${hoja_vida.id_Hoja_vida}">Eléctrico</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Claseelectronico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcelectronico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcelectronico'+${hoja_vida.id_Hoja_vida}">Electrónico</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Claseelectronico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcelectronicon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcelectronicon'+${hoja_vida.id_Hoja_vida}">Electrónico</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Clasemecanico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcmecanico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcmecanico'+${hoja_vida.id_Hoja_vida}">Mécanico</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Clasemecanico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcmecanicon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcmecanicon'+${hoja_vida.id_Hoja_vida}">Mécanico</label>
+	            </div>
+                <div class="mb-3 form-check" th:if="${hoja_vida.Claseelectromecanico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcelectromecanico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcelectromecanico'+${hoja_vida.id_Hoja_vida}">Electromecánico</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Claseelectromecanico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcelectromecanicon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcelectromecanicon'+${hoja_vida.id_Hoja_vida}">Electromecánico</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Clasehidraulico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvchidraulico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvchidraulico'+${hoja_vida.id_Hoja_vida}">Hidraúlico</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Clasehidraulico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvchidraulicon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvchidraulicon'+${hoja_vida.id_Hoja_vida}">Hidraúlico</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Claseneumatico==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcneumatico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcneumatico'+${hoja_vida.id_Hoja_vida}">Neumático</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Claseneumatico==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcneumaticon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcneumaticon'+${hoja_vida.id_Hoja_vida}">Neumático</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Clasevapor==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcvapor'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcvapor'+${hoja_vida.id_Hoja_vida}">Vapor</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Clasevapor==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcvaporn'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcvaporn'+${hoja_vida.id_Hoja_vida}">Vapor</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Clasesolar==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvcsolar'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvcsolar'+${hoja_vida.id_Hoja_vida}">Solar</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Clasesolar==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvcsolarn'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvcsolarn'+${hoja_vida.id_Hoja_vida}">Solar</label>
+	            </div>
+                                                   
+              </fieldset>  
+            </div>
+            <div class="col-md-6">
+              <h5>Equipo</h5>
+              <fieldset class="mb-3" th:each="hoja_vida:${hoja_vidac}">
+				<div class="mb-3 form-check" th:if="${hoja_vida.Equipotipofijo==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvtipofijo'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvtipofijo'+${hoja_vida.id_Hoja_vida}">Fijo</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Equipotipofijo==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvtipofijon'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvtipofijon'+${hoja_vida.id_Hoja_vida}">Fijo</label>
+	            </div>
+	            <div class="mb-3 form-check" th:if="${hoja_vida.Equipotipoportatil==true}">
+                  <input type="checkbox" name="radios" class="form-check-input" th:id = "'hvtipoportatil'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                  <label class="form-check-label" th:for = "'hvtipoportatil'+${hoja_vida.id_Hoja_vida}">Portatil</label>
+                </div>
+                <div class = "mb-3 form-check" th:unless="${hoja_vida.Equipotipoportatil==true}">
+	              <input type="checkbox" class="form-check-input" value="" th:id = "'hvtipoportatiln'+${hoja_vida.id_Hoja_vida}"disabled>
+	              <label class="form-check-label" th:for =  "'hvtipoportatiln'+${hoja_vida.id_Hoja_vida}">Portatil</label>
+	            </div>
+
+              </fieldset>              
+            </div>
+          </div>
+         
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    </div>     
+
+     
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    <script th:src="@{/js/offcanvas.js}"></script>
+  </body>
+</html>

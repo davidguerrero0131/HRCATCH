@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<meta th:name="_csrf" th:content="${_csrf.token}" />
+	<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+	<title>Mantenimientos</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+	<script th:src="@{/js/chart.js}"></script>
+
+	<style>
+		.modal-body {
+			height: 200px;
+			width: 100%;
+			overflow-y: auto;
+			overflow-x: auto;
+		}
+
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/syshome}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/syshome}">Atras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/systipos}">Inventario</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/sysusuarios}">Usuarios</a>
+
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<main class="container">
+		<form th:action="@{/sysmantenimiento}" method="post">
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+				<div class="py-4 text-center">
+
+					<h2>Mantenimientos preventivos programados</h2>
+					<p class="lead">Seleccione para clasificar de acuerdo a mantenimientos asignados</p>
+				</div>
+				<div class="row">
+
+					<div class="col-md-1">
+
+
+					</div>
+					<div class="col-md-2">
+						<input type="text" name="daterange" id="rangofecha" required>
+					</div>
+					<div class="col-md-1 mb-3">
+						<button type="submit" class="w-200 btn btn-dark btn-sm">Buscar</button>
+					</div>
+					<div class="col-md-1">
+					</div>
+					<div class="col-md-5">
+						<b>
+							<p>De <medium th:text="${fecha1}"></medium> a <medium th:text="${fecha2}"></medium>
+							</p>
+						</b>
+					</div>
+				</div>
+				<div class="container-xl">
+					<div class="row">
+
+						<div class="bd-example">
+							<nav>
+								<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+									<a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home"
+										role="tab" aria-controls="nav-home" aria-selected="true">Mantenimientos
+										programados</a>
+									<a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile"
+										role="tab" aria-controls="nav-profile" aria-selected="false">Seguimiento de
+										metas</a>
+									<a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact"
+										role="tab" aria-controls="nav-contact" aria-selected="false">Estadísticas</a>
+								</div>
+							</nav>
+							<div class="tab-content" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+									aria-labelledby="nav-home-tab">
+
+									<div class="row">
+										<div class="col-md-3">
+											<p class="lead" th:text="${nombre}"></p>
+										</div>
+										<div class="col-md-6">
+											<b style="color: red;">
+												<label
+													th:text="'Mes actual'+': '+${equipos.size()}+' mantenimientos preventivos. '"></label>
+												<small th:text="${tiempototal}+' minutos'"></small>
+											</b>
+										</div>
+										<div class="col-md-3">
+											<div class="input-group">
+												<span th:text="Filtrar" class="label label-warning"></span>
+												<input id="myInput" onkeyup="myFunction()" class="form-control"
+													placeholder="Nombre, marca, serie, responsable">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div th:if="${#lists.isEmpty(equipos)}" class="alert alert-info my-4"
+												th:text="'No hay mantenimientos programados en este rango'">
+											</div>
+											<div class="table-responsive">
+												<table class="table table-sm" th:if="${not #lists.isEmpty(equipos)}"
+													id="myTable">
+													<thead>
+														<tr>
+															<th scope="col">Id</th>
+															<th scope="col">Tipos</th>
+															<th scope="col">Nombre</th>
+															<th scope="col">Modelo</th>
+															<th scope="col">Serie</th>
+															<th scope="col">Servicio</th>
+															<th scope="col">Ubicación</th>
+															<th scope="col">Dia programado</th>
+															<th scope="col">Responsable</th>
+															<th scope="col">Preventivo</th>
+														</tr>
+													</thead>
+
+													<tbody>
+														<tr th:each="equipo,iter:${equipos}">
+															<td >
+															
+															<a type="button" th:text="${equipo.id_Sysequipo}"
+															 th:href="@{/sysreportes} + '/' + ${equipo.id_Sysequipo}"
+																	class="btn btn-primary"></a>
+															
+															</td>
+															<td th:text="${equipo.tipo_equipo.nombre_Tipo_equipo}"></td>
+															<td th:text="${equipo.Nombre_equipo}"></td>
+															<td th:text="${equipo.Modelo}"></td>
+															<td th:text="${equipo.Serie}"></td>
+															<td th:text="${equipo.servicio.Nombre_servicio}"></td>
+															<td th:text="${equipo.Ubicacion}"></td>
+
+
+															<td th:text="${equipo.Dias_mantenimiento}"></td>
+															<td
+																th:text="${equipo.usuario.Nombre}+' '+${equipo.usuario.Apellido}">
+															</td>
+															<td th:if="${validarMantenimiento.get(iter.index)} == true">
+																<a type="button"  th:href="@{/sysreportes} + '/' + ${equipo.id_Sysequipo}"
+																	class="btn btn-primary">Realizado</a>
+
+															</td>
+
+															<td th:if="${validarMantenimiento.get(iter.index)} == false">
+																<a type="button" th:href="@{/sysnuevomtto} + '/' + ${equipo.id_Sysequipo}"
+																	class="btn btn-danger">No realizado</a>
+
+															</td>
+
+
+
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+
+
+
+								</div>
+								<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+									aria-labelledby="nav-profile-tab">
+
+									<article class="my-3" id="progress">
+
+										<div th:switch="${advancecolor}">
+											<div class="bd-example">
+												<div class="progress mb-3" th:case="1">
+													<div class="progress-bar bg-success w-100" role="progressbar"
+														th:aria-valuenow="${porcentaje}" aria-valuemin="0"
+														aria-valuemax="100" th:text="${porcentaje}+'%'"></div>
+												</div>
+												<div class="progress mb-3" th:case="2">
+													<div class="progress-bar bg-info w-75" role="progressbar"
+														th:aria-valuenow="${porcentaje}" aria-valuemin="75"
+														aria-valuemax="100" th:text="${porcentaje}+'%'"></div>
+												</div>
+												<div class="progress mb-3" th:case="3">
+													<div class="progress-bar bg-secondary w-50" role="progressbar"
+														th:aria-valuenow="${porcentaje}" aria-valuemin="50"
+														aria-valuemax="75" th:text="${porcentaje}+'%'"></div>
+												</div>
+												<div class="progress mb-3" th:case="4">
+													<div class="progress-bar bg-warning w-25" role="progressbar"
+														th:aria-valuenow="${porcentaje}" aria-valuemin="25"
+														aria-valuemax="50" th:text="${porcentaje}+'%'"></div>
+												</div>
+												<div class="progress" th:case="5">
+													<div class="progress-bar bg-danger" role="progressbar"
+														th:aria-valuenow="${porcentaje}" aria-valuemin="0"
+														aria-valuemax="25" th:text="${porcentaje}+'%'"></div>
+												</div>
+											</div>
+
+										</div>
+									</article>
+
+									<div class="row">
+										<div class="col-md-3">
+											<div class="d-flex flex-column flex-shrink-0 p-3 bg-light"
+												style="width: 220px;">
+												<ul class="nav nav-pills flex-column mb-auto">
+													<li class="nav-item">
+														<a href="#nav-sinrealizar" id="nav-sinrealizar-tab"
+															class="nav-link active" data-bs-toggle="tab" role="tab"
+															aria-controls="nav-sinrealizar" aria-selected="true"
+															aria-current="page">
+															Mantenimientos sin realizar
+														</a>
+													</li>
+													<li>
+														<a href="#nav-realizado" id="nav-realizado-tab"
+															class="nav-link link-dark" data-bs-toggle="tab" role="tab"
+															aria-controls="nav-realizado" aria-selected="false">
+															Mantenimientos realizados
+														</a>
+													</li>
+												</ul>
+
+											</div>
+										</div>
+										<div class="col-md-9">
+											<div class="tab-content" id="nav-tabContents">
+												<div class="tab-pane fade show active" id="nav-sinrealizar"
+													role="tabpanel" aria-labelledby="nav-sinrealizar-tab">
+													<p class="lead" th:text="' Mantenimientos sin realizar'">
+														Mantenimientos sin realizar</p>
+
+													<div th:if="${#lists.isEmpty(listsinrealizar)}"
+														class="alert alert-info my-4"
+														th:text="'No hay mantenimientos programados en este rango'">
+													</div>
+													<div class="table-responsive">
+														<table class="table table-sm"
+															th:if="${not #lists.isEmpty(listsinrealizar)}">
+															<thead>
+																<tr class="table-danger">
+																	<th scope="col">Nombre</th>
+																	<th scope="col">Marca</th>
+																	<th scope="col">Modelo</th>
+																	<th scope="col">Serie</th>
+
+																	<th scope="col">Servicio</th>
+
+																	<th scope="col">Dias</th>
+																	<th scope="col">Realizar</th>
+																</tr>
+															</thead>
+
+															<tbody>
+																<tr th:each="equipo:${listsinrealizar}">
+																	<td th:text="${equipo.nombre_Equipo}"></td>
+																	<td th:text="${equipo.Marca}"></td>
+																	<td th:text="${equipo.Modelo}"></td>
+																	<td th:text="${equipo.Serie}"></td>
+
+																	<td th:text="${equipo.Servicio}"></td>
+
+
+																	<td th:text="${equipo.Dias}"></td>
+																	<td>
+																		<div th:if="${equipo.equipo}">
+																			<div th:if="${equipo.Realizado}">
+																				<a class="btn btn-warning btn-sm"
+																					th:href="@{/visualizacionreportes/}+${equipo.equipo.id_Equipo}">Subir
+																					reporte</a>
+
+																			</div>
+																			<div th:unless="${equipo.Realizado}">
+																				<button
+																					th:onclick="'window.location.href = \'' +@{/rutinamtto/}+${equipo.equipo.id_Equipo}+'/'+${equipo.id_Mantenimiento_preventivo}+'\''"
+																					type="button"
+																					class="w-100 btn btn-sm btn-dark">Ejecutar</button>
+
+																			</div>
+																		</div>
+																		<div th:unless="${equipo.equipo}">
+																			hi
+																		</div>
+
+																	</td>
+
+
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="nav-realizado" role="tabpanel"
+													aria-labelledby="nav-realizado-tab">
+
+													<p class="lead" th:text="' Mantenimientos realizados'">
+														Mantenimientos sin realizar</p>
+
+													<div th:if="${#lists.isEmpty(listhechos)}"
+														class="alert alert-info my-4"
+														th:text="'No hay mantenimientos hechos hasta el momento'">
+													</div>
+													<div class="table-responsive">
+														<table class="table table-success table-sm"
+															th:if="${not #lists.isEmpty(listhechos)}">
+															<thead>
+																<tr>
+																	<th scope="col">Nombre</th>
+																	<th scope="col">Marca</th>
+
+																	<th scope="col">Serie</th>
+																	<th scope="col">Fecha realización</th>
+																	<th scope="col">Tiempo realización</th>
+																	<th scope="col">Ver reportes</th>
+																</tr>
+															</thead>
+
+															<tbody>
+																<tr th:each="equipo:${listhechos}">
+																	<td th:text="${equipo.nombre_Equipo}"></td>
+																	<td th:text="${equipo.Marca}"></td>
+
+																	<td th:text="${equipo.Serie}"></td>
+																	<td th:text="${equipo.Fecha_realizacion}"></td>
+																	<td th:text="${equipo.Tiempo_realizacion}"></td>
+																	<td><a class="btn btn-success btn-sm"
+																			th:href="@{/visualizacionreportes/}+${equipo.equipo.id_Equipo}"
+																			th:text="${equipo.equipo.id_Equipo}+R"></a>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+									aria-labelledby="nav-contact-tab">
+									<div class="row">
+										<p class="lead">Seleccione el técnico para observar sus estadísticas</p>
+										<div class="col-md-6">
+											<canvas id="donutmttos" width="50" height="50"></canvas>
+
+											<div class="modal" id="myModal" tabindex="-1" role="dialog"
+												aria-labelledby="myModalLabel">
+												<div class="modal-dialog modal-xl" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="titlemodal"></h5>
+															<button type="button" id="xmodal" class="btn-close"
+																data-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<div class="table-responsive">
+																<table class="table table-sm">
+																	<thead class="table-secondary">
+																		<tr>
+																			<th scope="col">Nombre</th>
+																			<th scope="col">Marca</th>
+																			<th scope="col">Modelo</th>
+																			<th scope="col">Serie</th>
+																			<th scope="col">Servicio</th>
+
+																			<th scope="col" id="tipo">Falla</th>
+																			<th scope="col">Trabajo</th>
+																			<th scope="col">Fecha</th>
+																			<th scope="col">Reporte</th>
+																		</tr>
+																	</thead>
+																	<tbody id="table">
+																		<tr>
+																		</tr>
+
+																	</tbody>
+																</table>
+															</div>
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" id="closemodal"
+																class="btn btn-secondary"
+																data-dismiss="modal">Cerrar</button>
+
+
+														</div>
+													</div>
+												</div>
+											</div>
+											<p align="center" class="lead mb-3"> Tiempo invertido en los mantenimientos
+												según tipo de mantenimiento</p>
+											<div class="table-responsive">
+												<table class="table table-sm">
+													<thead>
+														<tr>
+															<th scope="col">Tiempo(Tiempo total)</th>
+															<th scope="col">Total</th>
+															<th scope="col">Promedio</th>
+														</tr>
+													</thead>
+
+													<tbody>
+														<tr>
+															<td class="table-danger">Correctivo</td>
+															<td id="ttc"></td>
+															<td id="tpc"></td>
+														</tr>
+														<tr>
+															<td class="table-primary">Preventivo</td>
+															<td id="ttp"></td>
+															<td id="tpp"></td>
+														</tr>
+														<tr>
+															<td class="table-info">Predictivo</td>
+															<td id="ttpd"></td>
+															<td id="tppd"></td>
+														</tr>
+														<tr>
+															<td class="table-warning">Otros</td>
+															<td id="tto"></td>
+															<td id="tpo"></td>
+														</tr>
+													</tbody>
+													<thead>
+														<tr>
+															<th scope="col">Tiempo(Tiempo de llamado)</th>
+															<th scope="col">Total</th>
+															<th scope="col">Promedio</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="table-danger">Correctivo</td>
+															<td id="ttcr"></td>
+															<td id="tpcr"></td>
+														</tr>
+
+														<tr>
+															<td class="table-info">Predictivo</td>
+															<td id="ttpdr"></td>
+															<td id="tppdr"></td>
+														</tr>
+														<tr>
+															<td class="table-warning">Otros</td>
+															<td id="ttor"></td>
+															<td id="tpor"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+
+
+										</div>
+										<div class="col-md-6">
+
+											<canvas id="donutfallas" width="50" height="50"></canvas>
+											<p align="center" class="lead mb-6"> Tiempo invertido en los mantenimientos
+												según los tipos de falla<br></p>
+											<div class="table-responsive">
+												<table class="table table-sm">
+													<thead>
+														<tr>
+															<th scope="col">Tiempo</th>
+															<th scope="col">Total</th>
+															<th scope="col">Promedio</th>
+														</tr>
+													</thead>
+
+													<tbody>
+														<tr>
+															<td class="table-warning">Desgaste</td>
+															<td id="ttdes"></td>
+															<td id="tpdes"></td>
+														</tr>
+														<tr>
+															<td class="table-danger">Operación indebida</td>
+															<td id="ttopind"></td>
+															<td id="tpopind"></td>
+														</tr>
+														<tr>
+															<td class="table-info">Causa externa</td>
+															<td id="ttex"></td>
+															<td id="tpex"></td>
+														</tr>
+														<tr>
+															<td class="table-primary">Accesorios</td>
+															<td id="ttac"></td>
+															<td id="tpac"></td>
+														</tr>
+														<tr>
+															<td class="table-secondary">Desconocido</td>
+															<td id="ttunk"></td>
+															<td id="tpunk"></td>
+														</tr>
+														<tr>
+															<td class="table-success">Sin fallas</td>
+															<td id="ttsin"></td>
+															<td id="tpsin"></td>
+														</tr>
+														<tr>
+															<td class="table-info">Otro</td>
+															<td id="ttotra"></td>
+															<td id="tpotra"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<script th:inline="javascript" type="text/javascript">
+			/*<![CDATA[*/
+			$(function () {
+				$('input[name="daterange"]').daterangepicker({
+					opens: 'right'
+				});
+
+			});
+      /*]]>*/
+		</script>
+
+		<script>
+			function myFunction() {
+				var input, filter, div, tr, td, i, txtValue;
+				input = document.getElementById("myInput");
+				filter = input.value.toUpperCase();
+				div = document.getElementById("myTable");
+				tr = div.getElementsByTagName("tr");
+				for (i = 0; i < tr.length; i++) {
+					td1 = tr[i].getElementsByTagName("td")[1];
+					td2 = tr[i].getElementsByTagName("td")[2];
+					td3 = tr[i].getElementsByTagName("td")[3];
+					td4 = tr[i].getElementsByTagName("td")[5];
+					td5 = tr[i].getElementsByTagName("td")[6];
+					td6 = tr[i].getElementsByTagName("td")[8];
+					if (td1 || td2 || td3) {
+						txtValue1 = td1.textContent || td1.innerText;
+						txtValue2 = td2.textContent || td2.innerText;
+						txtValue3 = td3.textContent || td3.innerText;
+						txtValue4 = td4.textContent || td4.innerText;
+						txtValue5 = td5.textContent || td5.innerText;
+						txtValue6 = td6.textContent || td6.innerText;
+						if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue5.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else if ((txtValue6.toUpperCase().indexOf(filter)) > -1) {
+							tr[i].style.display = "";
+						}
+						else {
+							tr[i].style.display = "none";
+						}
+
+					}
+
+
+				}
+			}
+
+		</script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	</main>
+</body>
+
+</html>

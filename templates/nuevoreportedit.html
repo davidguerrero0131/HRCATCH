@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title th:text="${serieequipo}+' Nuevo reporte'">Nuevo reporte</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/form-validation.css" rel="stylesheet" th:href = "@{/css/form-validation.css}">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/periodicidad}">Reportes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" th:href="@{/usuarios}">Usuarios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Más opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+    
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>      
+
+  <main>
+  <div class="container">
+    <div class="py-5 text-center">
+     
+      <h2>Nuevo reporte</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+    </div>
+ <form class="needs-validation" validate th:action="@{/nuevoreportedit/}+${idequipo}"th:object="${reporte}"method="post">  
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Seccion de datos</span>
+          <span class="badge bg-secondary rounded-pill" th:text="${idequipo}"></span>
+        </h4>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            
+              <h6 class="my-0">Periodicidad</h6>
+              
+	          <div th:if="${periodicidad==4}">
+              	<small class="text-muted">CUATRIMESTRAL</small>
+	          </div>
+              
+              <div th:if="${periodicidad==3}">
+              	<small class="text-muted">TRIMESTRAL</small>
+              </div>
+              <div th:if="${periodicidad==2}">
+              	<small class="text-muted">SEMESTRAL</small>
+              </div>
+              <div th:if="${periodicidad==1}">
+              	<small class="text-muted">ANUAL</small>
+              </div>
+
+            
+
+            <span class="text-muted" th:text="${periodicidad}"></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Tipo de equipo</h6>
+              <small class="text-muted"th:text="${nombreequipo}"></small>
+            </div>
+            
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Servicio/Ubicación</h6>
+              <small class="text-muted" th:text="${servicioequipo}+'/'+${ubicacionequipo}"></small>
+            </div>
+           
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div class="text-muted">
+              <h6 class="my-0">Serie</h6>
+              <small th:text="${serieequipo}"></small>
+            </div>
+          
+          </li>
+ 
+        </ul>
+    	</div>
+
+ 
+      
+     <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Datos de reporte</h4>
+        
+          <div class="row g-3">
+            <div class="col-sm-4">
+              <label for="NumReporte" class="form-label">Número de reporte</label>
+              <input th:placeholder="${numeroreporte}"type="text" class="form-control" id="NumReporte" disabled>
+              
+            </div>
+
+            <div class="col-sm-4">
+              <label for="placainventario" class="form-label">Placa inventario</label>
+              <input type="text" class="form-control" id="placanew" th:placeholder="${placa}" value="" disabled>
+              
+            </div>
+            <div class="col-md-4">
+              <label for="servicio" class="form-label">Servicio</label>
+              <select class="form-select" id="country" disabled>
+                <option th:text="${servicioequipo}"></option>
+                
+              </select>
+
+            </div>
+            <div class = "col-7">
+            	<label for = "fechareport">Fecha</label>
+            	<input th:name="fecha" id = "date" type = "date" class = "form-control" required>
+            </div>
+            
+            
+            <div class="col-md-5">
+              <label for="country" class="form-label">Ubicación</label>
+              <select class="form-select" id="country" disabled>
+                <option value="" th:text="${ubicacionequipo}"></option>
+              </select>
+              
+            </div>  
+            <div class="col-md-4">
+              <label for= "llamadotime" class="form-label">Hora de llamado</label>
+              <input th:name= "hora_llamado" placeholder= "Selected time" type="time" id = "llamadotime" value="" class="form-control timepicker"></input>
+            </div>
+            <div class="col-md-4">
+              <label for= "input_starttime" class="form-label">Hora de inicio</label>
+              <input th:name= "hora_inicio"placeholder= "Selected time" type="time" id = "input_starttime" class="form-control timepicker" required></input>
+            </div>
+            <div class="col-md-4">
+              <label for= "input_finaltime" class="form-label">Hora de terminación</label>
+              <input th:name= "hora_finalizacion"placeholder= "Selected time" type="time" id = "input_finaltime" class="form-control timepicker" required></input>
+            </div>
+          </div>
+        
+       </div>
+       </div>
+       
+       
+            <div class= "row">
+            <div class="col-md-4">      
+              <h4 class="mb-3">Tipo de mantenimiento</h4>            
+              <div class="my-3">
+                <div class="form-check">
+                  <input th:field="*{Tipo_mantenimiento}"id="Predictivo" value=4 name="paymentMethod" type="radio" class="form-check-input" required>
+                  <label class="form-check-label" for="Predictivo">Predictivo</label>
+                </div>
+                <div class="form-check">
+                  <input th:field="*{Tipo_mantenimiento}"id="Preventivo" value=3 name="paymentMethod" type="radio" class="form-check-input" required>
+                  <label class="form-check-label" for="Preventivo">Preventivo</label>
+                </div>
+                <div class="form-check">
+                  <input th:field="*{Tipo_mantenimiento}"id="Correctivo" value=2 name="paymentMethod" type="radio" class="form-check-input" required>
+                  <label class="form-check-label" for="Correctivo">Correctivo</label>
+                </div>
+                <label id= "tfslabel" class="form-check-label" for="tfs">Tiempo fuera de servicio (días)</label>
+                <input id="tfs" th:field="*{Tiempo_fuera_servicio}"type="number" step="1" min="0" max="365"class="form-control" placeholder="Dias fuera de servicio">               
+                
+                <div class="form-check">
+                  <input th:field="*{Tipo_mantenimiento}"id="Otro" value=1 name="paymentMethod" type="radio" class="form-check-input" required>
+                  <label class="form-check-label" for="Otro">Otro</label>
+                </div>
+              </div>
+            </div>
+            
+	          <div class="col-md-5">
+	            <h4 class="mb-3">Tipo de falla</h4>
+	            <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}"class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio1" value = 1 required>
+	              <label class="= form-check-label" for= "inlineRadio1">1</label>
+	            </div>     
+	           <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}" class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio2" value = 2 required>
+	              <label class="= form-check-label" for= "inlineRadio2">2</label>
+	            </div>  
+	           <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}"class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio3" value = 3 required>
+	              <label class="= form-check-label" for= "inlineRadio3">3</label>
+	            </div>  
+	           <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}"class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio4" value = 4 required>
+	              <label class="= form-check-label" for= "inlineRadio4">4</label>
+	            </div>  
+	           <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}"class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio5" value = 5 required>
+	              <label class="= form-check-label" for= "inlineRadio5">5</label>
+	            </div>  
+	           <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}"class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio6" value = 6 required>
+	              <label class="= form-check-label" for= "inlineRadio6">6</label>
+	            </div>  
+	           <div class="form-check form-check-inline">
+	              <input th:field="*{Tipo_falla}"class = "form-check-input" type = "radio" name= "TipoFalla" id = "inlineRadio7" value = 7 required>
+	              <label class="= form-check-label" for= "inlineRadio7">7</label>
+	            </div>
+	          </div>
+	          <div class="col-md-3">
+	          	1. Desgaste<br>
+	          	2. Operación indebida<br>
+	          	3. Causa externa<br>
+	          	4. Accesorios<br>
+	          	5. Desconocido<br>
+	          	6. Sin fallas<br>
+	          	7. Otro
+	          	
+	          </div>
+            </div>
+			<div class = "row">
+				<div class="col-md-6">
+		            <h4 class="mb-3">Motivo del llamado</h4>
+		            <textarea class="form-control" rows ="3"onkeyup="mayus(this);" th:field="*{Motivo}" required></textarea>
+				</div>
+				<div class="col-md-6">
+		            <h4 class="mb-3">Trabajo realizado</h4>
+		            <textarea class="form-control" rows ="3"onkeyup="mayus(this);" th:field="*{Trabajo_realizado}" required></textarea>
+				</div>
+				<div class="col-md-6">
+					<h4 class="mb-3">Repuesto cambiado</h4>
+            		<textarea class="form-control" rows ="3"onkeyup="mayus(this);" th:field="*{Repuesto_cambiado}"></textarea>
+
+				</div>
+            
+        
+            <div class="col-md-6">
+              <label for="address" class="form-label">Comprobante de egreso</label>
+              <input th:field="*{Comprobante_ingreso}"type="text"onkeyup="mayus(this);" class="form-control" id="Comprobante" placeholder="Ingrese el comprobante" >
+          	  <label for="Realizado" class="form-label">Realizado por</label>
+              <input th:field="*{Autor_realizado}" id="myInput"onkeyup="myFunction()"type="text" class="form-control"  placeholder="Por quien fue realizado" required>
+
+              </select>
+              <div class="invalid-feedback">
+                Complete por quien fue relizado
+              </div>
+              <label for = "Recibido" class = "form-label">Recibido por
+              <input th:field="*{Autor_recibido}"type="text"onkeyup="mayus(this);" class="form-control" id="Recibido_por" placeholder="Recibido por" value="" required>
+              <div class="invalid-feedback">
+                Complete por quien fue recibido
+              </div>
+            </div>
+            
+	          <div class="col-md-6">  
+		          <h4 class="mb-3">Observaciones</h4>
+		          <textarea class="form-control" onkeyup="mayus(this);" rows ="3" th:field="*{Observaciones}" required></textarea>
+			   </div>
+          </div>
+          <div class="row">
+          <hr class="my-4">
+          <div class = "col-md-6">     
+          
+          
+          <div class="form-check">
+            <input type="checkbox" th:field="*{Mtto_propio}"class="form-check-input" id="realizado">
+            <label class="form-check-label" for="realizado">Complete si es mantenimiento del área de biomédica</label>
+          </div>
+          
+
+  
+
+          
+          </div>
+          <div class = "col-md-6">
+          	<div class="form-check">
+            <input type="checkbox" th:field="*{Comodato}"class="form-check-input" id="same-address">
+            <label class="form-check-label" for="same-address">Complete si es comodato</label>
+          </div>
+          </div>
+          <hr class="my-4">
+          </div>
+
+          
+          <div class="btn-group">
+            <button class="w-150 btn btn-dark btn-lg" type="submit" value = "Guardar">Guardar</button>
+
+            <button th:onclick= "'window.location.href = \''+@{/todoslosequipos}+'\''"type="button" class="w-150 btn btn-dark btn-lg">Nuevo reporte</button>              
+            
+          </div>    
+               
+        </form>
+     
+    </div>
+  
+  </main>
+  
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2021 HRCatch</p>
+    
+  </footer>
+</div>
+<script th:inline = "javascript">
+/*<![CDATA[*/
+
+var fecha = /*[[${fecha}]]*/ 'default';
+var hll = /*[[${horallamado}]]*/ 'default';
+var hi = /*[[${horainicio}]]*/ 'default';
+var ht = /*[[${horaterminacion}]]*/ 'default';
+
+var dateinput = document.getElementById("date");
+
+var hllinput = document.getElementById("llamadotime");
+var hiinput = document.getElementById("input_starttime");
+var htinput = document.getElementById("input_finaltime");
+
+dateinput.value = fecha;
+hllinput.value = hll;
+hiinput.value = hi;
+htinput.value = ht;
+
+$("#tfs").hide();
+$("#tfslabel").hide();
+var autores = ['CLAUDIA MILENA QUEVEDO','MILENA QUEVEDO','MANUEL LÓPEZ','MANUEL LOPEZ',
+'MANUEL RICARDO LÓPEZ','MANUEL RICARDO LÓPEZ','GERMÁN CRUZ','GERMAN CRUZ','GERNÁN CRUZ','GERMÁN CRUZ SALAS',
+'GERMAN CRUZ SALAS','MIGUEL SANCHEZ','MIGUEL ANTONIO SANCHEZ','WILSÓN CAMARGO','WILSON CAMARGO','WILSON CÁMARGO',
+'CESAR AUGUSTO SUAREZ','CESAR SUAREZ','ENRIQUE BAUTISTA','ENRIQUE BAUTISTA LÓPEZ','GERMÁN PUERTO','GERMÁN DARIO PUERTO'];
+function myFunction(){
+	
+	input = document.getElementById("myInput");
+	check = document.getElementById("realizado");
+	input.value = input.value.toUpperCase();
+	filter = input.value.toUpperCase();
+	
+	
+	for(i=0;i<autores.length;i++){
+		if(autores[i]===filter){
+			$("#realizado").prop("checked",true);
+			i = autores.length
+			
+		}
+		else{
+			$("#realizado").prop("checked",false);
+			
+		}
+		console.log(autores[i]===filter)
+	}
+	}
+
+$(document).ready(function(){
+ $('#Correctivo').on('change',function(){
+	
+	
+	
+    if (document.getElementById("Correctivo").checked) {
+     $("#tfs").show();
+	 $("#tfslabel").show();
+     
+    } 
+   
+    else {
+	 $("#tfs").hide();
+	 $("#tfslabel").hide();
+    
+    }  
+  })
+  
+  
+});
+
+function mayus(e){
+	e.value = e.value.toUpperCase();
+}
+/*]]>*/
+</script>
+	
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	
+      
+  </body>
+</html>

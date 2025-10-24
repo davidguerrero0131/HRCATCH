@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Servicios con equipos de mantenimiento cuatrimestral</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/pricing.css" rel="stylesheet" th:href="@{/css/pricing.css}">
+  </head>
+  <body>
+    
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/periodicidad}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>        
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown04">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+
+
+<main class="container">
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Cuatrimestral</h1>
+    <p class="lead">Seleccione el servicio para visualizar los reportes</p>
+    <p></p>
+  </div>
+  <form>
+    <div class="col-md-12 col-lg-12">
+      <div class="input-group">
+        <input class="form-control"id = "cuatrimestralservicioinput"onkeyup = "myFunction()" type="text" placeholder="Ingrese tipo de equipo" aria-label="Search">
+        <span class="input-group-btn">
+          <button type="button" class="w-200 btn btn-lg btn-dark">Buscar</button>
+        </span>
+      </div>
+    </div>
+ 
+  </form>
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center" id = "cardservicio">
+    <div class="col-md-4" th:each="servicio:${servicios}">
+      <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 fw-normal" th:text="${servicio.Nombre_servicio}"></h4>
+
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"> </h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>...</li>
+        </ul>
+        <button th:onclick= "'window.location.href = \'' +@{/visualizacionserviciocuatrimestral/}+${servicio.id_Servicio}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+             
+      </div>
+    </div>
+    </div>
+  </div>
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+     
+        <small class="d-block mb-3 text-muted"> 2022</small>
+      </div>
+
+    </div>
+  </footer>
+</main>
+<script>
+function myFunction(){
+	var input,filter,div,p,a,i,txtValue;
+	input = document.getElementById("cuatrimestralservicioinput");
+	filter = input.value.toUpperCase();
+	div = document.getElementById("cardservicio");
+	p = div.getElementsByClassName("col-md-4");
+	console.log(p.length);
+	for(i=0;i<p.length;i++){
+		headercard = p[i].getElementsByClassName("my-0 fw-normal")[0];
+		txtValue = headercard.textContent||heradercard.innerText;
+		if(txtValue.toUpperCase().indexOf(filter)>-1){
+			p[i].style.display="";
+		}
+		else{
+			p[i].style.display="none";
+		}
+	}
+}
+</script>
+
+    
+  </body>
+</html>

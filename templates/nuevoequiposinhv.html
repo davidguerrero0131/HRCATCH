@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+
+	<meta name="generator" content="Hugo 0.80.0">
+	<title>Nuevo equipo</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+
+	<!-- Custom styles for this template -->
+	<link th:href="@{/css/nuevoequiposinhv.css}" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06"
+				aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExample06">
+				<ul class="navbar-nav me-auto mb-2 mb-xl-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/usuarios}">Atras</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
+							aria-expanded="false">Más opciones</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown06">
+							<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+									reclamos</a></li>
+							<li><a class="dropdown-item"
+									href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+									tuto</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container-xl">
+		<main>
+			<div class="py-4 text-center">
+
+				<h2>Nuevo equipo</h2>
+				<p class="lead">Complete los datos correspondientes</p>
+				<p class="lead"><small>Recuerde completar todo en mayúscula</small></p>
+			</div>
+			<div class="row g-3">
+				<h4 class="mb-3">Datos del equipo</h4>
+				<form class="needs-validation" validate
+					th:action="@{/crearnuevoequipo/}+${equipo.tipo_equipo.id_Tipo_equipo}" th:object="${equipo}"
+					method="post">
+					<div class="row g-3">
+						<div class="col-sm-4">
+							<label for="seriee" class="form-label">Serie</label>
+							<input th:field="*{Serie}" type="text" class="form-control is-valid" id="seriee"
+								placeholder="Ingrese la serie del equipo" required>
+							<div class="invalid-feedback">
+								Número de serie requerido
+							</div>
+						</div>
+
+						<div class="col-sm-4">
+							<label for="nombree" class="form-label">Nombre del equipo</label>
+							<input th:field="*{nombre_Equipo}" type="text" class="form-control is-valid" id="nombree"
+								placeholder="Reescriba el nombre del tipo de equipo, en caso de que no tenga un nombre distinto"
+								value="" required>
+							<div class="invalid-feedback">
+								Ingrese el nombre del equipo
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label for="marcae" class="form-label">Marca</label>
+							<input th:field="*{Marca}" type="text" class="form-control is-valid" id="marcae"
+								placeholder="Ingrese la marca del equipo" value="" required>
+							<div class="invalid-feedback">
+								Ingrese la marca del equipo
+							</div>
+
+						</div>
+						<div class="col-md-4">
+							<label for="modeloe" class="form-label">Modelo</label>
+							<input th:field="*{Modelo}" type="text" class="form-control is-valid" id="modeloe"
+								placeholder="Ingrese el modelo del equipo" value="" required>
+							<div class="invalid-feedback">
+								Ingrese el modelo del equipo
+							</div>
+
+						</div>
+						<div class="col-sm-4">
+							<label for="anoinge" class="form-label">Año de ingreso</label>
+							<input th:field="*{Ano_ingreso}" type="number" step="1" min="0" max="2100"
+								class="form-control is-valid" placeholder="Ejemplo: 2022" id="anoinge" value=""
+								required>
+
+						</div>
+
+						<div class="col-md-4">
+							<label for="placae" class="form-label" align="text-center">Placa inventario</label>
+							<input th:field="*{Placa_inventario}" type="text" class="form-control is-valid" id="placae"
+								placeholder="Ingrese la placa inventario" required>
+
+
+						</div>
+						<div class="col-md-4">
+							<label for="servicioe" class="form-label" align="text-center">Servicio</label>
+							<select class="form-control" th:name="myService" id="series" required>
+								<option selected disabled value="0">SELECCIONE EL SERVICIO</option>
+
+								<div th:each="servicio:${serviciosfull}">
+									<option th:text="${servicio.Nombre_servicio}"
+										th:value="${servicio.Nombre_servicio}"></option>
+								</div>
+							</select>
+						</div>
+						<div class="col-md-4">
+							<label for="ubicacionee" class="form-label is-valid" align="text-center">Ubicación</label>
+							<input th:field="*{Ubicacion}" type="text" class="form-control is-valid" id="ubicacionee"
+								placeholder="Ingrese la ubicación del equipo" required>
+						</div>
+						<div class="col-md-4">
+							<label for="ubicacionespecificae" class="form-label" align="text-center">Ubicación
+								específica</label>
+							<input th:field="*{Ubicacion_especifica}" type="text" class="form-control"
+								id="ubicacionespecificae" placeholder="Ingrese la ubicación específica del equipo">
+						</div>
+
+						<hr class="featurette-divider">
+						<div class="mb-3">
+							<div class="row">
+								<div class="col-md-6">
+									<h4>Mantenimiento del equipo</h4>
+								</div>
+								<div class="col-md-6" th:if="${meses}">
+									<p class="lead" th:text="${meses}+':'+${dias}"></p>
+								</div>
+							</div>
+
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<div class="mb-3">
+									<h6>Periodicidad</h6>
+								</div>
+							</div>
+							<div class="col-md-6">
+
+								<p class="lead" id="period"><small></small></p>
+							</div>
+							<div class="col-md-4">
+								<p class="lead" id="adv" style="color: red;"></p>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-check mb-3">
+									<input th:field="*{Periodicidad}" type="radio"
+										name="metodoPeriodicidadMantenimiento" id="trimestral" class="form-check-input"
+										value=3 required>
+									<label class="form-check-label" for="trimestral">Trimestral </label>
+								</div>
+								<div class="form-check mb-3">
+									<input th:field="*{Periodicidad}" type="radio"
+										name="metodoPeriodicidadMantenimiento" id="cuatrimestral"
+										class="form-check-input" value=4 required>
+									<label class="form-check-label" for="cuatrimestral">Cuatrimestral </label>
+								</div>
+								<div class="form-check mb-3">
+									<input th:field="*{Periodicidad}" type="radio"
+										name="metodoPeriodicidadMantenimiento" id="semestral" class="form-check-input"
+										value=2 required>
+									<label class="form-check-label" for="semestral">Semestral </label>
+								</div>
+								<div class="form-check mb-3">
+									<input th:field="*{Periodicidad}" type="radio"
+										name="metodoPeriodicidadMantenimiento" id="anual" class="form-check-input"
+										value=1 required>
+									<label class="form-check-label" for="anual">Anual </label>
+								</div>
+
+
+							</div>
+
+
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="menero" name="metodoMesesPreventivo"
+												th:value="ENERO">
+											<label class="form-check-label" for="menero">Enero</label>
+
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="ene1"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mfebrero" name="metodoMesesPreventivo"
+												th:value="FEBRERO">
+											<label class="form-check-label" for="mfebrero">Febrero</label>
+
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="feb2"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mmarzo" name="metodoMesesPreventivo"
+												th:value="MARZO">
+											<label class="form-check-label" for="mmarzo">Marzo</label>
+
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="mar3"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mabril" name="metodoMesesPreventivo"
+												th:value="ABRIL">
+											<label class="form-check-label" for="mabril">Abril</label>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="abr4"
+											style="width: 130px;">
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mmayo" name="metodoMesesPreventivo"
+												th:value="MAYO">
+											<label class="form-check-label" for="mmayo">Mayo</label>
+
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="may5"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mjunio" name="metodoMesesPreventivo"
+												th:value="JUNIO">
+											<label class="form-check-label" for="mjunio">Junio</label>
+
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="jun6"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mjulio" name="metodoMesesPreventivo"
+												th:value="JULIO">
+											<label class="form-check-label" for="mjulio">Julio</label>
+
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="jul7"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="magosto" name="metodoMesesPreventivo"
+												th:value="AGOSTO">
+											<label class="form-check-label" for="magosto">Agosto</label>
+
+										</div>
+									</div>
+
+									<div class="col-md-2">
+
+										<input class="mb-2" type="text" name="datetimes" id="ago8"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mseptiembre" name="metodoMesesPreventivo"
+												th:value="SEPTIEMBRE">
+											<label class="form-check-label" for="mseptiembre">Septiembre</label>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="sep9"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="moctubre" name="metodoMesesPreventivo"
+												th:value="OCTUBRE">
+											<label class="form-check-label" for="moctubre">Octubre</label>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="oct10"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" id="mnoviembre" name="metodoMesesPreventivo"
+												th:value="NOVIEMBRE">
+											<label class="form-check-label" for="mnoviembre">Noviembre</label>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input class="mb-2" type="text" name="datetimes" id="nov11"
+											style="width: 130px;">
+									</div>
+									<div class="col-md-2">
+										<div class="form-check mb-3">
+											<input type="checkbox" name="metodoMesesPreventivo" id="mdiciembre"
+												th:value="DICIEMBRE">
+											<label class="form-check-label" for="mdiciembre">Diciembre</label>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+
+										<input class="mb-2" type="text" name="datetimes" id="dic12"
+											style="width: 130px;">
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-4 mb-3">
+								<label for="anomtto" class="form-label">Año de mantenimiento</label>
+								<input type="number" th:field="*{Ano_mantenimiento}" step="1" min="1980" max="2100"
+									class="form-control is-valid" placeholder="Ejemplo: 2022" id="anoinge" value=""
+									required>
+
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="anomtto" class="form-label">Hospital</label>
+								<select class="form-control is-valid" disabled>
+									<option>Hospital Universitario San Rafael Tunja</option>
+								</select>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="nombree" class="form-label">Tipo de equipo</label>
+								<input type="text" class="form-control is-valid" id="nombree" name="tipoequipo"
+									th:text="${equipo.tipo_equipo.nombre_Tipo_equipo}"
+									th:value="${equipo.tipo_equipo.nombre_Tipo_equipo}" disabled>
+
+							</div>
+							<div class="row">
+								<hr class="featurette-divider">
+								<div class="col-md-12 mb-3">
+									<h5>Responsabilidad del mantenimiento</h5>
+									<p class="lead"><small>Seleccione según sea, de acuerdo al cronograma incluyendo los
+											mantenimientos preventivos</small></p>
+
+
+								</div>
+
+								<div class="col-md-1">
+									<label for="mesentipomtto">Enero</label>
+									<select class="form-control" th:field="*{Enero_mantenimiento}" id="mesentipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesfetipomtto">Febrero</label>
+									<select class="form-control" th:field="*{Febrero_mantenimiento}" id="mesfetipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesmartipomtto">Marzo</label>
+									<select class="form-control" th:field="*{Marzo_mantenimiento}" id="mesmartipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesabtipomtto">Abril</label>
+									<select class="form-control" th:field="*{Abril_mantenimiento}" id="mesabtipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesmaytipomtto">Mayo</label>
+									<select class="form-control" th:field="*{Mayo_mantenimiento}" id="mesmaytipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesjuntipomtto">Junio</label>
+									<select class="form-control" th:field="*{Junio_mantenimiento}" id="mesjuntipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesjultipomtto">Julio</label>
+									<select class="form-control" th:field="*{Julio_mantenimiento}" id="mesjultipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesagtipomtto">Agosto</label>
+									<select class="form-control" th:field="*{Agosto_mantenimiento}" id="mesagtipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="messeptipomtto">Septiembre</label>
+									<select class="form-control" th:field="*{Septiembre_mantenimiento}"
+										id="messeptipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesoctipomtto">Octubre</label>
+									<select class="form-control" th:field="*{Octubre_mantenimiento}" id="mesoctipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesnovtipomtto">Noviembre</label>
+									<select class="form-control" th:field="*{Noviembre_mantenimiento}"
+										id="mesnovtipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+								<div class="col-md-1">
+									<label for="mesditipomtto">Diciembre</label>
+									<select class="form-control" th:field="*{Diciembre_mantenimiento}"
+										id="mesditipomtto">
+										<option value="0">Elija</option>
+										<option value="m">Mantenimiento preventivo</option>
+										<option value="C">Contrato</option>
+										<option value="G">Garantía</option>
+									</select>
+
+								</div>
+							</div>
+
+						</div>
+						<div class="col-md-4">
+							<label for="codigo" class="form-label" align="text-center">Código</label>
+							<input type="text" th:field="*{Codigo}" class="form-control is-valid" name="codigo"
+								placeholder="Ingrese código del equipo">
+						</div>
+						<div class="col-md-4">
+							<label class="form-label" align="text-center">Seleccione si el equipo ingresa a los
+								servicios</label>
+							<div class="form-check mb-3">
+								<input type="checkbox" th:field="*{Activo}" id="activoserv" name="activoserv">
+								<label class="form-check-label" for="activoserv">Activo</label>
+							</div>
+						</div>
+						<hr class="featurette-divider">
+
+						<div class="col-12">
+							<div class="btn-group">
+								<button class="w-150 btn btn-dark btn-lg" type="submit">Guardar</button>
+								<button class="w-150 btn btn-dark btn-lg">Atras</button>
+							</div>
+						</div>
+
+
+					</div>
+
+				</form>
+			</div>
+	</div>
+	</main>
+
+	<footer class="my-5 pt-5 text-muted text-center text-small">
+		<p class="mb-1">&copy; 2022 HRCatch</p>
+
+	</footer>
+	</div>
+
+
+
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var dictservice = /*[[${servicios}]]*/ 'default';
+	var listnameservice = dictservice;
+	var botonopr = 0;
+
+	$("#dic12").hide();
+	$("#nov11").hide();
+	$("#oct10").hide();
+	$("#sep9").hide();
+	$("#ago8").hide();
+	$("#jul7").hide();
+	$("#jun6").hide();
+	$("#may5").hide();
+	$("#abr4").hide();
+	$("#mar3").hide();
+	$("#feb2").hide();
+	$("#ene1").hide();
+	var mesesstr = /*[[${meses}]]*/ 'default';
+	var diasstr = /*[[${dias}]]*/ 'default';
+
+	if (mesesstr != null && diasstr != null) {
+		var mesesarray = mesesstr.split(',');
+
+		var diasarray = diasstr.split(',');
+		console.log(diasarray)
+		if (mesesarray.indexOf('ENERO') != -1) {
+			let posicion = mesesarray.indexOf('ENERO')
+
+			$("#menero").prop("checked", true);
+			$("#ene1").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "1/" + mttodias[0] + " - " + "1/" + mttodias[1];
+			var inputenero = document.getElementById("ene1");
+			inputenero.value = rangedates;
+		}
+		if (mesesarray.indexOf('FEBRERO') != -1) {
+			let posicion = mesesarray.indexOf('FEBRERO')
+
+			$("#mfebrero").prop("checked", true);
+			$("#feb2").show();
+			var mttodias = diasarray[posicion].split('-');
+
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "2/" + mttodias[0] + " - " + "2/" + mttodias[1];
+			var inputmes = document.getElementById("feb2");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('MARZO') != -1) {
+			let posicion = mesesarray.indexOf('MARZO')
+
+			$("#mmarzo").prop("checked", true);
+			$("#mar3").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "3/" + mttodias[0] + " - " + "3/" + mttodias[1];
+			var inputmes = document.getElementById("mar3");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('ABRIL') != -1) {
+			let posicion = mesesarray.indexOf('ABRIL')
+
+			$("#mabril").prop("checked", true);
+			$("#abr4").show();
+			var mttodias = diasarray[posicion].split('-');
+
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			console.log(mttodias)
+			var rangedates = "4/" + mttodias[0] + " - " + "4/" + mttodias[1];
+			console.log(rangedates)
+			var inputmes = document.getElementById("abr4");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('MAYO') != -1) {
+			let posicion = mesesarray.indexOf('MAYO')
+
+			$("#mmayo").prop("checked", true);
+			$("#may5").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "5/" + mttodias[0] + " - " + "5/" + mttodias[1];
+			var inputmes = document.getElementById("may5");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('JUNIO') != -1) {
+			let posicion = mesesarray.indexOf('JUNIO')
+
+			$("#mjunio").prop("checked", true);
+			$("#jun6").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "6/" + mttodias[0] + " - " + "6/" + mttodias[1];
+			var inputmes = document.getElementById("jun6");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('JULIO') != -1) {
+			let posicion = mesesarray.indexOf('JULIO')
+
+			$("#mjulio").prop("checked", true);
+			$("#jul7").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "7/" + mttodias[0] + " - " + "7/" + mttodias[1];
+			var inputmes = document.getElementById("jul7");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('AGOSTO') != -1) {
+			let posicion = mesesarray.indexOf('AGOSTO')
+
+			$("#magosto").prop("checked", true);
+			$("#ago8").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "8/" + mttodias[0] + " - " + "8/" + mttodias[1];
+			var inputmes = document.getElementById("ago8");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('SEPTIEMBRE') != -1) {
+			let posicion = mesesarray.indexOf('SEPTIEMBRE')
+
+			$("#mseptiembre").prop("checked", true);
+			$("#sep9").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "9/" + mttodias[0] + " - " + "9/" + mttodias[1];
+			var inputmes = document.getElementById("sep9");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('OCTUBRE') != -1) {
+			let posicion = mesesarray.indexOf('OCTUBRE')
+
+			$("#moctubre").prop("checked", true);
+			$("#oct10").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "10/" + mttodias[0] + " - " + "10/" + mttodias[1];
+			console.log(rangedates)
+			var inputmes = document.getElementById("oct10");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('NOVIEMBRE') != -1) {
+			let posicion = mesesarray.indexOf('NOVIEMBRE')
+
+			$("#mnoviembre").prop("checked", true);
+			$("#nov11").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "11/" + mttodias[0] + " - " + "11/" + mttodias[1];
+			var inputmes = document.getElementById("nov11");
+			inputmes.value = rangedates;
+		}
+		if (mesesarray.indexOf('DICIEMBRE') != -1) {
+			let posicion = mesesarray.indexOf('DICIEMBRE')
+
+			$("#mdiciembre").prop("checked", true);
+			$("#dic12").show();
+			var mttodias = diasarray[posicion].split('-');
+			if (mttodias.length > 1) {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+				if (parseInt(mttodias[1], 10) < 10) {
+					mttodias[1] = '0' + mttodias[1];
+				}
+
+
+			}
+			else {
+				if (parseInt(mttodias[0], 10) < 10) {
+					mttodias[0] = '0' + mttodias[0];
+				}
+
+			}
+			var rangedates = "12/" + mttodias[0] + " - " + "12/" + mttodias[1];
+			var inputmes = document.getElementById("dic12");
+			inputmes.value = rangedates;
+		}
+
+
+	}
+
+
+
+
+
+
+	$(document).ready(function () {
+
+		$('#anual').on('change', function () {
+
+			var anual = document.getElementById("anual").checked;
+			var text = document.getElementById("period");
+
+			if (anual) {
+				text.textContent = "Seleccione unicamente un mes."
+
+			} else {
+				text.textContent = ""
+
+			}
+		})
+		$('#trimestral').on('change', function () {
+
+			var trimestral = document.getElementById("trimestral").checked;
+			var text = document.getElementById("period");
+
+			if (trimestral) {
+				text.textContent = "Seleccione cuatro meses cada tres meses."
+
+			} else {
+				text.textContent = ""
+
+			}
+		})
+		$('#semestral').on('change', function () {
+
+			var semestral = document.getElementById("semestral").checked;
+			var text = document.getElementById("period");
+
+			if (semestral) {
+				text.textContent = "Seleccione dos meses cada seis meses."
+
+			} else {
+				text.textContent = ""
+
+			}
+		})
+		$('#cuatrimestral').on('change', function () {
+
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var text = document.getElementById("period");
+
+			if (cuatrimestral) {
+				text.textContent = "Seleccione tres meses cada cuatro meses."
+
+			} else {
+				text.textContent = ""
+
+			}
+		})
+		$('#mdiciembre').on('change', function () {
+			var dic = document.getElementById("mdiciembre").checked;
+			var text = document.getElementById("adv");
+			if (dic) {
+				$("#dic12").show();
+
+				botonopr += 1;
+				$("#mesditipomtto").val("m");
+
+			} else {
+				$("#dic12").hide();
+				botonopr -= 1;
+				$("#mesditipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mnoviembre').on('change', function () {
+
+			var nov = document.getElementById("mnoviembre").checked;
+			var text = document.getElementById("adv");
+			if (nov) {
+				$("#nov11").show();
+				botonopr += 1;
+				$("#mesnovtipomtto").val("m");
+			} else {
+				$("#nov11").hide();
+				botonopr -= 1;
+				$("#mesnovtipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#moctubre').on('change', function () {
+
+			var oct = document.getElementById("moctubre").checked;
+			var text = document.getElementById("adv");
+			if (oct) {
+				$("#oct10").show();
+				botonopr += 1;
+				$("#mesoctipomtto").val("m");
+			} else {
+				$("#oct10").hide();
+				botonopr -= 1;
+				$("#mesoctipomtto").val("0");
+
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mseptiembre').on('change', function () {
+
+			var sep = document.getElementById("mseptiembre").checked;
+			var text = document.getElementById("adv");
+			if (sep) {
+				$("#sep9").show();
+				botonopr += 1;
+				$("#messeptipomtto").val("m");
+
+			} else {
+				$("#sep9").hide();
+				botonopr -= 1;
+				$("#messeptipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#magosto').on('change', function () {
+
+			var ago = document.getElementById("magosto").checked;
+			var text = document.getElementById("adv");
+			if (ago) {
+				$("#ago8").show();
+				botonopr += 1;
+				$("#mesagtipomtto").val("m");
+			} else {
+				$("#ago8").hide();
+				botonopr -= 1;
+				$("#mesagtipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mjulio').on('change', function () {
+
+			var jul = document.getElementById("mjulio").checked;
+			var text = document.getElementById("adv");
+			if (jul) {
+				$("#jul7").show();
+				botonopr += 1;
+				$("#mesjultipomtto").val("m");
+			} else {
+				$("#jul7").hide();
+				botonopr -= 1;
+				$("#mesjultipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mjunio').on('change', function () {
+
+			var jun = document.getElementById("mjunio").checked;
+			var text = document.getElementById("adv");
+			if (jun) {
+				$("#jun6").show();
+				$("#mesjuntipomtto").val("m");
+				botonopr += 1;
+			} else {
+				$("#jun6").hide();
+				botonopr -= 1;
+				$("#mesjuntipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mmayo').on('change', function () {
+
+			var may = document.getElementById("mmayo").checked;
+			var text = document.getElementById("adv");
+			if (may) {
+				$("#may5").show();
+				botonopr += 1;
+				$("#mesmaytipomtto").val("m");
+			} else {
+				$("#may5").hide();
+				botonopr -= 1;
+				$("#mesmaytipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mabril').on('change', function () {
+
+			var abr = document.getElementById("mabril").checked;
+			var text = document.getElementById("adv");
+			if (abr) {
+				$("#abr4").show();
+				botonopr += 1;
+				$("#mesabtipomtto").val("m");
+
+			} else {
+				$("#abr4").hide();
+				botonopr -= 1;
+				$("#mesabtipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mmarzo').on('change', function () {
+
+			var mar = document.getElementById("mmarzo").checked;
+			var text = document.getElementById("adv");
+			if (mar) {
+				$("#mar3").show();
+				$("#mesmartipomtto").val("m");
+				botonopr += 1;
+			} else {
+				$("#mar3").hide();
+				botonopr -= 1;
+				$("#mesmartipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#mfebrero').on('change', function () {
+
+			var feb = document.getElementById("mfebrero").checked;
+			var text = document.getElementById("adv");
+			if (feb) {
+				$("#feb2").show();
+				botonopr += 1;
+				$("#mesfetipomtto").val("m");
+			} else {
+				$("#feb2").hide();
+				botonopr -= 1;
+				$("#mesfetipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+		$('#menero').on('change', function () {
+
+			var ene = document.getElementById("menero").checked;
+			var text = document.getElementById("adv");
+
+			if (ene) {
+				$("#ene1").show();
+				botonopr += 1;
+				$("#mesentipomtto").val("m");
+
+			} else {
+				$("#ene1").hide();
+				botonopr -= 1;
+				$("#mesentipomtto").val("0");
+			}
+			var cuatrimestral = document.getElementById("cuatrimestral").checked;
+			var semestral = document.getElementById("semestral").checked;
+			var trimestral = document.getElementById("trimestral").checked;
+			var anual = document.getElementById("anual").checked;
+			if (cuatrimestral && botonopr > 3) {
+				text.textContent = "Ya ha seleccionado más de tres fechas de mantenimiento!"
+			}
+			else if (semestral && botonopr > 2) {
+				text.textContent = "Ya ha seleccionado más de dos fechas de mantenimiento!"
+			}
+			else if (trimestral && botonopr > 4) {
+				text.textContent = "Ya ha seleccionado más de cuatro fechas de mantenimiento!"
+			}
+			else if (anual && botonopr > 1) {
+				text.textContent = "Ya ha seleccionado más de una fecha de mantenimiento!"
+			}
+			else {
+				text.textContent = ""
+			}
+		})
+
+
+	});
+
+
+
+
+
+	function autocomplete(inp, arr) {
+		/*the autocomplete function takes two arguments,
+		the text field element and an array of possible autocompleted values:*/
+		var currentFocus;
+		/*execute a function when someone writes in the text field:*/
+		inp.addEventListener("input", function (e) {
+			var a, b, i, val = this.value;
+			/*close any already open lists of autocompleted values*/
+			closeAllLists();
+			if (!val) {return false;}
+			currentFocus = -1;
+			/*create a DIV element that will contain the items (values):*/
+			a = document.createElement("DIV");
+			a.setAttribute("id", this.id + "autocomplete-list");
+			a.setAttribute("class", "autocomplete-items");
+			/*append the DIV element as a child of the autocomplete container:*/
+			this.parentNode.appendChild(a);
+			/*for each item in the array...*/
+			for (i = 0; i < arr.length; i++) {
+				/*check if the item starts with the same letters as the text field value:*/
+				if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+					/*create a DIV element for each matching element:*/
+					b = document.createElement("DIV");
+					/*make the matching letters bold:*/
+					b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+					b.innerHTML += arr[i].substr(val.length);
+					/*insert a input field that will hold the current array item's value:*/
+					b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+					/*execute a function when someone clicks on the item value (DIV element):*/
+					b.addEventListener("click", function (e) {
+						/*insert the value for the autocomplete text field:*/
+						inp.value = this.getElementsByTagName("input")[0].value;
+						/*close the list of autocompleted values,
+						(or any other open lists of autocompleted values:*/
+						closeAllLists();
+					});
+					a.appendChild(b);
+				}
+			}
+		});
+		/*execute a function presses a key on the keyboard:*/
+		inp.addEventListener("keydown", function (e) {
+			var x = document.getElementById(this.id + "autocomplete-list");
+			if (x) x = x.getElementsByTagName("div");
+			if (e.keyCode == 40) {
+				/*If the arrow DOWN key is pressed,
+				increase the currentFocus variable:*/
+				currentFocus++;
+				/*and and make the current item more visible:*/
+				addActive(x);
+			} else if (e.keyCode == 38) { //up
+				/*If the arrow UP key is pressed,
+				decrease the currentFocus variable:*/
+				currentFocus--;
+				/*and and make the current item more visible:*/
+				addActive(x);
+			} else if (e.keyCode == 13) {
+				/*If the ENTER key is pressed, prevent the form from being submitted,*/
+				e.preventDefault();
+				if (currentFocus > -1) {
+					/*and simulate a click on the "active" item:*/
+					if (x) x[currentFocus].click();
+				}
+			}
+		});
+		function addActive(x) {
+			/*a function to classify an item as "active":*/
+			if (!x) return false;
+			/*start by removing the "active" class on all items:*/
+			removeActive(x);
+			if (currentFocus >= x.length) currentFocus = 0;
+			if (currentFocus < 0) currentFocus = (x.length - 1);
+			/*add class "autocomplete-active":*/
+			x[currentFocus].classList.add("autocomplete-active");
+		}
+		function removeActive(x) {
+			/*a function to remove the "active" class from all autocomplete items:*/
+			for (var i = 0; i < x.length; i++) {
+				x[i].classList.remove("autocomplete-active");
+			}
+		}
+		function closeAllLists(elmnt) {
+			/*close all autocomplete lists in the document,
+			except the one passed as an argument:*/
+			var x = document.getElementsByClassName("autocomplete-items");
+			for (var i = 0; i < x.length; i++) {
+				if (elmnt != x[i] && elmnt != inp) {
+					x[i].parentNode.removeChild(x[i]);
+				}
+			}
+		}
+		/*execute a function when someone clicks in the document:*/
+		document.addEventListener("click", function (e) {
+			closeAllLists(e.target);
+		});
+	}
+	autocomplete(document.getElementById("myInput"), listnameservice);
+/*]]>*/
+</script>
+<script>
+	$(function () {
+		$('input[name="datetimes"]').daterangepicker({
+			timepicker: true,
+
+			locale: {
+				format: 'M/DD '
+			}
+
+		});
+
+	});
+</script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</html>

@@ -1,0 +1,1392 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${equipo.Nombre_equipo}+' '+${equipo.Serie}"></title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+
+		}
+
+		.containers {
+			position: relative;
+			max-width: 650px;
+			margin: 0px auto;
+			margin-top: 50px;
+		}
+
+		.comment {
+			float: left;
+			width: 100%;
+			height: auto;
+		}
+
+		.commenter {
+			float: left;
+		}
+
+		.commenter img {
+			width: 35px;
+			height: 35px;
+		}
+
+		.commenter-text-area {
+			float: left;
+			width: auto;
+
+			height: auto;
+		}
+
+		.textinput {
+			float: left;
+			width: 100%;
+			min-height: 75px;
+			outline: none;
+			resize: none;
+			border: 1px solid grey;
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+	<script th:src="@{/js/jquery-3.6.0.js}"></script>
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand"
+					th:href="${usuario.getTipo_cargo_usuario} == 7 ? @{/sysvisitante} : @{/syshome}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page"
+								th:href="${usuario.getTipo_cargo_usuario} == 7 ? @{/serviciosys} + '/' + ${equipo.servicio.id_Servicio} : @{/sysequipos/}+${equipo.tipo_equipo.id_Tipo_equipo}">Atras</a>
+						</li>
+						<li class="nav-item" th:if="${usuario.getTipo_cargo_usuario} != 7">
+							<a class="nav-link" th:href="@{/systipos}">Inventario</a>
+						</li>
+						<li class="nav-item" th:if="${usuario.getTipo_cargo_usuario} != 7">
+							<a class="nav-link" th:href="@{/sysmantenimiento}">Mantenimiento</a>
+						</li>
+						<li class="nav-item" th:if="${usuario.getTipo_cargo_usuario} != 7">
+							<a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<main class="container">
+
+		<div class="my-3 p-3 bg-body rounded shadow-sm">
+			<div class="starter-template text-center py-5 px-3">
+				<h1 th:text="${equipo.Nombre_equipo}">
+					</medium>
+				</h1>
+				<small th:text="${equipo.Marca}+ ' '+ ${equipo.Modelo}"></small>
+				<h2 th:text="${equipo.Serie}"> </h2>
+				<h4 th:text="${equipo.servicio.Nombre_servicio}"> </h4>
+
+				<medium th:text="${equipo.Ubicacion}"></medium>
+
+				<p class="lead">A continuación podra visualizar las actividades realizadas al equipo</p>
+				<p th:text="${mttos.size()}"></p>
+			</div>
+			<div class="container-xl">
+				<div class="row">
+					<div class="bd-example">
+
+
+						<nav>
+							<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+
+								<a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home"
+									role="tab" aria-controls="nav-home" aria-selected="true">Reportes</a>
+
+								<a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile"
+									role="tab" aria-controls="nav-profile" aria-selected="false">Hoja de vida</a>
+
+
+							</div>
+						</nav>
+
+						<div class="tab-content" id="nav-tabContent">
+							<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+								aria-labelledby="nav-home-tab">
+								<div class="col-md-12 col-lg-12">
+									<div class="input-group">
+										<input class="form-control" id="myInput" onkeyup="myFunction()" type="text"
+											placeholder="Ingrese por quien fue realizado, el número o la fecha del reporte"
+											aria-label="Search">
+										<span class="input-group-btn">
+											<button type="button" class="w-200 btn btn-lg btn-dark"
+												onclick="myFunction()">Buscar</button>
+										</span>
+									</div>
+								</div>
+
+
+
+								<div class="bd-example">
+									<div th:if="${#lists.isEmpty(mttos)}" class="alert alert-info my-4"
+										th:text="'No existen reportes para este equipo por ID, Revise en el campo OTROS'">
+									</div>
+									<div class="table-responsive">
+
+										<table class="table table-hover" th:if="${not #lists.isEmpty(mttos)}"
+											id="myTable">
+											<thead>
+												<tr class="table-secondary">
+													<th scope="col">Fecha</th>
+													<th scope="col">N°</th>
+
+													<th scope="col">Tipo de mtto</th>
+													<th scope="col">Tipo de falla</th>
+
+													<th scope="col">Realizado por</th>
+													<th scope="col">Recibido por</th>
+													<th scope="col">Observaciones</th>
+													<th scope="col">Reporte completo</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="table-light" th:each="mtto,iter:${mttos}">
+
+													<th th:text="${mtto.Fecha}"></th>
+													<td th:text="${mtto.Numero_reporte}"></td>
+													<div th:switch="${mtto.Tipo_mantenimiento}">
+
+														<td th:case="0">ENTREGA</td>
+														<td th:case="1">PREVENTIVO</td>
+														<td th:case="2">CORRECTIVO</td>
+														<td th:case="3">PREVENTIVO Y CORRECTIVO</td>
+														<td th:case="4">DAÑO</td>
+														<td th:case="5">PREVENTIVO F2</td>
+														<td th:case="6">CORECTIVO F2</td>
+													</div>
+
+													<td th:text="${mtto.Tipo_falla}"></td>
+													<td th:text="${mtto.Autor_realizado}"></td>
+
+													<td th:text="${mtto.Autor_recibido}"></td>
+
+													<td
+														th:text="'S: '+${mtto.Observacioness}+' H: '+${mtto.Observacionesh}">
+													</td>
+
+													<td>
+														<button type="button" class="btn btn-primary"
+															data-bs-toggle="modal"
+															th:attr="data-bs-target='#staticBackdrop'+${mtto.id_Sysmtto}">
+															Más
+														</button>
+														<button sec:authorize="hasAnyAuthority('ADMIN','EDITOR')"
+															th:onclick="'window.location.href = \''+@{/editreporte/}+${mtto.id_Sysmtto}+'\''"
+															type="button" class="btn btn-success">Editar</button>
+
+														<!-- Modal -->
+														<div class="modal" th:id="'staticBackdrop'+${mtto.id_Sysmtto}"
+															data-bs-backdrop="static" data-bs-keyboard="false"
+															tabindex="-1" aria-labelledby="staticBackdropLabel"
+															aria-hidden="true">
+															<div class="modal-dialog modal-xl">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="staticBackdropLabel"
+																			th:text="${mtto.Numero_reporte}"></h5>
+																		<button type="button" class="btn-close"
+																			data-bs-dismiss="modal"
+																			aria-label="Close"></button>
+																	</div>
+																	<div class="modal-body">
+																		<div class="row">
+																			<div class="col-md-6">
+																				<div class="table-responsive">
+																					<table class="table">
+																						<thead>
+																							<tr>
+																								<th scope="col">Dato
+																								</th>
+																								<th scope="col">Valor
+																								</th>
+
+																							</tr>
+																						</thead>
+																						<tbody>
+																							<tr>
+																								<td scope="col"> Fecha:
+																								</td>
+																								<td
+																									th:text="${mtto.Fecha}">
+																								</td>
+
+																							</tr>
+																							<tr>
+																								<td>Hora inicio:</td>
+																								<td
+																									th:text="${mtto.Hora_inicio}">
+																								</td>
+
+																							</tr>
+																							<tr>
+																								<td>Hora llamado:</td>
+																								<td
+																									th:text="${mtto.Hora_llamado}">
+																								</td>
+
+																							</tr>
+																							<tr>
+																								<td>Hora terminacion:
+																								</td>
+																								<td
+																									th:text="${mtto.Hora_terminacion}">
+																								</td>
+
+																							</tr>
+																						</tbody>
+
+																					</table>
+																				</div>
+
+																				<!-- <div th:if = "${mtto.MPHardware}"> -->
+																				<div>
+																					<h6>Suba el documento del
+																						mantenimiento
+																						preventivo/correctivo Hardware y
+																						Software</h6>
+																					<form class="needs-validation"
+																						validate method="post"
+																						th:action="@{/uploadsysreport/}+${mtto.id_Sysmtto}"
+																						enctype="multipart/form-data"
+																						th:id="'fileUploadForm'+${mtto.id_Sysmtto}">
+																						<div class="input-group"
+																							sec:authorize="hasAnyAuthority('ADMIN','SYSADMIN','SYSUSER')">
+																							<label class="custom-file"
+																								th:id="'custom-file'+${mtto.id_Sysmtto}">
+																								<input type="file"
+																									class="form-control"
+																									name="file"
+																									accept="application/pdf"
+																									required>
+																								<span
+																									class="form-control"></span>
+																							</label>
+																							<div class="form-group">
+																								<button type="submit"
+																									class="btn btn-warning">Subir</button>
+
+																							</div>
+																						</div>
+																					</form>
+																					<div th:if="${mtto.Rutahardware}">
+																						<form method="get"
+																							th:action="@{/visualpdfsysmtto/}+${mtto.id_Sysmtto}"
+																							enctype="multipart/form-data"
+																							th:id="'fileUploadForm'+${mtto.id_Sysmtto}"
+																							class="container">
+
+																							<button type="submit"
+																								id="previewBtn"
+																								class="btn btn-primary">Visualizar</button>
+																						</form>
+																					</div>
+																				</div>
+																				<div th:if="${mtto.Entrega}">
+																					<h6>Suba el documento de la entrega
+																					</h6>
+																					<form class="needs-validation"
+																						validate method="post"
+																						th:action="@{/uploadsysentrega/}+${mtto.id_Sysmtto}"
+																						enctype="multipart/form-data"
+																						th:id="'fileUploadForm'+${mtto.id_Sysmtto}">
+																						<div class="input-group"
+																							sec:authorize="hasAnyAuthority('SYSADMIN','SYSUSER')">
+																							<label class="custom-file"
+																								th:id="'custom-file'+${mtto.id_Sysmtto}">
+																								<input type="file"
+																									class="form-control"
+																									name="file"
+																									accept="application/pdf"
+																									required>
+																								<span
+																									class="form-control"></span>
+																							</label>
+																							<div class="form-group">
+																								<button type="submit"
+																									class="btn btn-success">Subir</button>
+
+																							</div>
+																						</div>
+																					</form>
+																					<div th:if="${mtto.Rutaentrega}">
+																						<form method="get"
+																							th:action="@{/visualpdfentrega/}+${mtto.id_Sysmtto}"
+																							enctype="multipart/form-data"
+																							th:id="'fileUploadForm'+${mtto.id_Sysmtto}"
+																							class="container">
+
+																							<button type="submit"
+																								id="previewBtn"
+																								class="btn btn-primary">Visualizar</button>
+																						</form>
+																					</div>
+																				</div>
+
+																				<div th:if="${mtto.Rutinah}">
+																					<h5>Mantenimiento preventivo
+																						Hardware</h5>
+																					<div class="table-responsive">
+																						<table
+																							class="table table-hover">
+																							<thead>
+																								<tr
+																									class="table-secondary">
+																									<th scope="col">Paso
+																									</th>
+																									<th scope="col">
+																										Cumple</th>
+																									<th scope="col">No
+																										cumple</th>
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<tr class="table-white"
+																									th:each="protocolo,count:${protocoloh}">
+																									<td
+																										th:text="${protocolo.Paso}">
+																									</td>
+																									<div
+																										th:if="${# arrays.contains(#strings.arraySplit(mtto.Rutinah, ','), #strings.toString(count.index))}">
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													checked
+																													disabled>
+																											</div>
+																										</td>
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													disabled>
+																											</div>
+																										</td>
+																									</div>
+																									<div
+																										th:unless="${# arrays.contains(#strings.arraySplit(mtto.Rutinah, ','), #strings.toString(count.index))}">
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													disabled>
+																											</div>
+																										</td>
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													checked
+																													disabled>
+																											</div>
+																										</td>
+																									</div>
+
+																								</tr>
+																							</tbody>
+																						</table>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-md-6">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<div class="starter-template text-center py-2"
+																							th:id="${mtto.id_Sysmtto}">
+																							<label
+																								for="disabledSelectrealizado"
+																								class="form-label">Tipo
+																								de mantenimiento</label>
+																							<fieldset class="mb-3">
+
+																								<div class="mb-3 form-check"
+																									th:if="${mtto.Tipo_mantenimiento==3}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto3'+${mtto.id_Sysmtto}"
+																										checked
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto3'+${mtto.id_Sysmtto}">Preventivo
+																										y
+																										Correctivo</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:unless="${mtto.Tipo_mantenimiento==3}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto3n'+${mtto.id_Sysmtto}"
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto3n'+${mtto.id_Sysmtto}">Preventivo
+																										y
+																										Correctivo</label>
+
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:if="${mtto.Tipo_mantenimiento==2}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto2'+${mtto.id_Sysmtto}"
+																										checked
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto2'+${mtto.id_Sysmtto}">Correctivo</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:unless="${mtto.Tipo_mantenimiento==2}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto2n'+${mtto.id_Sysmtto}"
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto2n'+${mtto.id_Sysmtto}">Correctivo</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:if="${mtto.Tipo_mantenimiento==1}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto'+${mtto.id_Sysmtto}"
+																										checked
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto'+${mtto.id_Sysmtto}">Preventivo</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:unless="${mtto.Tipo_mantenimiento==1}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtton'+${mtto.id_Sysmtto}"
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtton'+${mtto.id_Sysmtto}">Preventivo</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:if="${mtto.Tipo_mantenimiento==0}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto'+${mtto.id_Sysmtto}"
+																										checked
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto'+${mtto.id_Sysmtto}">Entrega</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:unless="${mtto.Tipo_mantenimiento==0}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtton'+${mtto.id_Sysmtto}"
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtton'+${mtto.id_Sysmtto}">Entrega</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:if="${mtto.Tipo_mantenimiento==5}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto'+${mtto.id_Sysmtto}"
+																										checked
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto'+${mtto.id_Sysmtto}">Preventivo
+																										F2</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:unless="${mtto.Tipo_mantenimiento==5}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtton'+${mtto.id_Sysmtto}"
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtton'+${mtto.id_Sysmtto}">Preventivo
+																										F2</label>
+																								</div>
+
+																								<div class="mb-3 form-check"
+																									th:if="${mtto.Tipo_mantenimiento==6}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtto'+${mtto.id_Sysmtto}"
+																										checked
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtto'+${mtto.id_Sysmtto}">Correctivo
+																										F2</label>
+																								</div>
+																								<div class="mb-3 form-check"
+																									th:unless="${mtto.Tipo_mantenimiento==6}">
+																									<input
+																										type="checkbox"
+																										name="radiostm"
+																										class="form-check-input"
+																										th:id="'permtton'+${mtto.id_Sysmtto}"
+																										disabled><label
+																										class="form-check-label"
+																										th:for="'permtton'+${mtto.id_Sysmtto}">Correctivo
+																										F2</label>
+																								</div>
+																							</fieldset>
+																						</div>
+																					</div>
+																					<div class="col-md-6">
+																						<div class="mb-3">
+																							<label
+																								for="disabledSelectrealizado"
+																								class="form-label">Tipo
+																								de falla</label>
+																							<select
+																								id="disabledSelectrealizado"
+																								class="form-select"
+																								disabled>
+																								<div
+																									th:switch="${mtto.Tipo_falla}">
+
+																									<option th:case="0">
+																										Entrega</option>
+																									<option th:case="1">
+																										Desgaste
+																									</option>
+																									<option th:case="2">
+																										Operación
+																										indebida
+																									</option>
+																									<option th:case="3">
+																										Causa externa
+																									</option>
+																									<option th:case="4">
+																										Accesorios
+																									</option>
+																									<option th:case="5">
+																										Desconocido
+																									</option>
+																									<option th:case="6">
+																										Sin fallas
+																									</option>
+																									<option th:case="7">
+																										Otro</option>
+
+																								</div>
+
+																							</select>
+
+																						</div>
+																						<div class="mb-3">
+																							<label
+																								for="disabledSelectrealizado"
+																								class="form-label">Realizado
+																								por</label>
+																							<select
+																								id="disabledSelectrealizado"
+																								class="form-select"
+																								disabled>
+																								<option
+																									th:text="${mtto.Autor_realizado}">
+																								</option>
+																							</select>
+																						</div>
+																						<div class="mb-3">
+																							<label
+																								for="disabledSelectrealizado"
+																								class="form-label">Recibido
+																								por</label>
+																							<select
+																								id="disabledSelectrealizado"
+																								class="form-select"
+																								disabled>
+																								<option
+																									th:text="${mtto.Autor_recibido}">
+																								</option>
+																							</select>
+																						</div>
+
+
+																					</div>
+																					<div th:if="${mtto.Entrega}">
+																						<div class="mb-4">
+																							<label
+																								for="observcacionesrepo"
+																								class="form-label"><b>Ubicacion
+																									anterior</b></label>
+
+																							<textarea
+																								id="observcacionesrepo"
+																								type="text"
+																								th:text="${mtto.Observacioness}"
+																								class="form-control"
+																								readonly>
+	                                  </textarea>
+																						</div>
+																						<div class="mb-4">
+																							<label
+																								for="observcacionesrepo"
+																								class="form-label"><b>Observaciones
+																									generales</b></label>
+
+																							<textarea type="text"
+																								th:text="${mtto.Observacionesh}"
+																								class="form-control"
+																								readonly>
+	                                  </textarea>
+																						</div>
+																					</div>
+																					<div th:if="${mtto.MPSoftware}">
+																						<div class="mb-4">
+																							<label
+																								for="observcacionesrepo"
+																								class="form-label"><b>Observaciones
+																									software</b></label>
+
+																							<textarea
+																								id="observcacionesrepo"
+																								type="text"
+																								th:text="${mtto.Observacioness}"
+																								class="form-control"
+																								readonly>
+                                  </textarea>
+																						</div>
+																						<div class="mb-4">
+																							<label
+																								for="observcacionesrepo"
+																								class="form-label"><b>Observaciones
+																									hardware</b></label>
+
+																							<textarea type="text"
+																								th:text="${mtto.Observacionesh}"
+																								class="form-control"
+																								readonly>
+                                  </textarea>
+																						</div>
+																					</div>
+																				</div>
+																				<div th:if="${mtto.Rutinas}">
+																					<h5>Mantenimiento preventivo
+																						Software</h5>
+																					<div class="table-responsive">
+																						<table
+																							class="table table-hover">
+																							<thead>
+																								<tr
+																									class="table-secondary">
+																									<th scope="col">Paso
+																									</th>
+																									<th scope="col">
+																										Cumple</th>
+																									<th scope="col">No
+																										cumple</th>
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<tr class="table-white"
+																									th:each="protocolo,count:${protocolos}">
+																									<td
+																										th:text="${protocolo.Paso}">
+																									</td>
+
+																									<div
+																										th:if="${# arrays.contains(#strings.arraySplit(mtto.Rutinas, ','), #strings.toString(count.index))}">
+
+
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													checked
+																													disabled>
+																											</div>
+																										</td>
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													disabled>
+																											</div>
+																										</td>
+																									</div>
+																									<div
+																										th:unless="${# arrays.contains(#strings.arraySplit(mtto.Rutinas, ','), #strings.toString(count.index))}">
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													disabled>
+																											</div>
+																										</td>
+																										<td>
+																											<div
+																												class="form-check">
+																												<input
+																													type="checkbox"
+																													class="form-check-input"
+																													checked
+																													disabled>
+																											</div>
+																										</td>
+																									</div>
+
+																								</tr>
+																							</tbody>
+																						</table>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+
+																	</div>
+																	<div class="modal-footer">
+																		<div th:if="${mtto.Entrega}">
+																			<a th:href="@{/downlandEntregaSYS/}+${mtto.id_Sysmtto}"
+																				class="btn btn-danger">Formato
+																				entrega</a>
+																		</div>
+																		<div th:if="${mtto.MPHardware}">
+																			<a th:href="@{/downlandMttoSYS/}+${mtto.id_Sysmtto}"
+																				class="btn btn-danger">Formato
+																				mantenimiento</a>
+																		</div>
+																		<div
+																			th:if="${!mtto.MPHardware and !mtto.MPHardware and !mtto.Entrega and !mtto.Dano}">
+																			<a th:href="@{/downlandCorrectivoSYS/}+${mtto.id_Sysmtto}"
+																				class="btn btn-danger">Formato
+																				correctivo</a>
+																		</div>
+																		<div th:if="${mtto.Dano}">
+																			<a th:href="@{/downlandSysDanos/}+${mtto.id_Sysmtto}"
+																				class="btn btn-danger">Formato daños</a>
+																		</div>
+																		<button type="button" class="btn btn-secondary"
+																			data-bs-dismiss="modal">Cerrar</button>
+
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+							</div>
+							<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+								aria-labelledby="nav-profile-tab">
+								<div class="row">
+									<div th:if="${hoja_vida}">
+										<div class="row">
+											<div class="col-md-4">
+												<h5>Forma de adquisición</h5>
+												<div class="bd-example" th:each="hoja_vida:${hoja_vida}">
+
+													<div class="form-check" th:if="${hoja_vida.Compraddirecta==true}">
+														<input type="checkbox" class="form-check-input" checked
+															disabled>
+														<label class="form-check-label">Compra directa</label>
+													</div>
+													<div class="form-check"
+														th:unless="${hoja_vida.Compraddirecta==true}">
+														<input type="checkbox" class="form-check-input" disabled>
+														<label class="form-check-label">Compra directa</label>
+													</div>
+													<div class="form-check" th:if="${hoja_vida.Convenio==true}">
+														<input type="checkbox" name="radioscd3" class="form-check-input"
+															checked disabled>
+														<label class="form-check-label">Convenio</label>
+													</div>
+													<div class="form-check" th:unless="${hoja_vida.Convenio==true}">
+														<input type="checkbox" name="radioscd4" class="form-check-input"
+															disabled>
+														<label class="form-check-label">Convenio</label>
+													</div>
+													<div class="form-check" th:if="${hoja_vida.Donado==true}">
+														<input type="checkbox" name="radioscd5" class="form-check-input"
+															checked disabled>
+														<label class="form-check-label">Donado</label>
+													</div>
+													<div class="form-check" th:unless="${hoja_vida.Donado==true}">
+														<input type="checkbox" name="radioscd6" class="form-check-input"
+															disabled>
+														<label class="form-check-label">Donado</label>
+													</div>
+
+													<div class="form-check"
+														th:if="${hoja_vida.Asignadoporministerio==true}">
+														<input type="checkbox" name="radioscd7" class="form-check-input"
+															checked disabled>
+														<label class="form-check-label">Asignado por el
+															ministerio</label>
+													</div>
+													<div class="form-check"
+														th:unless="${hoja_vida.Asignadoporministerio==true}">
+														<input type="checkbox" name="radioscd8" class="form-check-input"
+															disabled>
+														<label class="form-check-label">Asignado por el
+															ministerio</label>
+													</div>
+
+													<div class="form-check"
+														th:if="${hoja_vida.Asignadoporgobernacion==true}">
+														<input type="checkbox" name="radioscd9" class="form-check-input"
+															checked disabled>
+														<label class="form-check-label">Asignado por la
+															gobernación</label>
+													</div>
+													<div class="form-check"
+														th:unless="${hoja_vida.Asignadoporgobernacion==true}">
+														<input type="checkbox" name="radioscd10"
+															class="form-check-input" disabled>
+														<label class="form-check-label">Asignado por la
+															gobernación</label>
+													</div>
+
+													<div class="mb-3 form-check" th:if="${hoja_vida.Comodato==true}">
+														<input type="checkbox" name="radioscd11"
+															class="form-check-input" checked disabled>
+														<label class="form-check-label">Comodato</label>
+													</div>
+													<div class="mb-3 form-check"
+														th:unless="${hoja_vida.Comodato==true}">
+														<input type="checkbox" name="radioscd12"
+															class="form-check-input" disabled>
+														<label class="form-check-label">Comodato</label>
+													</div>
+
+
+													<fieldset disabled aria-label="Disabled fieldset example">
+														<div class="input-group">
+															<span class="badge  bg-success">Contrato:</span>
+															<div class="mb-3 px-3">
+																<label for="disabledTextInput"
+																	class="form-label"></label>
+																<input type="text" id="disabledTextInput"
+																	class="form-control"
+																	th:placeholder="${hoja_vida.Contrato}">
+															</div>
+														</div>
+													</fieldset>
+												</div>
+
+											</div>
+											<div class="col-md-4">
+												<h5>Periodicidad</h5>
+												<div class="form-check" th:if="${equipo.Periodicidad==3}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvmtri'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvmtri'+${equipo.id_Sysequipo}">Trimestral</label>
+												</div>
+												<div class="form-check" th:unless="${equipo.Periodicidad==3}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvmtrin'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvmtrin'+${equipo.id_Sysequipo}">Trimestral</label>
+												</div>
+												<div class=" form-check" th:if="${equipo.Periodicidad==4}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvmcua'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvmcua'+${equipo.id_Sysequipo}">Cuatrimestral</label>
+												</div>
+												<div class="form-check" th:unless="${equipo.Periodicidad==4}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvmcuan'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvmcuan'+${equipo.id_Sysequipo}">Cuatrimestral</label>
+												</div>
+												<div class="form-check" th:if="${equipo.Periodicidad==2}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvmse'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvmse'+${equipo.id_Sysequipo}">Semestral</label>
+												</div>
+												<div class="form-check" th:unless="${equipo.Periodicidad==2}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvmsen'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvmsen'+${equipo.id_Sysequipo}">Semestral</label>
+												</div>
+												<div class="mb-3 form-check" th:if="${equipo.Periodicidad==1}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvmanu'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvmanu'+${equipo.id_Sysequipo}">Anual</label>
+												</div>
+												<div class="mb-3 form-check" th:unless="${equipo.Periodicidad==1}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvmanun'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvmanun'+${equipo.id_Sysequipo}">Anual</label>
+												</div>
+
+												<h5>Responsabilidad actual</h5>
+
+
+												<div class="form-check" th:if="${equipo.Mtto==0}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvMapropio'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvMapropio'+${equipo.id_Sysequipo}">Propio</label>
+												</div>
+												<div class="form-check" th:unless="${equipo.Mtto==0}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvMapropion'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvMapropion'+${equipo.id_Sysequipo}">Propio</label>
+												</div>
+												<div class="form-check" th:if="${equipo.Mtto==1}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvMacontratado'+${equipo.id_Sysequipo}" checked
+														disabled>
+													<label class="form-check-label"
+														th:for="'hvMacontratado'+${equipo.id_Sysequipo}">Contratado</label>
+												</div>
+												<div class="form-check" th:unless="${equipo.Mtto==1}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvMacontratadon'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvMacontratadon'+${equipo.id_Sysequipo}">Contratado</label>
+												</div>
+												<div class="form-check" th:if="${equipo.Mtto==2}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvMacomodato'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvMacomodato'+${equipo.id_Sysequipo}">Comodato</label>
+												</div>
+												<div class="form-check" th:unless="${equipo.Mtto==2}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvMacomodaton'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvMacomodaton'+${equipo.id_Sysequipo}">Comodato</label>
+												</div>
+												<div class="mb-3 form-check" th:if="${equipo.Mtto==3}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'hvMagarantia'+${equipo.id_Sysequipo}" checked disabled>
+													<label class="form-check-label"
+														th:for="'hvMagarantia'+${equipo.id_Sysequipo}">Garantía</label>
+												</div>
+												<div class="mb-3 form-check" th:unless="${equipo.Mtto==3}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'hvMagarantian'+${equipo.id_Sysequipo}" disabled>
+													<label class="form-check-label"
+														th:for="'hvMagarantian'+${equipo.id_Sysequipo}">Garantía</label>
+												</div>
+
+											</div>
+											<div class="col-md-4" style="text-align: center;">
+												<p th:text="'Última actualización: '+${hoja_vida.Fecha_update}"></p>
+
+												<img th:src="@{${hoja_vida.Foto}}" width="250" height="200">
+												<div class="btn-group" role="group">
+
+													<button
+														sec:authorize="hasAnyAuthority('ADMIN','SYSADMIN','SYSUSER')"
+														th:onclick="'window.location.href = \'' +@{/downlandHVSYS/}+${equipo.id_Sysequipo}+'\''"
+														type="button" class="w-100 btn btn-sm btn-danger">Descargar
+														pdf</button>
+													<button
+														sec:authorize="hasAnyAuthority('ADMIN','SYSADMIN','SYSUSER')"
+														th:onclick="'window.location.href = \'' +@{/sysedithv/}+${equipo.id_Sysequipo}+'\''"
+														type="button" class="w-100 btn btn-sm btn-secondary">Editar
+														HV</button>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<h5>Fechas importantes</h5>
+												<div class="row mb-3">
+													<div class="col-md-12">
+														<div class="bd-example">
+															<ul class="list-group list-group-flush">
+																<li class="list-group-item"
+																	th:text="'Fecha de compra: '+${hoja_vida.Fecha_compra}">
+																</li>
+																<li class="list-group-item"
+																	th:text="'Fecha de instalación: '+${hoja_vida.Fecha_instalacion}">
+																</li>
+																<li class="list-group-item"
+																	th:text="'Fecha de vencimiento de garantía: '+${hoja_vida.Fecha_vencimientogarantia}">
+																</li>
+																<li class="list-group-item"
+																	th:text="'Costo de compra: '+${hoja_vida.Costo_compra}">
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<h5>Accesorios</h5>
+												<div th:if="${#lists.isEmpty(repuestos)}" class="alert alert-info my-4"
+													th:text="'No existen repuestos para este equipo'">
+												</div>
+												<div th:if="${not #lists.isEmpty(repuestos)}">
+													<div class="table-responsive">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th scope="col">Nombre del repuesto</th>
+																	<th scope="col">Marca</th>
+																	<th scope="col">Modelo</th>
+																	<th scope="col">Serie</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr th:each="repuesto:${repuestos}">
+																	<td th:text="${repuesto.Nombre_repuesto}"></td>
+																	<td th:text="${repuesto.Marca}"></td>
+																	<td th:text="${repuesto.Modelo}"></td>
+																	<td th:text="${repuesto.Serie}"></td>
+																</tr>
+
+															</tbody>
+
+														</table>
+													</div>
+												</div>
+
+											</div>
+											<div class="col-md-6">
+												<h5>Datos del hospital</h5>
+												<div class="table-renponsive">
+													<table class="table table-hover">
+														<thead>
+															<tr class="table-secondary">
+																<th scope="col">Institución</th>
+																<th scope="col">HUSRT</th>
+
+
+															</tr>
+														</thead>
+														<tbody>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Sede</td>
+																<td th:text="${equipo.hospital.Nombre_hospital}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Departamento</td>
+																<td th:text="${hoja_vida.Departamento}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Municipio</td>
+																<td th:text="${hoja_vida.Municipio}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Dirección</td>
+																<td th:text="${hoja_vida.Direccion}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Telefono</td>
+																<td th:text="${hoja_vida.Telefonoinstitucion}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Ubicación</td>
+																<td th:text="${equipo.ubicacion}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Nivel</td>
+																<td th:text="${hoja_vida.Nivelinstitucion}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">Servicio</td>
+																<td th:text="${equipo.servicio.Nombre_servicio}"></td>
+															</tr>
+															<tr class="table-light">
+																<td scope="row" class="table-danger">E-Mail</td>
+																<td th:text="${hoja_vida.Emailinstitucion}"></td>
+															</tr>
+
+														</tbody>
+
+													</table>
+												</div>
+											</div>
+											<div class="col-md-6"
+												th:if="${hoja_vida.systemEquipo.tipo_equipo.id_Tipo_equipo} != 130">
+												<h5>Datos adicionales</h5>
+
+												<div class="starter-template">
+													<div class="table-responsive">
+														<table class="table table-hover">
+															<thead>
+																<tr class="table-secondary">
+																	<th scope="col">Dato</th>
+																	<th scope="col">Valor</th>
+
+
+																</tr>
+															</thead>
+
+															<tbody>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Vendedor</td>
+																	<td th:text="${hoja_vida.vendedor}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Tipo de uso</td>
+																	<td th:text="${hoja_vida.tipoUso}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Procesador</td>
+																	<td th:text="${hoja_vida.Procesador}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Disco duro</td>
+																	<td th:text="${hoja_vida.Disco_duro}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Memoria RAM</td>
+																	<td th:text="${hoja_vida.Ram}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Sistema operativo
+																	</td>
+																	<td th:text="${hoja_vida.Sistema_operativo}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Office</td>
+																	<td th:text="${hoja_vida.Office}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Dirección IP</td>
+																	<td th:text="${hoja_vida.Ip}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Dirección MAC</td>
+																	<td th:text="${hoja_vida.mac}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Nombre de usuario
+																	</td>
+																	<td th:text="${hoja_vida.Nombre_usuario}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Tonner</td>
+																	<td th:text="${hoja_vida.Tonner}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Observaciones</td>
+																	<td th:text="${hoja_vida.observaciones}"></td>
+																</tr>
+															</tbody>
+
+														</table>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="col-md-6"
+												th:if="${hoja_vida.systemEquipo.tipo_equipo.id_Tipo_equipo} == 130">
+												<h5>Datos adicionales</h5>
+
+												<div class="starter-template">
+													<div class="table-responsive">
+														<table class="table table-hover">
+															<thead>
+																<tr class="table-secondary">
+																	<th scope="col">Dato</th>
+																	<th scope="col">Valor</th>
+
+
+																</tr>
+															</thead>
+
+															<tbody>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Dirección IP</td>
+																	<td th:text="${hoja_vida.Ip}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Puertos</td>
+																	<td th:text="${equipo.NumeroPuertos}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Direccionamiento
+																		Vlan</td>
+																	<td th:text="${equipo.DireccionamientoVlan}"></td>
+																</tr>
+																<tr class="table-light">
+																	<td scope="row" class="table-info">Administrable
+																	</td>
+																	<td th:if="${equipo.Administrable} == true"> Si
+																	</td>
+																	<td th:if="${equipo.Administrable} == false"> No
+																	</td>
+																</tr>
+															</tbody>
+
+														</table>
+													</div>
+												</div>
+
+											</div>
+
+
+										</div>
+									</div>
+									<div th:unless="${hoja_vida}">
+										<button sec:authorize="hasAnyAuthority('ADMIN','SYSADMIN','SYSUSER')"
+											th:onclick="'window.location.href = \'' +@{/sysnuevahv/}+${equipo.id_Sysequipo}+'\''"
+											class="btn btn-outline-secondary">Crear hoja de vida</button>
+									</div>
+								</div>
+
+
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+
+
+		<footer class="container">
+			<p class="float-end"><a href="#">Back to top</a></p>
+			<p> 2021-2022 Company, Inc. </p>
+		</footer>
+	</main>
+	<script>
+		$(".previewBtn").click(function () {
+			console.log('funciona')
+			var curWwwPath = window.document.location.href;
+			var pathName = window.document.location.pathname;
+			var pos = curWwwPath.indexOf(pathName);
+			var localhostPath = curWwwPath.substring(0, pos);
+			console.log(localhostPath)
+		});
+		function myFunction() {
+			var input, filter, div, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			div = document.getElementById("myTable");
+			tr = div.getElementsByClassName("table-light");
+			console.log(tr.length)
+			for (i = 0; i < tr.length; i++) {
+				td1 = tr[i].getElementsByTagName("td")[0];
+				td2 = tr[i].getElementsByTagName("td")[4];
+				td3 = tr[i].getElementsByTagName("td")[5];
+				th = tr[i].getElementsByTagName("th")[0];
+				if (td1 || td2 || td3) {
+					txtValue1 = td1.textContent || td1.innerText;
+					txtValue2 = td2.textContent || td2.innerText;
+					txtValue3 = td3.textContent || td3.innerText;
+					txtValue4 = th.textContent || th.innerText;
+					if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+
+					else {
+						tr[i].style.display = "none";
+					}
+
+				}
+
+
+			}
+		}
+	</script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

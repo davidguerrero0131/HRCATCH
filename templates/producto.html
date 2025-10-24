@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Bandeja principal</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/product/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" media="(max-width:800px)" href="">
+
+    <style>
+    	
+	    .icons {
+	      display: grid;
+	      max-width: 100%;
+	      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr) );
+	      gap: 1.25rem;
+	    }
+	    .icon {
+	      background-color: var(--bs-light);
+	      border-radius: .25rem;
+	    }
+	    .bi {
+	      margin: .25rem;
+	      font-size: 2.5rem;
+	    }
+	    
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+        
+      }
+    
+		
+    </style>
+    
+
+    
+    <!-- Custom styles for this template -->
+    <link href="..static/css/cheatsheet.css" rel="stylesheet" th:href="@{/css/cheatsheet.css}">
+    <link rel="stylesheet" th:href="@{/font/bootstrap-icons.css}">
+    
+  </head>
+  <body>
+    
+<header class="site-header sticky-top py-1">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="main navigation">
+  <div class="container-fluid">
+    <a class="navbar-brand" >HRCatch</a>
+    <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" >Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/clasificacion}" >Clasificación</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/periodicidad}" >Periodicidad</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"th:href="@{/semaforizacion}">Semaforización </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            <li><a class="dropdown-item" sec:authorize= "hasAnyAuthority('ADMIN')" th:href="@{/crearusuario}">Crear usuarios</a></li>
+           	<li><a class="dropdown-item" sec:authorize="hasAnyAuthority('ADMIN')"
+										data-bs-toggle="modal" data-bs-target="#exampleModal">Cambiar contraseña</a>
+			</li>
+          </ul>
+        </li>
+        </ul>
+        <form class="d-flex" th:action="@{/logout}"method="post">
+        
+          
+          <button class="btn btn-outline-light" type="submit" value = "Cerrar sesión" >Cerrar sesión</button>
+        
+        </form>
+
+      
+    </div>
+  </div>
+  </nav>
+</header>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+
+			<form class="modal-content" validate th:action="@{/setpassword}" method="post">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">CAMBIAR CONTRASEÑA</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<div class="mb-3 row">
+						<label for="cedula" class="form-label">Usuario</label>
+						<input type="text" th:name="cedula" class="form-control" id="cedula" placeholder="Cedula">
+					</div>
+
+					<div class="mb-3 row">
+						<label for="password" class="form-label">Nueva Contraseña</label>
+						<input type="password" th:name="password" class="form-control" id="password"
+							placeholder="Contraseña">
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+<main>
+
+  <div class="overflow-hidden text-center bg-light">
+  	<div class = "in-flex">
+    <div class="col-md-5 p-lg-5 mx-auto">
+    	<h4 th:inline="text"> Bienvenido [[${#request.userPrincipal.principal.fullName}]] </h4>
+      	
+      <h1 th:if="${mensaje}">
+	    <p th:text="${'You have successfully submitted poem titled - '}"/></p>
+	
+	</h1>
+      <h1 class="display-4 fw-normal">HRCATCH
+      <div class="icon">
+			      <i class="bi bi-hospital"></i>
+			      
+			    </div></h1>
+      
+      </div>
+      
+      <div class="container-fluid">
+     	
+      <div class="row">
+      
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">INVENTARIO</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-table"></i>
+			      
+			    </div>
+	  		  </li>	
+	          <li>Equipos</li>
+	          <li>Reportes</li>
+	          <li>Hojas de vida</li>
+	          
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/periodicidad}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">MANTENIMIENTO</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	          <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-tools"></i>
+			      
+			    </div>
+	  		  </li>
+	  
+	          <li>Programados</li>
+	          <li>Metas mensuales</li>
+	          <li>Cumplimiento de usuarios</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/mantenimiento}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">LLAMADOS</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-megaphone-fill"></i>
+			      
+			    </div>
+	  		  </li>
+	  		  
+	          <li>Lista de llamados</li>
+	          <li>Responder llamados</li>
+	          <li>Número de llamados</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/servicellamados}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">SEMAFORIZACIÓN</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-stoplights"></i>
+			      
+			    </div>
+	  		  </li>
+	  		  
+	          <li>Evaluación técnica</li>
+	          <li>Sugerencias de baja</li>
+	          <li>Bajas</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/semaforizacion}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    </div>
+	    <div class = "row">
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">INDICADORES</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-clipboard-data"></i>
+			      
+			    </div>
+	  		  </li>
+	  		  
+	          <li>Cumplimiento de objetivos</li>
+	          <li>Sugerencias y alarmas</li>
+	          <li>Informes</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/indicadores}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">CALENDARIO</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-calendar-week"></i>
+			      
+			    </div>
+	  		  </li>
+	  		  
+	          <li>Programación de mantenimientos</li>
+	          <li>Seguimiento semana a semana</li>
+	          <li>Eventos previstos</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/calendario}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+	        <h1 class="card-title pricing-card-title">USUARIOS</h1>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-people-fill"></i>
+			      
+			    </div>
+	  		  </li>
+	  		  
+	          <li>Usuarios de la aplicación</li>
+	          <li>Crear equipos y hojas de vida</li>
+	          <li>Tareas pendientes</li>
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/usuarios}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+	      <div class="card-header">
+	      
+	        <h4 class="my-0 fw-normal"></h4>
+	
+	      </div>
+	      <div class="card-body">
+			<h5 class="card-title pricing-card-title">ACTIVIDADES METROLOGICAS</h5>
+	        <ul class="list-unstyled mt-3 mb-4">
+	  		  <li>
+	  		  	<div class="icon">
+			      <i class="bi bi-graph-up-arrow"></i>
+			      
+			    </div>
+	  		  </li>
+			  <li> - </li>
+	          <li>Calificaciones</li>
+	          <li>Validaciones</li>
+	          <li>Calibraciones</li>
+			  
+	        </ul>
+	        <button th:onclick= "'window.location.href = \'' +@{/procesoscalval}+'\''"type="button" class="w-100 btn btn-lg btn-dark">Buscar</button>
+	                            
+	      </div>
+	    </div>
+	    </div>
+	  </div>
+  
+      </div>
+
+  </div>
+  </div>
+  
+</main>
+
+<footer class="container py-5">
+  
+</footer>
+     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+     <script th:src ="@{/js/productohurst.js}"></script>      
+  </body>
+</html>

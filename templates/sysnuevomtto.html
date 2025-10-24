@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${equipo.Serie}+' Nuevo mantenimiento'"></title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="../static/css/form-validation.css" rel="stylesheet" th:href="@{/css/form-validation.css}">
+</head>
+
+<body class="bg-light">
+	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/syshome}">HRCatch</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06"
+				aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExample06">
+				<ul class="navbar-nav me-auto mb-2 mb-xl-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page"
+							th:href="@{/sysequipos/}+${equipo.tipo_equipo.id_Tipo_equipo}">Atras</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/systipos}">Inventario</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/sysmantenimiento}">Mantenimiento</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/sysusuarios}">Usuarios</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
+							aria-expanded="false">Más opciones</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown06">
+							<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+									reclamos</a></li>
+							<li><a class="dropdown-item"
+									href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+									tuto</a></li>
+
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container">
+			<div class="py-5 text-center">
+
+				<h2>Nuevo reporte</h2>
+				<p class="lead">Complete los datos correspondientes</p>
+			</div>
+			<form class="needs-validation" validate th:action="@{/sysnuevomtto/}+${equipo.id_Sysequipo}"
+				th:object="${mtto}" method="post">
+
+				<div class="row g-3 mb-3">
+					<div class="col-md-5 col-lg-4 order-md-last">
+						<h4 class="d-flex justify-content-between align-items-center mb-3">
+							<span class="text-muted">Seccion de datos</span>
+							<span class="badge bg-secondary rounded-pill" th:text="${equipo.id_Sysequipo}"></span>
+						</h4>
+						<ul class="list-group mb-3">
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+
+								<h6 class="my-0">Periodicidad</h6>
+
+								<div th:if="${equipo.Periodicidad==4}">
+									<small class="text-muted">CUATRIMESTRAL</small>
+								</div>
+
+								<div th:if="${equipo.Periodicidad==3}">
+									<small class="text-muted">TRIMESTRAL</small>
+								</div>
+								<div th:if="${equipo.Periodicidad==2}">
+									<small class="text-muted">SEMESTRAL</small>
+								</div>
+								<div th:if="${equipo.Periodicidad==1}">
+									<small class="text-muted">ANUAL</small>
+								</div>
+
+
+
+								<span class="text-muted" th:text="${equipo.Periodicidad}"></span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Tipo de equipo</h6>
+									<small class="text-muted"
+										th:text="${equipo.tipo_equipo.nombre_Tipo_equipo}">  </small>
+									<h6 id="idTipoEquipo" th:text="${equipo.tipo_equipo.id_Tipo_equipo}"></h6>	
+								</div>
+
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Servicio/Ubicación</h6>
+									<small class="text-muted"
+										th:text="${equipo.servicio.Nombre_servicio}+'/'+${equipo.servicio.Ubicacion_servicio}"></small>
+								</div>
+
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div class="text-muted">
+									<h6 class="my-0">Marca/Modelo/Serie</h6>
+									<small th:text="${equipo.Marca}+'/'+${equipo.Modelo}+'/'+${equipo.Serie}"></small>
+								</div>
+
+							</li>
+
+						</ul>
+					</div>
+
+
+
+					<div class="col-md-7 col-lg-8">
+						<h4 class="mb-3">Datos de reporte</h4>
+
+						<div class="row g-3">
+							<div class="col-sm-4">
+								<label for="NumReporte" class="form-label">Número de reporte</label>
+								<input th:placeholder="${num}" type="text" class="form-control" id="NumReporte"
+									disabled>
+
+							</div>
+
+							<div class="col-sm-4">
+								<label for="placainventario" class="form-label">Placa inventario</label>
+								<input type="text" class="form-control" id="placanew"
+									th:placeholder="${equipo.Placa_inventario}" value="" disabled>
+
+							</div>
+							<div class="col-md-4">
+								<label for="servicio" class="form-label">Servicio</label>
+								<select class="form-select" id="country" disabled>
+									<option th:text="${equipo.servicio.Nombre_servicio}"></option>
+
+								</select>
+
+							</div>
+							<div class="col-7">
+								<label for="fechareport">Fecha</label>
+								<input th:name="fecha" id="date" type="date" class="form-control" required>
+							</div>
+
+
+							<div class="col-md-5">
+								<label for="country" class="form-label">Ubicación</label>
+								<select class="form-select" id="country" disabled>
+									<option value="" th:text="${equipo.Ubicacion_especifica}"></option>
+								</select>
+
+							</div>
+							<div class="col-md-4">
+								<label for="llamadotime" id="llamadotimelabel" class="form-label">Hora de
+									llamado</label>
+								<input th:name="hora_llamado" placeholder="Selected time" type="time" id="llamadotime"
+									value="" class="form-control timepicker"></input>
+							</div>
+							<div class="col-md-4">
+								<label for="input_starttime" class="form-label">Hora de inicio</label>
+								<input th:name="hora_inicio" placeholder="Selected time" type="time"
+									id="input_starttime" class="form-control timepicker" required></input>
+							</div>
+							<div class="col-md-4">
+								<label for="input_finaltime" class="form-label">Hora de terminación</label>
+								<input th:name="hora_finalizacion" placeholder="Selected time" type="time"
+									id="input_finaltime" class="form-control timepicker" required></input>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<h4 class="mb-3">Tipo de mantenimiento</h4>
+						<div class="my-3">
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="Preventivo" value=1 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Preventivo">Preventivo</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="Correctivo" value=2 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Correctivo">Correctivo</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{Tipo_mantenimiento}" id="dano" value=4 name="paymentMethod"
+									type="radio" class="form-check-input" required>
+								<label class="form-check-label" for="Otro">Reporte de daño</label>
+							</div>
+
+							<div id="opcionesf2">
+
+								<div class="form-check">
+									<input th:field="*{Tipo_mantenimiento}" id="Preventivo2" value=5
+										name="paymentMethod" type="radio" class="form-check-input" required>
+									<label class="form-check-label" for="Preventivo2">Preventivo (Fase 2)</label>
+								</div>
+
+
+
+								<div class="form-check">
+									<input th:field="*{Tipo_mantenimiento}" id="Correctivo2" value=6
+										name="paymentMethod" type="radio" class="form-check-input" required>
+									<label class="form-check-label" for="Correctivo2">Correctivo (Fase 2)</label>
+								</div>
+
+							</div>
+
+							<label id="tfslabel" class="form-check-label" for="tfs">Tiempo fuera de servicio
+								(Horas)</label>
+							<input id="tfs" th:field="*{Tiempo_fuera_servicio}" type="number" step="1" min="0" max="365"
+								class="form-control" placeholder="Dias fuera de servicio">
+
+						</div>
+					</div>
+
+					<div class="col-md-5">
+						<h4 class="mb-3">Tipo de falla</h4>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio1" value=1 required>
+							<label class="= form-check-label" for="inlineRadio1">1</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio2" value=2 required>
+							<label class="= form-check-label" for="inlineRadio2">2</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio3" value=3 required>
+							<label class="= form-check-label" for="inlineRadio3">3</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio4" value=4 required>
+							<label class="= form-check-label" for="inlineRadio4">4</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio5" value=5 required>
+							<label class="= form-check-label" for="inlineRadio5">5</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio6" value=6 required>
+							<label class="= form-check-label" for="inlineRadio6">6</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input th:field="*{Tipo_falla}" class="form-check-input" type="radio" name="TipoFalla"
+								id="inlineRadio7" value=7 required>
+							<label class="= form-check-label" for="inlineRadio7">7</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						1. Desgaste<br>
+						2. Operación indebida<br>
+						3. Causa externa<br>
+						4. Accesorios<br>
+						5. Desconocido<br>
+						6. Sin fallas<br>
+						7. Otro
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="row">
+						<div class="col" id="mttoh">
+							<h4 class="mb-3">Mantenimiento Hardware</h4>
+							<div class="table-responsive">
+								<table class="table table-sm">
+									<thead>
+										<tr class="table-primary">
+											<th scope="col">Paso</th>
+											<th scope="col">Lista de actividades a realizar</th>
+											<th scope="col">Cumple</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-light" th:each="protocolo,iter:${protocoloh}">
+											<td th:text="${iter.index}"></td>
+											<td th:text="${protocolo.Paso}"></td>
+											<td>
+												<input type="checkbox" th:name="hcumplimientos" th:value=${iter.index}
+													class="form-check-input">
+											</td>
+										<tr>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+						<div class="col" id="mttos">
+							<h4 class="mb-3">Mantenimiento Software</h4>
+							<div class="table-responsive">
+								<table class="table table-sm">
+									<thead>
+										<tr class="table-primary">
+											<th scope="col">Paso</th>
+											<th scope="col">Lista de actividades a realizar</th>
+											<th scope="col">Cumple</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-light" th:each="protocolo,iter:${protocolos}">
+											<td th:text="${iter.index}"></td>
+											<td th:text="${protocolo.Paso}"></td>
+											<td>
+												<input type="checkbox" th:name="scumplimientos" th:value=${iter.index}
+													class="form-check-input">
+											</td>
+										<tr>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col" id="obsh">
+							<h4 class="mb-3" id="titlehard">Observaciones Hardware</h4>
+							<textarea class="form-control" onkeyup="mayus(this);" rows="3" th:field="*{Observacionesh}"
+								maxlength="1500"></textarea>
+
+						</div>
+						<div class="col" id="obss">
+							<h4 class="mb-3" id="titledef">Observaciones Software</h4>
+							<textarea class="form-control" onkeyup="mayus(this);" rows="3" th:field="*{Observacioness}"
+								maxlength="1500"></textarea>
+
+						</div>
+						<div class="col" id="solucion">
+							<h4 class="mb-3">Solución</h4>
+							<textarea class="form-control" onkeyup="mayus(this);" rows="3" th:field="*{Rutasoftware}"
+								maxlength="1500"></textarea>
+
+						</div>
+					</div>
+
+					<div class="col-md-12" id="estadoequipo">
+						<h4 class="mb-3">Estado del equipo</h4>
+						<div class="row">
+							<div class="col-md-6">
+								<h4 class="mb-3">Físico</h4>
+								<div class="my-3">
+									<div class="form-check">
+										<input value=1 th:name="statede" type="checkbox" class="form-check-input">
+										<label class="form-check-label" for="Preventivo">Bueno</label>
+									</div>
+									<div class="form-check">
+										<input value=2 th:name="statede" type="checkbox" class="form-check-input">
+										<label class="form-check-label" for="Correctivo">Regular</label>
+									</div>
+
+									<div class="form-check">
+										<input value=3 th:name="statede" type="checkbox" class="form-check-input">
+										<label class="form-check-label" for="Otro">Malo</label>
+
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<h4 class="mb-3">Funcional</h4>
+								<div class="my-3">
+									<div class="form-check">
+										<input value=1 th:name="statede" type="checkbox" class="form-check-input">
+										<label class="form-check-label" for="Preventivo">Bueno</label>
+									</div>
+									<div class="form-check">
+										<input value=2 th:name="statede" type="checkbox" class="form-check-input">
+										<label class="form-check-label" for="Correctivo">Regular</label>
+									</div>
+
+									<div class="form-check">
+										<input value=3 th:name="statede" type="checkbox" class="form-check-input">
+										<label class="form-check-label" for="Otro">Malo</label>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-3">
+
+
+						<label for="Realizado" class="form-label">Realizado por</label>
+						<input th:field="*{Autor_realizado}" id="myInput" onkeyup="myFunction()" type="text"
+							class="form-control" placeholder="Por quien fue realizado" maxlength="50" required>
+
+						<label class="form-label" id="cedulae">Cedula</label>
+						<input th:name="cedulareal" id="cedularealizado" onkeyup="myFunction()" type="text"
+							class="form-control" placeholder="Cedula" maxlength="50">
+
+						<label class="form-label" id="tele">Telefono</label>
+						<input th:name="telefonoreal" id="phonerealizado" onkeyup="myFunction()" type="text"
+							class="form-control" placeholder="Telefono" maxlength="50">
+
+						<label class="form-label" id="cargoe">Cargo</label>
+						<input th:name="cargoreal" id="cargorealizado" onkeyup="myFunction()" type="text"
+							class="form-control" placeholder="Cargo" maxlength="50">
+
+
+
+					</div>
+					<div class="col-md-6">
+						<label for="Reciido" class="form-label">Recibido por</label>
+						<input th:field="*{Autor_recibido}" type="text" onkeyup="mayus(this);" class="form-control"
+							placeholder="Recibido por" maxlength="50" required>
+
+						<label for="Reciido" id="cargor" class="form-label">Cargo</label>
+						<input th:name="cargorecep" id="cargorecibido" type="text" onkeyup="mayus(this);"
+							class="form-control" placeholder="Recibido por" maxlength="50">
+
+						<label for="fechareport" id="fechar">Fecha de recepcion</label>
+						<input th:name="daterecep" id="daterecep" type="date" class="form-control">
+
+						<label for="Reciido" id="depr" class="form-label">Dependencia</label>
+						<input th:name="dependenciacep" id="dependencia" type="text" onkeyup="mayus(this);"
+							class="form-control" placeholder="Recibido por" maxlength="50">
+
+					</div>
+				</div>
+
+				<div class="btn-group">
+					<button class="w-150 btn btn-dark btn-lg" type="submit" value="Guardar">Guardar</button>
+
+					<button th:onclick="'window.location.href = \''+@{/systipos}+'\''" type="button"
+						class="w-150 btn btn-dark btn-lg">Nuevo mantenimiento</button>
+
+				</div>
+
+			</form>
+
+		</div>
+
+	</main>
+
+
+	<footer class="my-5 pt-5 text-muted text-center text-small">
+		<p class="mb-1">&copy; 2022 HRCatch</p>
+
+	</footer>
+	</div>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		var fecha = /*[[${fecha}]]*/ 'default';
+		var hll = /*[[${horallamado}]]*/ 'default';
+		var hi = /*[[${horainicio}]]*/ 'default';
+		var ht = /*[[${horaterminacion}]]*/ 'default';
+
+		var dateinput = document.getElementById("date");
+		var text = document.getElementById("titledef");
+		var textfalla = document.getElementById("titlehard");
+		var hllinput = document.getElementById("llamadotime");
+		var hiinput = document.getElementById("input_starttime");
+		var htinput = document.getElementById("input_finaltime");
+		dateinput.value = fecha;
+		hllinput.value = hll;
+		hiinput.value = hi;
+		htinput.value = ht;
+
+		$("#cargor").hide();
+		$("#fechar").hide();
+		$("#depr").hide();
+		$("#cedulae").hide();
+		$("#tele").hide();
+		$("#cargoe").hide();
+
+		$("#cedularealizado").hide();
+		$("#phonerealizado").hide();
+		$("#cargorealizado").hide();
+
+		$("#cargorecibido").hide();
+		$("#daterecep").hide();
+		$("#dependencia").hide();
+
+		$("#tfs").hide();
+		$("#tfs").hide();
+		$("#tfs").hide();
+		$("#tfslabel").hide();
+		$("#mttos").hide();
+		$("#mttoh").hide();
+		$("#obss").hide();
+		$("#obsh").hide();
+		$("#solucion").hide();
+		$("#estadoequipo").hide();
+		var autores = ['CLAUDIA MILENA QUEVEDO', 'MILENA QUEVEDO', 'MANUEL LÓPEZ', 'MANUEL LOPEZ',
+			'MANUEL RICARDO LÓPEZ', 'MANUEL RICARDO LÓPEZ', 'GERMÁN CRUZ', 'GERMAN CRUZ', 'GERNÁN CRUZ', 'GERMÁN CRUZ SALAS',
+			'GERMAN CRUZ SALAS', 'MIGUEL SANCHEZ', 'MIGUEL ANTONIO SANCHEZ', 'WILSÓN CAMARGO', 'WILSON CAMARGO', 'WILSON CÁMARGO',
+			'CESAR AUGUSTO SUAREZ', 'CESAR SUAREZ', 'ENRIQUE BAUTISTA', 'ENRIQUE BAUTISTA LÓPEZ', 'GERMÁN PUERTO', 'GERMÁN DARIO PUERTO'];
+		$(document).ready(function () {
+
+			$('#Preventivo').on('change', function () {
+
+				$("#mttos").show();
+				$("#mttoh").show();
+				$("#obss").show();
+				$("#obsh").show();
+				$("#obss").prop("required", true);
+				$("#obsh").prop("required", true);
+				$("#tfs").hide();
+				$("#solucion").hide();
+				$("#tfslabel").hide();
+				$("#cargor").hide();
+				$("#fechar").hide();
+				$("#depr").hide();
+				$("#cedulae").hide();
+				$("#tele").hide();
+				$("#cargoe").hide();
+
+				$("#cedularealizado").hide();
+				$("#phonerealizado").hide();
+				$("#cargorealizado").hide();
+
+				$("#cargorecibido").hide();
+				$("#daterecep").hide();
+				$("#dependencia").hide();
+				$("#estadoequipo").hide();
+				text.textContent = "Observaciones Software"
+
+			})
+
+			$('#Preventivo2').on('change', function () {
+
+				$("#mttos").show();
+				$("#mttoh").show();
+				$("#obss").show();
+				$("#obsh").show();
+				$("#obss").prop("required", true);
+				$("#obsh").prop("required", true);
+				$("#tfs").hide();
+				$("#solucion").hide();
+				$("#tfslabel").hide();
+				$("#cargor").hide();
+				$("#fechar").hide();
+				$("#depr").hide();
+				$("#cedulae").hide();
+				$("#tele").hide();
+				$("#cargoe").hide();
+
+				$("#cedularealizado").hide();
+				$("#phonerealizado").hide();
+				$("#cargorealizado").hide();
+
+				$("#cargorecibido").hide();
+				$("#daterecep").hide();
+				$("#dependencia").hide();
+				$("#estadoequipo").hide();
+				text.textContent = "Observaciones Software"
+
+			})
+
+			$('#Correctivo').on('change', function () {
+
+				$("#mttos").hide();
+				$("#mttoh").hide();
+				$('#obss').removeAttr("required");
+				$('#obsh').removeAttr("required");
+				$("#obsh").show();
+				$("#obss").show();
+				$("#solucion").show();
+				$("#cargor").hide();
+				$("#fechar").hide();
+				$("#depr").hide();
+				$("#cedulae").hide();
+				$("#tele").hide();
+				$("#cargoe").hide();
+
+				$("#cedularealizado").hide();
+				$("#phonerealizado").hide();
+				$("#cargorealizado").hide();
+
+				$("#cargorecibido").hide();
+				$("#daterecep").hide();
+				$("#dependencia").hide();
+				$("#estadoequipo").hide();
+				text.textContent = "Observaciones Generales"
+				textfalla.textContent = "Falla técnica"
+			})
+
+
+			$('#Correctivo2').on('change', function () {
+
+				$("#mttos").hide();
+				$("#mttoh").hide();
+				$('#obss').removeAttr("required");
+				$('#obsh').removeAttr("required");
+				$("#obsh").show();
+				$("#obss").show();
+				$("#solucion").show();
+				$("#cargor").hide();
+				$("#fechar").hide();
+				$("#depr").hide();
+				$("#cedulae").hide();
+				$("#tele").hide();
+				$("#cargoe").hide();
+
+				$("#cedularealizado").hide();
+				$("#phonerealizado").hide();
+				$("#cargorealizado").hide();
+
+				$("#cargorecibido").hide();
+				$("#daterecep").hide();
+				$("#dependencia").hide();
+				$("#estadoequipo").hide();
+				text.textContent = "Observaciones Generales"
+				textfalla.textContent = "Falla técnica"
+			})
+
+
+			$('#PyC').on('change', function () {
+
+				$("#mttos").show();
+				$("#mttoh").show();
+				$("#obss").show();
+				$("#obsh").show();
+				$("#obss").prop("required", true);
+				$("#obsh").prop("required", true);
+				$("#solucion").hide();
+				$("#tfs").show();
+				$("#tfslabel").show();
+				$("#cargor").hide();
+				$("#fechar").hide();
+				$("#depr").hide();
+				$("#cedulae").hide();
+				$("#tele").hide();
+				$("#cargoe").hide();
+
+				$("#cedularealizado").hide();
+				$("#phonerealizado").hide();
+				$("#cargorealizado").hide();
+
+				$("#cargorecibido").hide();
+				$("#daterecep").hide();
+				$("#dependencia").hide();
+				$("#estadoequipo").hide();
+				text.textContent = "Observaciones Software"
+			})
+			$('#dano').on('change', function () {
+
+				$("#mttos").hide();
+				$("#mttoh").hide();
+				$("#obss").show();
+				$("#obsh").show();
+				$("#estadoequipo").show();
+				$("#obss").prop("required", true);
+				$("#obsh").prop("required", true);
+				$("#solucion").hide();
+				$("#tfs").hide();
+				$("#tfslabel").hide();
+
+				$("#cargor").show();
+				$("#fechar").show();
+				$("#depr").show();
+				$("#cedulae").show();
+				$("#tele").show();
+				$("#cargoe").show();
+
+				$("#cedularealizado").show();
+				$("#phonerealizado").show();
+				$("#cargorealizado").show();
+
+				$("#cargorecibido").show();
+				$("#daterecep").show();
+				$("#dependencia").show();
+				$("#estadoequipo").show();
+				textfalla.textContent = "Descripción de lo sucedido"
+			})
+
+		});
+
+		function myFunction() {
+
+			input = document.getElementById("myInput");
+			check = document.getElementById("realizado");
+			input.value = input.value.toUpperCase();
+			filter = input.value.toUpperCase();
+
+
+			for (i = 0; i < autores.length; i++) {
+				if (autores[i] === filter) {
+					$("#realizado").prop("checked", true);
+					i = autores.length
+
+				}
+				else {
+					$("#realizado").prop("checked", false);
+
+				}
+				console.log(autores[i] === filter)
+			}
+		}
+
+		$(document).ready(function () {
+			$('#Correctivo').on('change', function () {
+
+
+
+				if (document.getElementById("Correctivo").checked) {
+					$("#tfs").show();
+					$("#tfslabel").show();
+
+				}
+
+				else {
+					$("#tfs").hide();
+					$("#tfslabel").hide();
+
+				}
+			})
+
+			$('#Correctivo2').on('change', function () {
+
+				if (document.getElementById("Correctivo2").checked) {
+					$("#tfs").show();
+					$("#tfslabel").show();
+
+				}
+
+				else {
+					$("#tfs").hide();
+					$("#tfslabel").hide();
+
+				}
+			})
+
+
+		});
+
+		function mayus(e) {
+			e.value = e.value.toUpperCase();
+		}
+		
+		function mttoTipoEquipo(){
+			
+			idtipoEquipo = document.getElementById("idTipoEquipo").innerText;
+			var divmttoTipoEquipo = document.getElementById("opcionesf2");
+			if(idtipoEquipo != 121 && idtipoEquipo != 124){
+				divmttoTipoEquipo.style.display = "none";
+			}else {
+				divmttoTipoEquipo.style.display = "block";
+			}
+			
+		}
+		
+		mttoTipoEquipo();
+		
+/*]]>*/
+	</script>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit = no">
+
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${numeroreporte}+' '+${equipo}+' '+${serie}"></title>
+
+
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+
+		}
+	</style>
+
+
+	<!-- Custom styles for this template -->
+	<script th:src="@{/js/html2canvas.min.js}"></script>
+	<script th:src="@{/js/jspdf.min.js}"></script>
+	<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<script th:src="@{/js/jquery-3.6.0.js}"></script>
+
+
+
+	<link href="../static/css/formatoreporte.css" rel="stylesheet" type="text/css" media="screen"
+		th:href="@{/css/formatoreporte.css}">
+	<link href="../static/css/formatoreporte.css" rel="stylesheet" type="text/css" media="print"
+		th:href="@{/css/formatoreporte.css}">
+
+</head>
+
+<body class="bg-light">
+	<form id="form1">
+		<div id="text">
+			<div class="container-fluid">
+				<div class="col-sm-12">
+					<table class="table" style="border-color:blue;">
+						<thead>
+							<td class="text-primary" align="center" style="border-color:blue;"><b><small>CÓDIGO:
+										IB-F-24</small></b></td>
+							<td class="text-primary" align="center" style="border-color:blue;"><b>E.S.E HOSPITAL
+									UNIVERSITARIO SAN RAFAEL DE TUNJA</b></td>
+							<td class="text-primary" align="center" style="border-color:blue;"><img
+									th:src="@{/images/Escudo_husrt.png}" width="140" height="60"></td>
+						</thead>
+						<tbody>
+							<td class="text-primary" align="center" style="border-color:blue;"><b><small>VERSION:
+										01</small></b></td>
+							<td class="text-primary" align="center" style="border-color:blue;"><b><big>REPORTE DE
+										MANTENIMIENTO DIGITAL HRCATCH</big><b></td>
+							<td class="text-primary" align="center" style="border-color:blue;">
+								<b><small>Fecha:11/05/2020</small></b>
+							</td>
+						</tbody>
+
+					</table>
+				</div>
+				<div class="col-sm-12">
+					<div class="row mb-2">
+						<div class="col">
+							<input id="miid" type="text" align="center" style="width:295px;border-color:blue"
+								name="equipolab" class="form-control form-control-sm" placeholder="FECHA:" disabled>
+						</div>
+						<div class="col">
+							<input id="miid" th:placeholder="${fecha}" type="text" name="fecha"
+								style="width:695px;border-color:blue" class="form-control form-control-sm" disabled>
+						</div>
+						<div class="col">
+						</div>
+
+					</div>
+					<div class="row mb-2">
+						<div class="col-2 col-sm-2">
+							<label class="text-primary"><b>REPORTE No.</b></label>
+						</div>
+						<div class="col-sm-2">
+							<input id="miid" th:placeholder="${numeroreporte}" type="text" name="numreporte"
+								style="width:195px;border-color:blue" class="form-control" placeholder="290183"
+								disabled>
+						</div>
+						<div class="col">
+							<input type="text" name="hourllamado" style="width:265px;border-color:blue"
+								class="form-control" th:placeholder="'Hora llamado: '+${horallamado} " disabled>
+
+						</div>
+						<div class="col">
+							<input type="text" name="hourinicio" style="width:265px;border-color:blue"
+								class="form-control" th:placeholder="'Hora Inicio: '+${horainicio} " disabled>
+						</div>
+						<div class="col">
+							<input type="text" name="hourfinal" style="width:266px;border-color:blue"
+								class="form-control" th:placeholder="'Hora Final: '+${horafinal} " disabled>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-2 col-sm-2">
+						<div class="col-3 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:205px;border-color:blue" name="equipolab"
+								class="form-control" placeholder="EQUIPO:" disabled>
+						</div>
+
+					</div>
+					<div class="col-4 col-sm-4">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input th:placeholder="${equipo}" type="text" style="width:430px;border-color:blue"
+								name="equipo" class="form-control" disabled>
+						</div>
+
+					</div>
+					<div class="col-2 col-sm-2">
+						<div class="col-3 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:205px;border-color:blue" name="marcalab"
+								class="form-control" placeholder="MARCA:" disabled>
+						</div>
+
+					</div>
+					<div class="col-4 col-sm-3">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input th:placeholder="${marca}" type="text" style="width:396px;border-color:blue"
+								name="marca" class="form-control" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 col-sm-2">
+						<div class="col-3 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:205px;border-color:blue" name="modelolab"
+								class="form-control" placeholder="MODELO:" disabled>
+						</div>
+					</div>
+					<div class="col-3 col-md-2">
+						<div class="col-sm-3 col-lg-8 themed-grid-col">
+							<input th:placeholder="${modelo}" type="text" style="width:216px;border-color:blue"
+								name="modelo" class="form-control" disabled>
+						</div>
+					</div>
+					<div class="col-1 col-sm-1">
+						<div class="col-3 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:95px;border-color:blue" name="serielab" class="form-control"
+								placeholder="SERIE:" disabled>
+						</div>
+					</div>
+					<div class="col-2 col-sm-3">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input th:placeholder="${serie}" type="text" style="width:316px;border-color:blue"
+								name="serie" class="form-control" disabled>
+						</div>
+
+
+					</div>
+					<div class="col-1 col-sm-2">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input type="text" style="width:190px;border-color:blue" name="inventariolab"
+								class="form-control" placeholder="INVENTARIO:" disabled>
+						</div>
+					</div>
+					<div class=" col-1 col-sm-1">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input th:placeholder="${inventario}" type="text" style="width:169px;border-color:blue"
+								name="inventario" class="form-control" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 col-sm-2">
+						<div class="col-3 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:205px;border-color:blue" name="serviciolab"
+								class="form-control" placeholder="SERVICIO:" disabled>
+						</div>
+
+					</div>
+					<div class="col-4 col-sm-4">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input th:placeholder="${servicio}" type="text" style="width:430px;border-color:blue"
+								name="servicio" class="form-control" disabled>
+						</div>
+
+					</div>
+					<div class="col-2 col-sm-2">
+						<div class="col-3 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:205px;border-color:blue" name="ubicacionlab"
+								class="form-control" placeholder="UBICACIÓN:" disabled>
+						</div>
+
+					</div>
+					<div class="col-4 col-sm-3">
+						<div class="col-sm-3 col-sm-8 themed-grid-col">
+							<input th:placeholder="${ubicacion}" type="text" style="width:396px;border-color:blue"
+								name="ubicacion" class="form-control" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-5 col-sm-4">
+						<div class="col-4 col-sm-4 themed-grid-col mb-3">
+							<input type="text" style="width:330px;border-color:blue" name="periodicidadlab"
+								class="form-control " placeholder="TIPO DE MANTENIMIENTO:" disabled>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<table class="table" style="border-color:blue;">
+							<thead style="border-color:blue;">
+								<tr class="headt">
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><b>PREDICTIVO: </b></label>
+											</div>
+											<div class="col-sm-1">
+
+												<div class="form-check" th:if="${tipomtto==4}">
+
+													<input type="checkbox" th:id="'predictivo'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:unless="${tipomtto==4}">
+													<input type="checkbox" th:id="'predictivon'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+
+											</div>
+										</div>
+									</td>
+								</tr>
+							</thead>
+						</table>
+
+					</div>
+					<div class="col-sm-2">
+						<table class="table" style="border-color:blue;">
+							<thead style="border-color:blue;">
+								<tr class="headt">
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><b>PREVENTIVO: </b></label>
+											</div>
+											<div class="col-md-1">
+												<div class="form-check" th:if="${tipomtto==3}">
+
+													<input type="checkbox" th:id="'preventivo'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:unless="${tipomtto==3}">
+													<input type="checkbox" th:id="'preventivon'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</thead>
+						</table>
+
+					</div>
+					<div class="col-sm-2">
+						<table class="table" style="border-color:blue;">
+
+							<thead style="border-color:blue;">
+								<tr class="headt">
+									<td style="border-color:blue;color:#222016">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><b>CORRECTIVO: </b></label>
+											</div>
+											<div class="col-sm-1">
+												<div class="form-check" th:if="${tipomtto==2}">
+
+													<input type="checkbox" th:id="'correctivo'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:unless="${tipomtto==2}">
+													<input type="checkbox" th:id="'correctivon'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</thead>
+
+						</table>
+
+					</div>
+					<div class="col-sm-1">
+						<table class="table" style="border-color:blue;">
+							<thead style="border-color:blue;">
+								<tr class="headt">
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-8">
+												<label class="text-primary"><b>OTRO: </b></label>
+											</div>
+											<div class="col-sm-1">
+												<div class="form-check" th:if="${tipomtto==1}">
+
+													<input type="checkbox" th:id="'otro'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:unless="${tipomtto==1}">
+													<input type="checkbox" th:id="'otron'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</thead>
+						</table>
+
+					</div>
+				</div>
+
+
+			</div>
+			<div class="container-fluid">
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-12">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<tr>
+										<td style="border-color:blue;">
+											<div class="row">
+												<div class="col-sm-3">
+													<label class="text-primary"><b>MOTIVO DEL LLAMADO:</b></label>
+												</div>
+												<div class="col-sm-9">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color:blue;">&nbsp
+														</li>
+
+													</ul>
+												</div>
+												<div class="col-sm-12">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color:blue;"
+															th:text="${motivo}">&nbsp</li>
+													</ul>
+												</div>
+											</div>
+										</td>
+
+
+									</tr>
+								</thead>
+								<tbody>
+
+
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-12">
+							<table class="table" style="border-color:blue;background-color: #1034A6;">
+								<thead>
+									<tr>
+										<td font color="blue" align="center"><b>FALLAS ENCONTRADAS</b></td>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead style="border-color:blue;">
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-8">
+												<label class="text-primary"><small><b>1.DESGASTE</b></small><br>&nbsp
+												</label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+
+												<div class="form-check" th:case="1">
+													<input type="checkbox" th:id="'desgaste1'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="1-4">
+													<input type="checkbox" th:id="'desgaste2'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="1-5">
+													<input type="checkbox" th:id="'desgaste3'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="1-6">
+													<input type="checkbox" th:id="'desgaste4'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'desgaste5'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-8">
+												<label class="text-primary"><small><small><b>2.OPERACIÓN
+																INDEBIDA</b></small></small></label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+												<div class="form-check" th:case="2">
+													<input type="checkbox" th:id="'opindebida1'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="2--4">
+													<input type="checkbox" th:id="'opindebida2'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="2-4">
+													<input type="checkbox" th:id="'opindebida3'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="2-5">
+													<input type="checkbox" th:id="'opindebida4'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'opindebida5'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-8">
+												<label class="text-primary"><small><b>3.CAUSA EXTERNA
+														</b></small></label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+												<div class="form-check" th:case="3">
+													<input type="checkbox" th:id="'causaexterna'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'causaexternan'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><small><b>4.ACCESORIOS<br>&nbsp
+														</b></small></label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+												<div class="form-check" th:case="4">
+													<input type="checkbox" th:id="'acces1'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4--7">
+													<input type="checkbox" th:id="'acces2'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4..6">
+													<input type="checkbox" th:id="'acces3'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4--6">
+													<input type="checkbox" th:id="'acces4'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4-6">
+													<input type="checkbox" th:id="'acces5'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+
+												<div class="form-check" th:case="4-7">
+													<input type="checkbox" th:id="'acces6'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'acces7'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><small><small><b>5.DESCONOCIDO<br>&nbsp
+															</b></small></small></label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+												<div class="form-check" th:case="5">
+													<input type="checkbox" th:id="'descono1'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="2-5">
+													<input type="checkbox" th:id="'descono2'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="1-5">
+													<input type="checkbox" th:id="'descono3'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'descono4'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><small><b>6.SIN FALLAS </b></small></label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+												<div class="form-check" th:case="6">
+													<input type="checkbox" th:id="'sinfalla1'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="1-6">
+													<input type="checkbox" th:id="'sinfalla2'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4..6">
+													<input type="checkbox" th:id="'sinfalla3'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4--6">
+													<input type="checkbox" th:id="'sinfalla4'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4-6">
+													<input type="checkbox" th:id="'sinfalla5'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'sinfalla6'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<div class="row">
+											<div class="col-sm-9">
+												<label class="text-primary"><small><b>7.OTRO<br>&nbsp
+														</b></small></label>
+											</div>
+											<div class="col-sm-1" th:switch="${tipofalla}">
+												<div class="form-check" th:case="7">
+													<input type="checkbox" th:id="'otros1'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4-7">
+													<input type="checkbox" th:id="'otros2'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="4--7">
+													<input type="checkbox" th:id="'otros3'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case=".">
+													<input type="checkbox" th:id="'otros4'+${idreporte}"
+														class="form-check-input" checked disabled>
+												</div>
+												<div class="form-check" th:case="*">
+													<input type="checkbox" th:id="'otros5'+${idreporte}"
+														class="form-check-input" disabled>
+												</div>
+											</div>
+										</div>
+									</td>
+								</thead>
+							</table>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-sm-12 mb-3">
+					<table class="table" style="border-color:blue;">
+						<thead>
+							<td style="border-color:blue;">
+								<div class="row">
+									<div class="col-sm-3">
+										<p class="text-primary"><b>TRABAJO REALIZADO:</b></p>
+									</div>
+									<div class="col-sm-9">
+										<div class="bd-example">
+											<ul class="list-group">
+												<li class="list-group-item" style="border-color: blue">&nbsp</li>
+											</ul>
+										</div>
+
+									</div>
+									<div class="col-md-12">
+										<textarea class="form-control" style="border-color: blue" cols="126" rows="5"
+											th:text="${trabajo}">
+
+                  </textarea>
+									</div>
+
+
+								</div>
+							</td>
+
+						</thead>
+
+					</table>
+					<table class="table" style="border-color:blue;background-color: #1034A6;">
+						<thead>
+							<tr style="border-color:blue;">
+								<td font color="blue" align="center"><b>REPUESTOS UTILIZADOS</b></td>
+							</tr>
+						</thead>
+					</table>
+					<table class="table" style="border-color:blue;">
+						<thead>
+							<tr style="border-color:blue;">
+								<td class="text-primary" align="center" style="border-color:blue;"><b> DESCRIPCIÓN</b>
+								</td>
+								<td class="text-primary" align="center"><b>CANTIDAD</b>
+								</td>
+								<td class="text-primary" align="center"><b>C.EGRESO</b></td>
+								<td class="text-primary" align="center"><b>DESCRIPCIÓN</b></td>
+								<td class="text-primary" align="center"><b>CANTIDAD</b> </td>
+								<td class="text-primary" align="center"><b>C.EGRESO</b></td>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td th:text="${repuesto}" style="border-color:blue;" rowspan=4>&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td th:text="${cegreso}" style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+
+							</tr>
+							<tr>
+
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp </td>
+								<td style="border-color:blue;">&nbsp</td>
+							</tr>
+
+							<tr>
+
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+							</tr>
+							<tr>
+
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+								<td style="border-color:blue;">&nbsp</td>
+							</tr>
+							<tr></tr>
+
+						</tbody>
+					</table>
+					<table class="table" style="border-color:blue;">
+						<thead>
+							<td style="border-color:blue;">
+								<div class="row">
+									<div class="col-md-2">
+										<p class="text-primary"><b>OBSERVACIONES</b></p>
+									</div>
+									<div class="col-md-10">
+										<div class="bd-example">
+											<ul class="list-group">
+												<li class="list-group-item" style="border-color: blue">&nbsp</li>
+											</ul>
+										</div>
+
+									</div>
+									<div class="col-md-12">
+										<textarea class="form-control" style="border-color: blue" cols="126" rows="2"
+											th:text="${observaciones}">
+
+                  </textarea>
+									</div>
+
+
+								</div>
+							</td>
+
+						</thead>
+
+					</table>
+					<div class="row">
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<label class="text-primary"><b>REALIZADO POR:</b></label>
+										<div class="row">
+											<div class="col">
+												<div class="bd-example">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color: blue"
+															th:text="${nombrerealizado}"></li>
+													</ul>
+												</div>
+												<label class="text-primary" align="center"><b>&nbsp &nbsp &nbsp &nbsp
+														&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+														NOMBRE</b></label>
+
+
+											</div>
+											<div class="col">
+												<div class="bd-example">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color: blue">&nbsp
+														</li>
+													</ul>
+												</div>
+												<label class="text-primary" align="center"><b>&nbsp &nbsp &nbsp &nbsp
+														&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+														FIRMA</b></label>
+												<div class="bd-example">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color: blue">&nbsp
+														</li>
+													</ul>
+												</div>
+												<label class="text-primary" align="center"><b>&nbsp &nbsp &nbsp &nbsp
+														&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+														CEDULA</b></label>
+											</div>
+										</div>
+									</td>
+								</thead>
+
+							</table>
+						</div>
+						<div class="col">
+							<table class="table" style="border-color:blue;">
+								<thead>
+									<td style="border-color:blue;">
+										<label class="text-primary"><b>RECIBIDO POR:</b></label>
+										<div class="row">
+											<div class="col">
+												<div class="bd-example">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color: blue"
+															th:text="${nombrerecibido}"></li>
+													</ul>
+												</div>
+												<label class="text-primary" align="center"><b>&nbsp &nbsp &nbsp &nbsp
+														&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+														NOMBRE</b></label>
+
+
+											</div>
+											<div class="col">
+												<div class="bd-example">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color: blue">&nbsp
+														</li>
+													</ul>
+												</div>
+												<label class="text-primary" align="center"><b>&nbsp &nbsp &nbsp &nbsp
+														&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+														FIRMA</b></label>
+												<div class="bd-example">
+													<ul class="list-group">
+														<li class="list-group-item" style="border-color: blue">&nbsp
+														</li>
+													</ul>
+												</div>
+												<label class="text-primary" align="center"><b>&nbsp &nbsp &nbsp &nbsp
+														&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+														CEDULA</b></label>
+											</div>
+										</div>
+									</td>
+								</thead>
+
+							</table>
+						</div>
+					</div>
+
+					<div class="col-md-12 mb-3">
+						<h4 align="center" class="text-primary"> E-mail: &nbsp
+							bioingenieria@hospitalsanrafaeltunja.gov.co &nbsp &nbsp / &nbsp ext:2157</h4>
+					</div>
+				</div>
+
+
+			</div>
+			<br><br><br>
+
+			<div class="container-fluid mb-3" th:if="${mtto}">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive  mb-3">
+							<br>
+							<table class="table" style="border-color:black;font-color:black;">
+
+								<tbody>
+									<tr>
+										<td rowspan="3" align="left" style="border-color:black;width:23%">
+											<small><b>RUTINA DE MANTENIMIENTO PREVENTIVO</b></small>
+										</td>
+										<td align="center" style="border-color:black;"><small><b> MINISTERIO DE LA
+													PROTECCIÓN SOCIAL</b></small></td>
+										<td rowspan="3" align="center" style="border-color:black;"><img
+												th:src="@{/images/Escudo_husrt.png}" width="140" height="120"></td>
+									</tr>
+									<tr>
+										<td align="center" style="border-color:black;"><small><b>E.S.E HOSPITAL
+													UNIVERSITARIO SAN RAFAEL DE TUNJA</b></small></td>
+									</tr>
+									<tr>
+										<td scope="col" align="center" style="border-color:black;"><small><b>III NIVEL
+													DE ATENCIÓN</b></small></td>
+									</tr>
+								</tbody>
+
+							</table>
+
+
+
+						</div>
+						<div class="col-md-12 mb-3">
+							<h5 align="center" th:text="${mtto.equipo.nombre_Equipo}"></h5>
+						</div>
+						<div class="table-responsive  mb-3">
+							<table class="table" style="border-color:black;font-color:black;">
+								<tbody>
+									<tr>
+										<th style="border-color:black;">MARCA:</th>
+										<td th:text="${mtto.equipo.Marca}" style="border-color:black;"></td>
+										<th style="border-color:black;width:23%">SERVICIO:</th>
+									</tr>
+									<tr>
+										<td style="border-color:black;">MODELO:</td>
+										<td style="border-color:black;" th:text="${mtto.equipo.Modelo}"></td>
+										<td rowspan="3" style="border-color:black;" th:text="${mtto.equipo.Servicios}">
+										</td>
+									</tr>
+									<tr>
+										<td style="border-color:black;">SERIE:</td>
+										<td style="border-color:black;" th:text="${mtto.equipo.Serie}"></td>
+
+									</tr>
+									<tr>
+										<td style="border-color:black;">N°ACTIVO:</td>
+										<td style="border-color:black;" th:text="${mtto.equipo.Placa_inventario}"></td>
+
+									</tr>
+
+								</tbody>
+
+							</table>
+						</div>
+
+						<div class="table-responsive mb-3">
+							<table class="table" style="border-color:black;font-color:black;">
+								<thead>
+									<th style="border-color:black;text-align:center;width:78%">PROTOCOLO ESTABLECIDO POR
+										EL FABRICANTE</th>
+									<th style="border-color:black;text-align:center;">CUMPLE</th>
+									<th style="border-color:black;text-align:center;">NO CUMPLE</th>
+								</thead>
+								<tbody>
+									<tr th:each="protocolo:${protocols}">
+										<td style="border-color:black;" th:text="${protocolo.Paso}"></td>
+										<div th:if="${protocolo.Cumplimiento==true}">
+											<td style="border-color:black;">
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" checked disabled>
+												</div>
+											</td>
+											<td style="border-color:black;">
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" disabled>
+												</div>
+											</td>
+										</div>
+										<div th:unless="${protocolo.Cumplimiento==true}">
+											<td style="border-color:black;">
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" disabled>
+												</div>
+											</td>
+											<td style="border-color:black;">
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" checked disabled>
+												</div>
+											</td>
+										</div>
+
+									</tr>
+
+								</tbody>
+
+							</table>
+
+
+
+						</div>
+						<div class="table-responsive">
+							<table class="table" style="border-color:black;font-color:black;">
+								<div th:if="${mtto.tipo_equipo.Repuestos_minimos==''}">
+									<td style="border-color:black;">
+										<big><b><label>Material consumible:</label></b></big>
+										<div th:each="material:${materiales}">
+											<p th:text="${material}"></p>
+										</div>
+									</td>
+									<td style="border-color:black;">
+										<big><b><label>Herramientas y equipos:</label></b></big>
+										<div th:each="herramienta:${herramientas}">
+											<p th:text="${herramienta}"></p>
+										</div>
+									</td>
+								</div>
+								<div th:unless="${mtto.tipo_equipo.Repuestos_minimos==''}">
+									<td style="border-color:black;">
+										<big><b><label>Material consumible:</label></b></big>
+										<div th:each="material:${materiales}">
+											<p th:text="${material}"></p>
+										</div>
+									</td>
+									<td style="border-color:black;">
+										<big><b><label>Herramientas y equipos:</label></b></big>
+										<div th:each="herramienta:${herramientas}">
+											<p th:text="${herramienta}"></p>
+										</div>
+									</td>
+									<td style="border-color:black;">
+										<big><b><label>Repuestos mínimos:</label></b></big>
+										<div th:each="repuesto:${repuestos}">
+											<p th:text="${repuesto}"></p>
+										</div>
+									</td>
+
+								</div>
+							</table>
+						</div>
+						<div class="table-responsive">
+							<table class="table" style="border-color:black;font-color:black;">
+								<tbody>
+									<tr>
+										<td th:text="'TIEMPO DE EJECUCIÓN (APROX. '+${mtto.tipo_equipo.Tiempo_minutos}+' MINUTOS):'"
+											style="border-color:black;"></td>
+										<td th:text="${minutos}" style="border-color:black;"></td>
+										<td style="border-color:black;">REPORTE:</td>
+										<td th:text="${numeroreporte}" style="border-color:black;"></td>
+									</tr>
+									<tr>
+										<td rowspan="2" style="border-color:black;">
+											<br>
+											<h5 align="center">FIRMA DE QUIEN REALIZA</h5>
+										</td>
+										<td rowspan="2" colspan="3" style="border-color:black;">
+											<br>
+											<h5 align="center">FIRMA DE QUIEN RECIBE</h5>
+										</td>
+									</tr>
+									<tr></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div th:if="${mttoMSV} != null">
+		<div class="table-responsive  mb-3">
+			<br>
+			<table class="table" style="border-color:black;font-color:black;">
+
+				<tbody>
+					<tr>
+						<td rowspan="3" align="left" style="border-color:black;width:23%">
+							<small><b>RUTINA DE MANTENIMIENTO PREVENTIVO</b></small>
+						</td>
+						<td align="center" style="border-color:black;"><small><b> MINISTERIO DE LA
+									PROTECCIÓN SOCIAL</b></small></td>
+						<td rowspan="3" align="center" style="border-color:black;"><img
+								th:src="@{/images/Escudo_husrt.png}" width="140" height="120"></td>
+					</tr>
+					<tr>
+						<td align="center" style="border-color:black;"><small><b>E.S.E HOSPITAL
+									UNIVERSITARIO SAN RAFAEL DE TUNJA</b></small></td>
+					</tr>
+					<tr>
+						<td scope="col" align="center" style="border-color:black;"><small><b>III NIVEL
+									DE ATENCIÓN</b></small></td>
+					</tr>
+				</tbody>
+
+			</table>
+
+
+
+		</div>
+		<div class="col-md-12 mb-3">
+			<h5 align="center" th:text="${mtto.equipo.nombre_Equipo}"></h5>
+		</div>
+		<div class="table-responsive  mb-3">
+			<table class="table" style="border-color:black;font-color:black;">
+				<tbody>
+					<tr>
+						<th style="border-color:black;">MARCA:</th>
+						<td th:text="${mtto.equipo.Marca}" style="border-color:black;"></td>
+						<th style="border-color:black;width:23%">SERVICIO:</th>
+					</tr>
+					<tr>
+						<th style="border-color:black;">MODELO:</th>
+						<td style="border-color:black;" th:text="${mtto.equipo.Modelo}"></td>
+						<td rowspan="3" style="border-color:black;" th:text="${mtto.equipo.Servicios}">
+						</td>
+					</tr>
+					<tr>
+						<th style="border-color:black;">SERIE:</th>
+						<td style="border-color:black;" th:text="${mtto.equipo.Serie}"></td>
+
+					</tr>
+					<tr>
+						<th style="border-color:black;">N°ACTIVO:</th>
+						<td style="border-color:black;" th:text="${mtto.equipo.Placa_inventario}"></td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+		</div>
+
+		<div>
+			<h5 style="text-align: center;">DATOS DE SIMULADOR</h5>
+			<table class="table">
+				<tr>
+					<th scope="col" colspan="2">Equipo:</th>
+					<td scope="col" colspan="2">SIMULADOR PACIENTE</td>
+					<th scope="col" colspan="2">Marca:</th>
+					<td scope="col" colspan="2">FLUKE</td>
+					<th scope="col" colspan="2">Modelo:</th>
+					<td scope="col" colspan="2">PROSIM 8</td>
+				</tr>
+				<tr>
+					<th scope="col" colspan="2">Serie:</th>
+					<td scope="col" colspan="2">209115</td>
+					<th scope="col" colspan="2">Certificado de calibración:</th>
+					<td scope="col" colspan="2">CG6609-23</td>
+					<th scope="col" colspan="2">Fecha de calibración:</th>
+					<td scope="col" colspan="2">15/09/2023</td>
+				</tr>
+			</table>
+			<h5 style="text-align: center;">DATOS DE SIMULACION PACIENTE</h5>
+			<table class="table">
+				<tr>
+					<th scope="col" colspan="3"></th>
+					<th scope="col" colspan="6" style="text-align: center;">SPO2(%)</th>
+					<th scope="col" colspan="8" style="text-align: center;">SPO2(%) ECG(LPM)</th>
+				</tr>
+				<tr>
+					<th scope="col" colspan="3">Valor Colocado:</th>
+					<th scope="col" colspan="2">65</th>
+					<th scope="col" colspan="2">75</th>
+					<th scope="col" colspan="2">100</th>
+					<th scope="col" colspan="2">45</th>
+					<th scope="col" colspan="2">60</th>
+					<th scope="col" colspan="2">120</th>
+					<th scope="col" colspan="2">180</th>
+				</tr>
+				<tr>
+					<th scope="col" colspan="3">Valor Medido:</th>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v65medidoSPO2}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v75medidoSPO2}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v100medidoSPO2}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v45medidoECG}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v60medidoECG}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v120medidoECG}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v180medidoECG}"></td>
+				</tr>
+			</table>
+			<h5 style="text-align: center;">NIBP (mmHg)</h5>
+			<table class="table">
+				<tr>
+					<th scope="col" colspan="2"></th>
+					<th scope="col" colspan="2">SISTOLOCA</th>
+					<th scope="col" colspan="2">DIASTOLICA:</th>
+					<th scope="col" colspan="2">MEDIA</th>
+					<th scope="col" colspan="2"></th>
+					<th scope="col" colspan="2">SISTOLICA</th>
+					<th scope="col" colspan="2">DIASTOLICA</th>
+					<th scope="col" colspan="2">MEDIA</th>
+				</tr>
+				<tr>
+					<th scope="col" colspan="2">VALOR COLOCADO </th>
+					<th scope="col" colspan="2">120</th>
+					<th scope="col" colspan="2">80</th>
+					<th scope="col" colspan="2">92</th>
+					<th scope="col" colspan="2">VALOR COLOCADO </th>
+					<th scope="col" colspan="2">200</th>
+					<th scope="col" colspan="2">150</th>
+					<th scope="col" colspan="2">167</th>
+				</tr>
+				<tr>
+					<th scope="col" colspan="2">VALOR MEDIDO</th>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v120medidoSistolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v80medidoDiastolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v92medidoMedia}"></td>
+					<th scope="col" colspan="2">VALOR MEDIDO</th>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v200medidoSistolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v150medidoDiastolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v167medidoMedia}"></td>
+				</tr>
+				<tr>
+					<th scope="col" colspan="2">VALOR COLOCADO </th>
+					<th scope="col" colspan="2">60</th>
+					<th scope="col" colspan="2">30</th>
+					<th scope="col" colspan="2">40</th>
+					<th scope="col" colspan="2">VALOR COLOCADO </th>
+					<th scope="col" colspan="2">80</th>
+					<th scope="col" colspan="2">50</th>
+					<th scope="col" colspan="2">60</th>
+				</tr>
+				<tr>
+					<th scope="col" colspan="2">VALOR MEDIDO</th>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v60medidoSistolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v30medidoDiastolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v40medidoMedia}"></td>
+					<th scope="col" colspan="2">VALOR MEDIDO</th>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v80medidoSistolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v50medidoDiastolica}"></td>
+					<td scope="col" colspan="2" th:text="${mttoMSV.v60medidoMedia}"></td>
+				</tr>
+			</table>
+
+		</div>
+
+	</div>
+
+	<div class="table-responsive" th:if="${mtto} != null">
+		<table class="table" style="border-color:black;font-color:black;">
+			<div th:if="${mtto.tipo_equipo.Repuestos_minimos==''}">
+				<td style="border-color:black;">
+					<big><b><label>Material consumible:</label></b></big>
+				</td>
+				<td style="border-color:black;">
+					<big><b><label>Herramientas y equipos:</label></b></big>
+				</td>
+			</div>
+			<div th:unless="${mtto.tipo_equipo.Repuestos_minimos==''}">
+				<td style="border-color:black;">
+					<big><b><label>Material consumible:</label></b></big>
+				</td>
+				<td style="border-color:black;">
+					<big><b><label>Herramientas y equipos:</label></b></big>
+				</td>
+				<td style="border-color:black;">
+					<big><b><label>Repuestos mínimos:</label></b></big>
+
+				</td>
+
+			</div>
+		</table>
+	</div>
+	<div class="table-responsive" th:if="${mtto} != null">
+		<table class="table" style="border-color:black;font-color:black;">
+			<tbody>
+				<tr>
+					<td th:text="'TIEMPO DE EJECUCIÓN (APROX. '+${mtto.tipo_equipo.Tiempo_minutos}+' MINUTOS):'"
+						style="border-color:black;"></td>
+					<td th:text="${minutos}" style="border-color:black;"></td>
+					<td style="border-color:black;">REPORTE:</td>
+					<td th:text="${numeroreporte}" style="border-color:black;"></td>
+				</tr>
+				<tr>
+					<td rowspan="2" style="border-color:black;">
+						<br>
+						<h5 align="center">FIRMA DE QUIEN REALIZA</h5>
+					</td>
+					<td rowspan="2" colspan="3" style="border-color:black;">
+						<br>
+						<h5 align="center">FIRMA DE QUIEN RECIBE</h5>
+					</td>
+				</tr>
+				<tr></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<form>
+		<a class="btn btn-danger" th:href="@{/download/}+${idreporte}">Descargar archivo PDF</a>
+	</form>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Seguridad</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/offcanvas/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="..static/css/cheatsheet.css" rel="stylesheet" th:href="@{/css/cheatsheet.css}">
+
+  </head>
+  <body class="bg-light">
+   <div class="d-flex">  
+    <header>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+        <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" th:href="@{/producto}" >Atras</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/periodicidad}" >Periodicidad</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/semaforizacion}" >Semaforización</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href = "@{/usuarios}">Usuarios</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+              <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+                <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+                
+              </ul>
+            </li>
+          </ul>
+        
+        </div>
+      </div>
+    </nav>
+  </header>
+  <aside class="bd-aside sticky-xl-top text-muted align-self-start mb-3 mb-xl-5 px-2">
+    <h2 class="h6 pt-4 pb-3 mb-4 border-bottom">Información</h2>
+    <nav class="small" id= "toc">      
+         
+      <ul class="list-unstyled">
+      <li class="my-2">
+        <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#forms-collapse" aria-controls="forms-collapse">Tipos de criterios</button>
+        <ul class="list-unstyled ps-3 collapse" id="forms-collapse">
+          <li><a class="d-inline-flex align-items-center rounded" th:href="@{/clasificacion}">Valoración y tipos</a></li>
+        
+        </ul>
+      </li> 
+        <li class="my-2">
+          <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle = "collapse" aria-expanded = "false"data-bs-target = "#contents-collapse" aria-controls = "contents-collapse">Criterios técnicos</button>
+          
+          <ul class="list-unstyled ps-3 collapse" id = "contents-collapse">
+        
+            <li><a th:href = "@{/clasificacionIntensidadUso}"  class="d-inline-flex align-items-center rounded"><i class="icon ion-md-apps"></i>Intensidad de uso</a>
+
+            </li>   
+            <li><a th:href = "@{/clasificacionctEdad}" th:text = "Edad"class="d-inline-flex align-items-center rounded"><i class="icon ion-md-apps"></i></a>
+            </li>
+            <li><a th:href = "@{/clasificacionctNMantenimientos}" class="d-inline-flex align-items-center rounded"><i class="icon ion-md-apps"></i>Número de mantenimientos</a>
+            </li>   
+            <li><a th:href = "@{/clasificacionTFueraServicio}" class="d-inline-flex align-items-center rounded"><i class="icon ion-md-apps"></i>Tiempo fuera de servicio</a>
+            </li>   
+            
+            <li><a th:href = "@{/clasificacionctSeguridad}" th:text = "Seguridad"class="d-inline-flex align-items-center rounded"><i class="icon ion-md-apps"></i></a>
+            </li>   
+            <li><a th:href = "@{/clasificacionctGarantia}" class="d-inline-flex align-items-center rounded"><i class="icon ion-md-apps"></i>Garantía de repuestos</a>
+            </li>                                         
+          </ul>
+        </li>
+      <li class="my-2">
+        <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#components-collapse" aria-controls="components-collapse">Datos del  hospital</button>
+        <ul class="list-unstyled ps-3 collapse" id="components-collapse">
+          <li><a class="d-inline-flex align-items-center rounded" th:href="@{/clasificacionDHTipoEquipos}">Tipo de equipos</a></li>
+          <li><a class="d-inline-flex align-items-center rounded" th:href="@{/clasificacionDHServicio}">Servicios</a></li>
+        </ul>
+      </li>
+     
+      </ul>
+     
+    </nav>
+    
+  </aside>  
+
+
+
+<main class="container">
+  <div class="d-flex align-items-center p-3 my-3 text-white bg-danger rounded shadow-sm">
+
+    <div class="lh-1">
+      <h1 class="h6 mb-0 text-white lh-1">Información</h1>
+      <small>2022</small>
+    </div>
+  </div>
+
+        <div class="bd-example">
+        <table class="table table-hover">
+          <thead>
+          <tr class="table-success">
+            <th scope="col">Categoría </th>
+            <th scope="col">Seguridad del equipo </th>
+          
+          </tr>
+          </thead>
+          <tbody>
+          <tr class = "table-ligth">
+            <th scope="row">Categoría 1:</th>
+            <td>60</td>
+          
+          </tr>
+          
+          <tr class="table-light">
+            <th scope="row">Categoría 2:</th>
+            <td>75</td>
+            
+          </tr>
+          <tr class="table-light">
+            <th scope="row">Categoría 3:</th>
+            <td>90</td>
+           
+          </tr>
+          <tr class="table-light">
+            <th scope="row">Categoría 4:</th>
+            <td>100</td>
+          
+          </tr>
+          
+          </tbody>
+        </table>
+        </div>     
+ 
+        
+
+</main>
+</div>
+
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+      <script th:src="@{/js/offcanvas.js}"></script>
+      <script th:type="@{/js/cheatsheet.js}"></script>
+  </body>
+</html>

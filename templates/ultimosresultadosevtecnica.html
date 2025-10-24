@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Seleccione para evaluar por tipos de equipo</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+<script th:src = "@{/js/chart.js}"></script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/pricing.css" rel="stylesheet" th:href="@{/css/pricing.css}">
+  </head>
+  <body>
+    
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/semaforizacion}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>        
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown04">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+             
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+
+<main class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4" th:text="${tipoequipo.nombre_Tipo_equipo}"></h1>
+    <p class="lead">A continuación encontrara la información para cada equipo</p>
+  </div>
+  <form>
+    <div class="col-md-12 col-lg-12">
+      <div class="input-group">
+        <input class="form-control"id="myInput"onkeyup="myFunction()" type="text" placeholder="Ingrese el ID, la serie, la marca o el modelo" aria-label="Search">
+        <span class="input-group-btn">
+          <button type="button" class="w-200 btn btn-lg btn-dark"onclick="myFunction()">Buscar</button>
+        </span>
+      </div>
+    </div>
+ 
+  </form>
+
+  
+    <div class="table-responsive">
+      <table class="table table-hover" id= "myTable">
+          <thead>
+          <tr class="table-secondary">
+            <th scope="col">ID</th>
+            <th scope="col">Serie</th>
+            <th scope="col">Placa</th>
+            <th scope="col">Marca</th>
+
+            <th scope="col">Modelo</th>
+            <th scope="col">Servicio</th>
+            <th scope="col">Evaluación técnica</th>
+                
+            <th scope="col">Detalles</th>    
+          </tr>
+          </thead>
+          <tbody>          
+          <tr class="table-light" th:each= "equipo,iterador:${equipos}">
+            <th scope="row" th:text="${equipo.id_Equipo}"></th>
+            <td th:text="${equipo.Serie}"></td>
+            <td th:text="${equipo.Placa_inventario}"></td>
+            <td th:text="${equipo.Marca}"></td>
+            
+        
+            <td th:text="${equipo.Modelo}"></td>
+            <td th:text="${equipo.Servicios}"></td>
+            <div th:if="${ultimoscriterios.get(iterador.index)}">
+            	<div th:if="${ultimoscriterios.get(iterador.index).Total_puntos<25}">
+            		<td class = "table-danger"th:text="${ultimoscriterios.get(iterador.index).Total_puntos}"></td>
+            	</div >
+            	
+            	<div th:if="${ultimoscriterios.get(iterador.index).Total_puntos>=25 and ultimoscriterios.get(iterador.index).Total_puntos<60}">
+            		<td class = "table-warning"th:text="${ultimoscriterios.get(iterador.index).Total_puntos}"></td>
+            	</div>
+            	<div th:if="${ultimoscriterios.get(iterador.index).Total_puntos>=60}">
+            		<td class = "table-success"th:text="${ultimoscriterios.get(iterador.index).Total_puntos}"></td>
+            	</div>
+            	
+            </div>
+            <div th:unless="${ultimoscriterios.get(iterador.index)}">
+            	<td>ND</td>
+            </div>
+            
+            <td>
+              <div class="btn-group">
+                <button class="w-150 btn btn-dark btn-sm"th:name="${equipo.nombre_Equipo}+' '+${equipo.Serie}"th:id = "${iterador.index}" onclick = "ViewInd(this);"type="button" data-bs-toggle="modal" th:attr = "data-bs-target='#staticindex'+${equipo.id_Equipo}">Índices</button>
+              
+                <button type="button" class="w-150 btn btn-dark btn-sm"th:name="${equipo.nombre_Equipo}+${equipo.Serie}" data-bs-toggle="modal" th:id="${iterador.index}+'ev'" onclick="ViewEv(this);" th:attr="data-bs-target='#staticBackdrop1'+${equipo.id_Equipo}">
+                Ev. técnica
+              </button>
+              </div>
+              <!--indices-->
+              <div class="modal fade" th:id="'staticindex'+${equipo.id_Equipo}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticindexlabel">Índicadores de evaluación</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-6">
+                           <p class="lead">Índicadores del equipo:</p>
+                              
+                            
+                            <div class = "table-responsive">
+		          				<table class = "table table-sm">
+				      				<thead>
+				      					<tr>
+				      						<th scope = "col">Nombre indicador</th>
+				      						<th scope = "col">Indicador</th>
+				      						<th scope = "col">Resultado</th>		
+				      					</tr>
+				      				</thead>
+				      					
+				      				<tbody>
+				      					<tr>
+				      						<td class = "table-danger">1</td>
+				      						<td>Predictivos/Correctivos</td>
+				    						<td th:text="${indicadoresequipo.get(iterador.index).get(1)}+'/'+${indicadoresequipo.get(iterador.index).get(0)}"></td>
+				      					</tr>
+				      					<tr>
+				      						<td class = "table-primary">2</td>
+				      						<td>Preventivos/Correctivos</td>
+				    						<td th:text="${indicadoresequipo.get(iterador.index).get(2)}+'/'+${indicadoresequipo.get(iterador.index).get(0)}"></td>
+				      					</tr>
+				      					<tr>
+				      						<td class = "table-info">3</td>
+				      						<td>Correctivos/Totales</td>
+				    						<td th:text="${indicadoresequipo.get(iterador.index).get(0)}+'/'+${indicadoresequipo.get(iterador.index).get(11)}"></td>
+				      					</tr>
+				      					<tr>
+				      						<td class = "table-warning">4</td>
+				      						<td>Otros/Totales</td>
+				    						<td th:text="${indicadoresequipo.get(iterador.index).get(3)}+'/'+${indicadoresequipo.get(iterador.index).get(11)}"></td>
+				      					</tr>
+				      					<tr>
+				      						<td class = "table-warning">5</td>
+				      						<td>Hechos/Planeación</td>
+				      						<div th:switch="${equipo.Periodicidad}">
+				      							<td th:case="'1'" th:text="${indicadoresequipo.get(iterador.index).get(2)}+'/1'"></td>
+				      							<td th:case="'2'" th:text="${indicadoresequipo.get(iterador.index).get(2)}+'/2'"></td>
+				      							<td th:case="'3'" th:text="${indicadoresequipo.get(iterador.index).get(2)}+'/4'"></td>
+				      							<td th:case="'4'" th:text="${indicadoresequipo.get(iterador.index).get(2)}+'/3'"></td>
+				      						</div>
+				    						</tr>
+				      					
+				      				</tbody>
+				      				
+				      			</table>
+		          			</div>
+
+
+                          
+                          </div>
+                          <div class="col-md-6">
+                          	<canvas th:name = "${iterador.index}" th:id = "${iterador.index}+'gf'"width = "50" height = "50"></canvas>
+                                                       
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <!-- Modal -->
+              <div class="modal fade" th:id="'staticBackdrop1'+${equipo.id_Equipo}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Resultados evaluación técnica</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                  
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <div class="row">
+                        <div class="col-md-6">
+						  <div th:if="${ultimoscriterios.get(iterador.index)}">
+						  <p class="lead">Última evaluación realizada</p>	
+                          <div class="table-responsive">
+                            <table class="table table-striped table-sm">
+                              <thead>
+                                <tr>
+                                 <th>Criterio técnico</th> 
+                                 <th>Puntaje</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Intensidad de uso</td>
+                                  <td th:text="${ultimoscriterios.get(iterador.index).criterios_tecnicos.Intensidad_uso}"></td>
+                                </tr>
+                                <tr>
+                                  <td>Edad</td>
+                                  <td th:text="${ultimoscriterios.get(iterador.index).criterios_tecnicos.Edad}"></td>
+                                </tr>
+                                <tr>
+                                  <td>Número de mantenimientos</td>
+                                  <td th:text="${ultimoscriterios.get(iterador.index).criterios_tecnicos.Numero_mantenimientos}"></td>
+                                </tr>
+                                <tr>
+                                  <td>Tiempo fuera de servicio</td>
+                                  <td th:text="${ultimoscriterios.get(iterador.index).criterios_tecnicos.Tiempo_fuera_servicio}"></td>
+                                </tr>
+                                
+                                <tr>
+                                  <td>Seguridad</td>
+                                  <td th:text="${ultimoscriterios.get(iterador.index).criterios_tecnicos.Seguridad}"></td>
+                                </tr>
+                                <tr>
+                                  <td>Garantía de repuestos</td>
+                                  <td th:text="${ultimoscriterios.get(iterador.index).criterios_tecnicos.Garantia_repuestos}"></td>
+
+                                </tr>                              
+                               
+                              </tbody>
+                            </table>
+                        </div>
+						</div>
+						<div th:unless="${ultimoscriterios.get(iterador.index)}">
+							<p>No hay evaluaciones</p>
+						</div>
+                      </div>
+                      <div class="col-md-6">
+                      	<p class="lead">Evaluaciones del último año</p>
+                      	<canvas th:name = "${iterador.index}+'ev'" th:id = "${iterador.index}+'gf'"width = "50" height = "50"></canvas>
+                                                	 
+                      </div>
+                      
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>     
+
+          </tbody>
+        </table>
+
+    </div>
+
+        
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+     
+        <small class="d-block mb-3 text-muted"> 2022</small>
+      </div>
+    
+    </div>
+  </footer>
+</main>
+
+<script th:inline = "javascript">
+/*<![CDATA[*/
+	var indicadores = /*[[${indicadoresequipo}]]*/ 'default';
+	var evaluaciones = /*[[${historialevanual}]]*/ 'default';
+	
+	console.log(evaluaciones)
+	let chart;
+	let chart2;
+	function ViewEv(buton){
+		var id = buton.id;
+		var idgraph = document.getElementsByName(id);
+		
+		datos = evaluaciones[id.split('ev')[0]];
+		fechas = [];
+		valores = [];
+		
+		for(var i = 0;i<datos.length;i++){
+			
+			valores.push(datos[i].split(',')[0]);
+			fechas.push(datos[i].split(',')[1]);
+			
+			
+		}
+		console.log(valores)
+		console.log(fechas)
+		trazo(valores,fechas,idgraph,buton.name)
+	}
+	function ViewInd(buton){
+		var id = buton.id;
+		var idgraph = document.getElementsByName(id);
+		
+		datos = indicadores[id];
+		graphs(buton.name,datos[4],datos[5],datos[7],datos[6],datos[8],datos[9],datos[10],idgraph,id)
+			
+	}
+	function trazo(datos,fechas,grafica,name){
+		var Lev = grafica[0].getContext("2d");
+		if(chart){
+			chart.destroy();
+		}
+		chart = new Chart(Lev,{
+		type: "line",
+		data:{
+			labels:fechas,
+			datasets:[{
+					label:name,
+					data:datos,
+					fill:false,
+					borderColor:'rgb(75,192,192)',
+					tension:0.1
+					
+				}]
+			}
+		});
+	}
+	function graphs(name,desgas,opind,acces,causeex,unknown,wfallas,otrosf,grafica,id){
+		
+	
+		var Fmtto = grafica[0].getContext("2d");
+		
+		if(chart2){
+			chart2.destroy();
+		}
+		
+		chart2 = new Chart(Fmtto,{
+		type: "doughnut",
+		data:{
+			labels:['Desgaste','Operación indebida','Accesorios','Causa externa','Desconocido','Sin fallas','Otros'],
+			datasets:[{
+					label:name,
+					data:[desgas,opind,acces,causeex,unknown,wfallas,otrosf],
+					backgroundColor:['rgb(255,225,53)','rgb(139,0,0)','rgb(244,70,17)','rgb(144,238,144)','rgb(130,130,130)','rgb(0,143,57)','rgb(87,35,100)'],
+					hoverOffset:4
+					
+				}]
+			}
+		});
+	
+	
+	}
+	function myFunction(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTable");
+		tr = div.getElementsByClassName("table-light");
+		console.log(tr.length)
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			td2 = tr[i].getElementsByTagName("td")[2];
+			td3 = tr[i].getElementsByTagName("td")[3];
+			th = tr[i].getElementsByTagName("th")[0];
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				txtValue4 = th.textContent || th.innerText;
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+/*]]>*/
+	
+</script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    
+  </body>
+</html>

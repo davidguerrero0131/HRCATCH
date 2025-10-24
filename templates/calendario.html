@@ -1,0 +1,4801 @@
+x<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Calendario</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  
+    <!-- Custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+
+    
+  </head>
+<body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+          
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+<main class="container">  
+
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+	<div class="py-4 text-center">
+     
+        <h2>Mantenimientos preventivos programados</h2>
+        <p class="lead">Seleccione para clasificar de acuerdo a mantenimientos asignados</p>
+      </div>
+  <div class="container-xl">
+  	<div class = "row">
+  		
+  		<div class="bd-example">
+        <nav>
+          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+            <a class="nav-link" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Seguimiento actividades</a>
+            <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Programación de mantenimientos</a>
+            <a class="nav-link" id="nav-calval-tab" data-bs-toggle="tab" href="#nav-calval" role="tab" aria-controls="nav-calval" aria-selected="false">Programación calibraciones, validaciones y calificaciones</a>
+            <a class="nav-link active" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Actividades mensuales</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+	          <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+	          	<div class = "row g-3">
+	          	<div class = "col-md-3">
+	          	    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" >	
+				    <ul class="nav nav-pills flex-column mb-auto">
+				      <li class="nav-item">
+				        <a href="#nav-calvalc" id="nav-calvalc-tab"class="nav-link active" data-bs-toggle="tab" role="tab" aria-controls="nav-calvalc" aria-selected="true" aria-current="page">			          
+				          Cronograma calibraciones, validaciones y calificaciones
+				        </a>
+				      </li>
+				      <li>
+				        <a href="#nav-mttop" id="nav-mttop-tab"class="nav-link link-dark"data-bs-toggle="tab" role="tab" aria-controls="nav-mttop"  aria-selected="false">
+				            Cronograma semanal mantenimientos
+				        </a>
+				      </li>
+				    			      
+				    </ul>
+				    
+				  </div>
+	          	</div>
+	          	<div class = "col-md-9">
+		          	<label class="text-light badge-pill bg-danger">Validación</label>
+		          	<label class="text-light badge-pill bg-warning">Calificación</label>
+		          	<label class="text-light badge-pill bg-primary">Calibración</label>
+	
+	          	</div>
+	          	<div class ="col-md-12">
+	          		<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Equipo</th>
+	            					<th scope = "col">Responsable</th>
+	            					<th scope = "col">Enero</th>
+	            					<th scope = "col">Febrero</th>
+	            					<th scope = "col">Marzo</th>
+	            					<th scope = "col">Abril</th>
+	            					<th scope = "col">Mayo</th>
+	            					<th scope = "col">Junio</th>
+	            					<th scope = "col">Julio</th>
+	            					<th scope = "col">Agosto</th>
+	            					<th scope = "col">Septiembre</th>
+	            					<th scope = "col">Octubre</th>
+	            					<th scope = "col">Noviembre</th>
+	            					<th scope = "col">Diciembre</th>
+	            					
+	            				</tr>
+	            			</thead>
+	            			<tbody>
+	            				<tr th:each = "equipo:${equipos}" style ="text-align: center;">
+	            					<td th:text="${equipo.nombre_Equipo}"></td>
+	            					<td></td>
+	            					<td th:if = "${equipo.Validacion ==1}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==1}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==1}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=1 and equipo.Califiacion !=1 and equipo.Validacion !=1}" class = "table-white"></td>
+	            					
+	            					<td th:if = "${equipo.Validacion ==2}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==2}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==2}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=2 and equipo.Califiacion !=2 and equipo.Validacion !=2}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==3}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==3}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==3}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=3 and equipo.Califiacion !=3 and equipo.Validacion !=3}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==4}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==4}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==4}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=4 and equipo.Califiacion !=4 and equipo.Validacion !=4}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==5}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==5}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==5}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=5 and equipo.Califiacion !=5 and equipo.Validacion !=5}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==6}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==6}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==6}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 81 || equipo.tipo_equipo.id_Tipo_equipo == 83 || equipo.tipo_equipo.id_Tipo_equipo == 1240}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Calibracion !=6 and equipo.Califiacion !=6 and equipo.Validacion !=6 and equipo.tipo_equipo.id_Tipo_equipo != 81 and equipo.tipo_equipo.id_Tipo_equipo != 83 and equipo.tipo_equipo.id_Tipo_equipo != 1240}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==7}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==7}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==7}" class = "table-primary">X</td>
+	            				    <td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 81 || equipo.tipo_equipo.id_Tipo_equipo == 83 || equipo.tipo_equipo.id_Tipo_equipo == 1240}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 2 || equipo.tipo_equipo.id_Tipo_equipo == 3 ||
+	            					 equipo.tipo_equipo.id_Tipo_equipo == 4 || equipo.tipo_equipo.id_Tipo_equipo == 5 || equipo.tipo_equipo.id_Tipo_equipo == 6}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=7 and equipo.Califiacion !=7 and equipo.Validacion !=7 and equipo.tipo_equipo.id_Tipo_equipo != 81 and equipo.tipo_equipo.id_Tipo_equipo != 83 and equipo.tipo_equipo.id_Tipo_equipo != 1240}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==8}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==8}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==8}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 48 || equipo.tipo_equipo.id_Tipo_equipo == 49}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=8 and equipo.Califiacion !=8 and equipo.Validacion !=8}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==9}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==9}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==9}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=9 and equipo.Califiacion !=9 and equipo.Validacion !=9}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==10}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==10}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==10}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 41}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 1242}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Calibracion !=10 and equipo.Califiacion !=10 and equipo.Validacion !=10 and equipo.tipo_equipo.id_Tipo_equipo != 1242}" class = "table-white"></td>
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==11}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==11}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==11}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 81 || equipo.tipo_equipo.id_Tipo_equipo == 83 || equipo.tipo_equipo.id_Tipo_equipo == 1240 || equipo.tipo_equipo.id_Tipo_equipo == 52}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Calibracion !=11 and equipo.Califiacion !=11 and equipo.Validacion !=11 and equipo.tipo_equipo.id_Tipo_equipo != 81 and equipo.tipo_equipo.id_Tipo_equipo != 83 and equipo.tipo_equipo.id_Tipo_equipo != 1240 and equipo.tipo_equipo.id_Tipo_equipo != 52}" class = "table-white"></td>
+	            					
+	            					
+	            					
+	            					<td th:if = "${equipo.Validacion ==12}" class = "table-danger">X</td>
+	            					<td th:if = "${equipo.Califiacion ==12}" class = "table-warning">X</td>
+	            					<td th:if = "${equipo.Calibracion ==12}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.tipo_equipo.id_Tipo_equipo == 135}" class = "table-primary">X</td>
+	            					<td th:if = "${equipo.Calibracion !=12 and equipo.Califiacion !=12 and equipo.Validacion !=12}" class = "table-white"></td>
+	            					
+	            				</tr>
+	            			</tbody>
+            			</table>
+            		</div>
+	          	</div>
+	          	</div>
+	          </div>
+      
+          
+          
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <form class="needs-validation" validate th:action="@{/programar}"th:object="${mantenimiento_preventivo}"method="post">
+            	<div class="row">
+            		<div class="col-md-7">
+            		    <p class="lead">Seleccione el rango en el cuál desea programar sus mantenimientos preventivos </p>
+            			
+		          		
+            		</div>
+            		<div class="col-md-2">
+            			<input type="text" name = "daterange" id = "rangofecha" onchange="ViewtoProg();" required>
+            			<small><p class = "lead">Explore la semana</p></small>
+            		</div>
+            		<div class = "col-md-2">
+            			<select class = "form-select form-select-sm" th:name = "tecnicosalas" id="tecnicosala"  required>
+		          			<option selected disabled value="" >Técnicos</option>
+		          			<div th:each= "usuario:${usuarios}">
+		          				<option th:text = "${usuario.Nombre}+' '+${usuario.Apellido}" th:value="${usuario.id_Usuario}"></option>
+		          			</div>
+		          			
+		          		</select>
+		          		<small><p class = "lead">Asignar salas</p></small>
+            		</div>
+            		<div class ="col-md-1">
+            			<button type="submit" class="w-200 btn btn-sm btn-dark"value="programar">Programar</button>
+            		</div>
+            		<div class =" col-md-12">
+            			<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Nombre</th>
+	            					<th scope = "col">Serie</th>
+	            					<th scopre = "col">Servicio</th>
+	            					<th scope = "col">Dias mtto</th>
+	            				</tr>
+	            			</thead>
+	            			<tbody id = "tablaaprogramar">
+	            				<tr >
+	            					
+	            				</tr>
+	            			</tbody>
+            			</table>
+            		</div>
+            		</div>
+            		
+            		
+            	</div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="nav-calval" role="tabpanel" aria-labelledby="nav-calval-tab">
+          	 <form class="needs-validation" validate th:action="@{/programarcalval}"method="post">
+          	 <div class = "row">
+          	 	
+          	 	<div class= "col-md-9">
+          	 		<p class = "lead">Programar calibraciones, validaciones y calificaciones</p>
+          	 	</div>
+          	 	<div class = "col-md-2">
+          	 		<select class = "form-select form-select-sm" th:name = "mescalval" id="selectmonthcalval" onchange = "ModifyCalval();" required>
+		          			<option selected disabled value="" >Todos los meses</option>
+		          			<option th:text = "Enero" th:value=1></option>
+		          			<option th:text = "Febrero"th:value=2></option>
+		          			<option th:text = "Marzo" th:value =3 ></option>
+		          			<option th:text = "Abril"th:value =4></option>
+		          			<option th:text = "Mayo"th:value =5></option>
+		          			<option th:text = "Junio"th:value =6></option>
+		          			<option th:text = "Julio"th:value =7></option>
+		          			<option th:text = "Agosto"th:value =8></option>
+		          			<option th:text = "Septiembre"th:value =9></option>
+		          			<option th:text = "Octubre"th:value =10></option>
+		          			<option th:text = "Noviembre"th:value =11></option>
+		          			<option th:text = "Diciembre"th:value =12></option>
+		          			
+		          		</select> 
+		          	
+          	 	</div>
+          	 	<div class ="col-md-1">
+            			<button type="submit" class="w-200 btn btn-sm btn-dark"value="programar">Programar</button>
+            		</div>
+          	 	<div class = "col-md-12">
+          	 		<div class =" col-md-12">
+            			<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Nombre</th>
+	            					<th scope = "col">Marca</th>
+	            					<th scope = "col">Modelo</th>
+	            					<th scope = "col">Serie</th>
+	            					<th scopre = "col">Servicio</th>
+	            					<th scope = "col">Proceso</th>
+	            				</tr>
+	            			</thead>
+	            			<tbody id = "tablaprogramarcalval">
+	            				<tr >
+	            					
+	            				</tr>
+	            			</tbody>
+            			</table>
+            		</div>
+            		</div>
+          	 	</div>
+          	 	
+          	 	
+          	 </div>
+          	 </form>
+          	   
+          </div>
+          <div class="tab-pane fade  show active" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <div class = "row">
+          	<div class="col-md-3">
+          	<p class="lead">Seleccione el mes</p>
+          	<select class = "form-select form-select-sm" th:name = "mesparatodos" id="selectmonth" onchange = "ModifyMonth();" required>
+		          			<option selected disabled value="" >Todos los meses</option>
+		          			<option th:text = "Enero" th:value=1></option>
+		          			<option th:text = "Febrero"th:value=2></option>
+		          			<option th:text = "Marzo" th:value =3 ></option>
+		          			<option th:text = "Abril"th:value =4></option>
+		          			<option th:text = "Mayo"th:value =5></option>
+		          			<option th:text = "Junio"th:value =6></option>
+		          			<option th:text = "Julio"th:value =7></option>
+		          			<option th:text = "Agosto"th:value =8></option>
+		          			<option th:text = "Septiembre"th:value =9></option>
+		          			<option th:text = "Octubre"th:value =10></option>
+		          			<option th:text = "Noviembre"th:value =11></option>
+		          			<option th:text = "Diciembre"th:value =12></option>
+		          			
+		          		</select>
+          	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" >	
+			    <ul class="nav nav-pills flex-column mb-auto">
+			      <li class="nav-item">
+			        <a href="#nav-propio" id="nav-propio-tab"class="nav-link active" data-bs-toggle="tab" role="tab" aria-controls="nav-propio" aria-selected="true" aria-current="page">			          
+			          Mantenimiento propio
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#nav-contado" id="nav-contado-tab"class="nav-link link-dark"data-bs-toggle="tab" role="tab" aria-controls="nav-contado"  aria-selected="false">
+			            Mantenmiento contratado
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#nav-garantia" id="nav-garantia-tab" class="nav-link link-dark" data-bs-toggle="tab" role="tab" aria-controls="nav-garantia"  aria-selected="false">
+			         
+			          Mantenimiento garantía
+			        </a>
+			      </li>
+			      <li>
+			        <a href="#nav-calibracion" id = "nav-calibracion-tab" class="nav-link link-dark" data-bs-toggle = "tab"role = "tab" aria-controls="nav-calibracion"  aria-selected="false">
+			       
+			          Calibraciones, calificaciones y validaciones
+			        </a>
+			      </li>			      
+			    </ul>
+			    
+			  </div>
+			  
+          	</div>
+          	<div class="col-md-9">
+            <div class="row">
+            <div class="tab-content" id="nav-tabContents">
+		  		<div class="tab-pane fade show active" id="nav-propio" role="tabpanel" aria-labelledby="nav-propio-tab">
+		  			<p class= "lead" >Preventivos área:</p>
+            		
+            		<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Nombre</th>
+	            					<th scope = "col">Marca</th>
+	            					<th scope = "col">Modelo</th>
+	            					<th scope = "col">Serie</th>
+	            					<th scope = "col">Dias mtto</th>
+	            					<th scope = "col">Servicio</th>
+	            					<th scope = "col">Ubicación</th>
+	            				</tr>
+	            			</thead>
+	            			<tbody id = "tablapreventivos">
+	            				<tr >
+	            					
+	            				</tr>
+	            			</tbody>
+            			</table>
+            		</div>
+		  		</div>
+		  		<div class="tab-pane fade" id="nav-contado" role="tabpanel" aria-labelledby="nav-contado-tab">
+		  			<p class= "lead">Preventivos contrato:</p>
+            		<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Nombre</th>
+	            					<th scope = "col">Marca</th>
+	            					<th scope = "col">Modelo</th>
+	            					<th scope = "col">Serie</th>
+	            					<th scope = "col">Servicio</th>
+	            					<th scope = "col">Ubicación</th>
+	            				</tr>
+	            			</thead>
+	            			<tbody id = "tablacontratos">
+	            				<tr >
+	            					
+	            				</tr>
+	            			</tbody>
+            			</table>
+            		</div>
+		  		
+		  		</div>
+		  		<div class="tab-pane fade" id="nav-garantia" role="tabpanel" aria-labelledby="nav-garantia-tab">
+		  			<p class= "lead">Preventivos garantía:</p>
+            		<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Nombre</th>
+	            					<th scope = "col">Marca</th>
+	            					<th scope = "col">Modelo</th>
+	            					<th scope = "col">Serie</th>
+	            					<th scope = "col">Servicio</th>
+	            					<th scope = "col">Ubicación</th>
+	            				</tr>
+	            			</thead>
+	            			<tbody id = "tablagarantias">
+	            				<tr>
+	            				</tr>
+	            				
+	            			</tbody>
+            			</table>
+            		</div>
+		  		
+		  		</div>
+		  		<div class="tab-pane fade" id="nav-calibracion" role="tabpanel" aria-labelledby="nav-calibracion-tab">
+		  			<p class= "lead">Calibraciones y validaciones</p>
+		  			<div class="table-responsive">
+            			<table class="table table-sm">
+	            			<thead class = "table-primary">
+	            				<tr>
+	            					<th scope = "col">Nombre</th>
+	            					<th scope = "col">Marca</th>
+	            					<th scope = "col">Modelo</th>
+	            					<th scope = "col">Serie</th>
+	            					<th scope = "col">Servicio</th>
+	            					<th scope = "col">Ubicación</th>
+	            					<th scope = "col">Proceso</th>
+	            				</tr>
+	            			</thead>
+	            			<tbody id = "tablacalval">
+	            				<tr>
+	            				</tr>
+	            				
+	            			</tbody>
+            			</table>
+            		</div>
+		  		</div>
+		  		
+			  </div>
+
+            </div>
+          	</div>
+          	
+          </div>
+          </div>
+        </div>
+        </div>	
+  	
+  		
+  		
+  	</div>
+  </div>
+</div>
+	
+    <script th:inline = "javascript">
+    /*<![CDATA[*/
+    $(function(){
+        $('input[name="daterange"]').daterangepicker({
+          opens:'right'});
+
+      });
+    var eneroprep = /*[[${eneroprepro}]]*/ 'default';  
+    var febreroprep = /*[[${febreroprepro}]]*/ 'default';
+    var marzoprep = /*[[${marzoprepro}]]*/ 'default';
+    var abrilprep = /*[[${abrilprepro}]]*/ 'default';
+    var mayoprep = /*[[${mayoprepro}]]*/ 'default';
+    var junioprep = /*[[${junioprepro}]]*/ 'default';
+    var julioprep = /*[[${julioprepro}]]*/ 'default';
+    var agostoprep = /*[[${agostoprepro}]]*/ 'default';
+    var septiembreprep = /*[[${septiembreprepro}]]*/ 'default';
+    var octubreprep = /*[[${octubreprepro}]]*/ 'default';
+    var noviembreprep = /*[[${noviembreprepro}]]*/ 'default';
+    var diciembreprep = /*[[${diciembreprepro}]]*/ 'default';
+    
+    var eneroprec = /*[[${eneroprecon}]]*/ 'default';
+    var febreroprec = /*[[${febreroprecon}]]*/ 'default';
+    var marzoprec = /*[[${marzoprecon}]]*/ 'default';
+    var abrilprec = /*[[${abrilprecon}]]*/ 'default';
+    var mayoprec = /*[[${mayoprecon}]]*/ 'default';
+    var junioprec = /*[[${junioprecon}]]*/ 'default';
+    var julioprec = /*[[${julioprecon}]]*/ 'default';
+    var agostoprec = /*[[${agostoprecon}]]*/ 'default';
+    var septiembreprec = /*[[${septiembreprecon}]]*/ 'default';
+    var octubreprec = /*[[${octubreprecon}]]*/ 'default';
+    var noviembreprec = /*[[${noviembreprecon}]]*/ 'default';
+    var diciembreprec = /*[[${diciembreprecon}]]*/ 'default';
+    
+    var enerogar = /*[[${eneropregar}]]*/ 'default';
+    var febrerogar = /*[[${febreropregar}]]*/ 'default';
+    var marzogar = /*[[${marzopregar}]]*/ 'default';
+    var abrilgar = /*[[${abrilpregar}]]*/ 'default';
+    var mayogar = /*[[${mayopregar}]]*/ 'default';
+    var juniogar = /*[[${juniopregar}]]*/ 'default';
+    var juliogar = /*[[${juliopregar}]]*/ 'default';
+    var agostogar = /*[[${agostopregar}]]*/ 'default';
+    var septiembregar = /*[[${septiembrepregar}]]*/ 'default';
+    var octubregar = /*[[${octubrepregar}]]*/ 'default';
+    var noviembregar = /*[[${noviembrepregar}]]*/ 'default';
+    var diciembregar = /*[[${diciembrepregar}]]*/ 'default';
+    
+    var calval = /*[[${calvalstr}]]*/ 'default';
+    var enerocalval = [];
+    var febrerocalval = [];
+    var marzocalval = [];
+    var abrilcalval = [];
+    var mayocalval = [];
+    var juniocalval = [];
+    var juliocalval = [];
+    var agostocalval = [];
+    var septiembrecalval = [];
+    var octubrecalval = [];
+    var noviembrecalval = [];
+    var diciembrecalval = [];
+    
+    for (ecalval of calval){
+		var ecal = ecalval.split(',');
+		
+		if(ecal[ecal.length-1]=='1' || ecal[ecal.length-2]=='1'||ecal[ecal.length-3]=='1'){
+			enerocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='2' || ecal[ecal.length-2]=='2'||ecal[ecal.length-3]=='2'){
+			febrerocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='3' || ecal[ecal.length-2]=='3'||ecal[ecal.length-3]=='3'){
+			marzocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='4' || ecal[ecal.length-2]=='4'||ecal[ecal.length-3]=='4'){
+			abrilcalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='5' || ecal[ecal.length-2]=='5'||ecal[ecal.length-3]=='5'){
+			mayocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='6' || ecal[ecal.length-2]=='6'||ecal[ecal.length-3]=='6'){
+			juniocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='7' || ecal[ecal.length-2]=='7'||ecal[ecal.length-3]=='7'){
+			juliocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='8' || ecal[ecal.length-2]=='8'||ecal[ecal.length-3]=='8'){
+			agostocalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='9' || ecal[ecal.length-2]=='9'||ecal[ecal.length-3]=='9'){
+			septiembrecalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='10' || ecal[ecal.length-2]=='10'||ecal[ecal.length-3]=='10'){
+			octubrecalval.push(ecal);
+		}
+		else if(ecal[ecal.length-1]=='11' || ecal[ecal.length-2]=='11'||ecal[ecal.length-3]=='11'){
+			noviembrecalval.push(ecal);
+		}
+		else{
+			diciembrecalval.push(ecal);
+		}
+		
+	}
+    
+    
+    function ViewtoProg(){
+		var inputdate = document.getElementById('rangofecha').value;
+		var tablaprogramar = document.getElementById('tablaaprogramar')
+		tablaprogramar.innerHTML = '';
+		var listdate = inputdate.split('-');
+		var datein = listdate[0].trim().split('/');
+		var datefin = listdate[1].trim().split('/');
+		
+		if(datein[0]==datefin[0] && datein[2]==datefin[2]){
+			mes = parseInt(datein[0],10)
+			dia1 = parseInt(datein[1],10)
+			dia2 = parseInt(datefin[1],10)
+			if(mes==1){
+				
+				for (equipoe of eneroprep){
+					equipo = equipoe.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('ENERO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[2]}</td>
+								<td>${equipo[3]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[4]}</td>
+								<td>${equipo[5]}</td>
+								<td>${dias}</td>
+							</tr>
+						`
+				
+						}
+					}
+					
+					
+		
+				}
+					
+				
+			}
+			else if(mes==2){
+				for (equipof of febreroprep){
+					equipo = equipof.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('FEBRERO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+				
+						}
+					}
+					
+					
+		
+				}
+				
+			}
+			else if(mes==3){
+				for (equipom of marzoprep){
+					equipo = equipom.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('MARZO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+						
+						}
+					}
+					
+					
+		
+				}
+				
+			}
+			else if(mes==4){
+				for (equipoa of abrilprep){
+					equipo = equipoa.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('ABRIL')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+						
+						}
+					}
+					
+					
+		
+				}
+			}
+			else if(mes==5){
+				for (equipoma of mayoprep){
+					equipo = equipoma.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('MAYO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+				
+						}
+					}
+					
+					
+		
+				}
+				
+			}
+			else if(mes==6){
+				for (equipojn of junioprep){
+					equipo = equipojn.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('JUNIO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+					
+						}
+					}
+					
+					
+		
+				}
+			}
+			else if(mes==7){
+				for (equipojl of julioprep){
+					equipo = equipojl.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('JULIO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+						
+						}
+					}
+					
+					
+		
+				}
+				
+			}
+			else if(mes==8){
+				for (equipoag of agostoprep){
+					equipo = equipoag.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('AGOSTO')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+						
+						}
+					}
+					
+					
+		
+				}
+				
+			}
+			else if(mes==9){
+				for (equipos of septiembreprep){
+					equipo = equipos.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('SEPTIEMBRE')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+						
+						}
+					}
+					
+					
+		
+				}
+				
+			}
+			else if(mes==10){
+				for (equipoo of octubreprep){
+					equipo = equipoo.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('OCTUBRE')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+						
+						}
+					}
+					
+					
+		
+				}
+			}
+			else if(mes==11){
+				for (equipon of noviembreprep){
+					equipo = equipon.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('NOVIEMBRE')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+							console.log(dias);
+						}
+					}
+					
+					
+		
+				}
+			}
+			else if(mes==12){
+				for (equipod of diciembreprep){
+					equipo = equipod.split(',');
+					var listmtto = [];
+					if(parseInt(equipo[equipo.length-3])==1){
+						listmtto.push(equipo[9]+':'+equipo[8]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==2){
+						listmtto.push(equipo[10]+':'+equipo[8]);
+						listmtto.push(equipo[11]+':'+equipo[9]);
+					}
+					else if(parseInt(equipo[equipo.length-3])==3){
+						listmtto.push(equipo[12]+':'+equipo[8]);
+						listmtto.push(equipo[13]+':'+equipo[9]);
+						listmtto.push(equipo[14]+':'+equipo[10]);
+						listmtto.push(equipo[15]+':'+equipo[11]);
+						
+					}
+					else if(parseInt(equipo[equipo.length-3])==4){
+						listmtto.push(equipo[11]+':'+equipo[8]);
+						listmtto.push(equipo[12]+':'+equipo[9]);
+						listmtto.push(equipo[13]+':'+equipo[10]);
+					}
+					else{
+						
+					}
+					var dias = '';
+					for(prog of listmtto){
+						if(prog.indexOf('DICIEMBRE')==0){
+							mostrar = prog;
+							dias = prog.split(':');
+							dias = dias[1];
+						}
+					}
+					
+					dias = dias.split('-');
+					for(var dia =dia1;dia<dia2+1;dia++){
+						if(parseInt(dias[0],10)==dia){
+							tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>${equipo[0]}</td>
+								<td>${equipo[1]}</td>
+								<td>${equipo[5]}</td>
+								<td>${mostrar}</td>
+							</tr>
+						`
+							console.log(dias);
+						}
+					}
+					
+					
+		
+				}
+			}
+		}
+		else{
+			tablaaprogramar.innerHTML+=`
+							<tr>
+								<td>No hay mantenimientos programados</td>
+								<td>NH</td>
+								<td>NH</td>
+							</tr>
+						`
+		}
+		
+		
+	}
+	function ModifyCalval(){
+		var input = document.getElementById("selectmonthcalval").value;
+		var tablacalval = document.getElementById("tablaprogramarcalval");
+		console.log(input)
+		tablacalval.innerHTML ='';
+		if(input==1){
+			for(equipocv of enerocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>								
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				
+				else if(equipocv[equipocv.length-3]!=0){
+					console.log("entra")
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==2){
+			for(equipocv of febrerocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==3){
+			for(equipocv of marzocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==4){
+			for(equipocv of abrilcalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==5){
+			for(equipocv of mayocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==6){
+			for(equipocv of juniocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==7){
+			for(equipocv of juliocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==8){
+			for(equipocv of agostocalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==9){
+			for(equipocv of septiembrecalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==10){
+			for(equipocv of octubrecalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==11){
+			for(equipocv of noviembrecalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==12){
+			for(equipocv of diciembrecalval){
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+	
+	}
+    function ModifyMonth(){
+		var input = document.getElementById("selectmonth").value;
+		var tablaprev = document.getElementById("tablapreventivos")
+		var tablacont = document.getElementById("tablacontratos")
+		var tablagarant = document.getElementById("tablagarantias")
+		var tablacalval = document.getElementById("tablacalval")
+		tablaprev.innerHTML = '';
+		tablacont.innerHTML='';
+		tablagarant.innerHTML='';
+		tablacalval.innerHTML= '';
+		if(input==1){
+			for(equipo of eneroprep){
+				equipo = equipo.split(',')
+				
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of eneroprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of enerogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of enerocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+			
+		}
+		else if(input==2){
+			for(equipo of febreroprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of febreroprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+					
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of febrerogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of febrerocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==3){
+			for(equipo of marzoprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+			`
+			}
+			for(equipoc of marzoprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of marzogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of marzocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==4){
+			
+			for(equipo of abrilprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of abrilprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of abrilgar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+		}
+		else if(input==5){
+			for(equipo of mayoprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of mayoprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of mayogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of mayocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==6){
+			for(equipo of junioprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of junioprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of juniogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of juniocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==7){
+			for(equipo of julioprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of julioprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of juliogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of juliocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==8){
+			for(equipo of agostoprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of agostoprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+					
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of agostogar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of agostocalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==9){
+			for(equipo of septiembreprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of septiembreprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of septiembregar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of septiembrecalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==10){
+			for(equipo of octubreprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of octubreprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of octubregar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+					
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of octubrecalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==11){
+			for(equipo of noviembreprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of noviembreprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+						
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of noviembregar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+						
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of noviembrecalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else if(input==12){
+			for(equipo of diciembreprep){
+				equipo = equipo.split(',')
+				tablaprev.innerHTML+=`
+					<tr>
+						<td>${equipo[0]}</td>
+						<td>${equipo[2]}</td>
+						<td>${equipo[3]}</td>
+						<td>${equipo[1]}</td>
+						<td>${equipo[8]}</td>
+						<td>${equipo[5]}</td>
+						<td>${equipo[6]}</td>
+					</tr>
+				`
+			}
+			for(equipoc of diciembreprec){
+				equipoc = equipoc.split(',')
+				tablacont.innerHTML+=`
+					<tr>
+						<td>${equipoc[0]}</td>
+						<td>${equipoc[2]}</td>
+						<td>${equipoc[3]}</td>
+						<td>${equipoc[1]}</td>
+					
+						<td>${equipoc[5]}</td>
+						<td>${equipoc[6]}</td>
+					</tr>
+				`
+			}
+			for(equipog of diciembregar){
+				equipog = equipog.split(',')
+				tablagarant.innerHTML+=`
+					<tr>
+						<td>${equipog[0]}</td>
+						<td>${equipog[2]}</td>
+						<td>${equipog[3]}</td>
+						<td>${equipog[1]}</td>
+					
+						<td>${equipog[5]}</td>
+						<td>${equipog[6]}</td>
+					</tr>
+				`
+			}
+			for(equipocv of diciembrecalval){
+				
+				if(equipocv[equipocv.length-1]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calificacion<td></tr>
+						`							
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion,Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Validacion<td></tr>
+						`						
+					}
+				}
+				else if(equipocv[equipocv.length-2]!=0){
+					
+					if(equipocv[equipocv.length-1]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Validacion<td></tr>
+						`	
+					}
+					else if(equipocv[equipocv.length-3]!=0){
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion, Calibración<td></tr>
+						`							
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calificacion<td></tr>
+						`	
+					}
+				}
+				else if(equipocv[equipocv.length-3]!=0){
+					
+					if(equipocv[equipocv.length-2]!=0){
+						
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Calificacion<td></tr>
+						`
+					}
+					else if(equipocv[equipocv.length-1]!=0){
+							
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración, Validación<td></tr>
+						`				
+					}
+					else{
+						tablacalval.innerHTML+=`
+							<tr>
+								<td>${equipocv[0]}</td>
+								<td>${equipocv[2]}</td>
+								<td>${equipocv[3]}</td>
+								<td>${equipocv[1]}</td>
+								
+								<td>${equipocv[5]}</td>
+								<td>${equipocv[6]}</td>
+								<td>Calibración<td></tr>
+						`
+					}
+				}
+				
+			}
+		}
+		else{
+			
+		}
+		
+		
+	}
+    /*]]>*/
+    </script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</main>
+</body>

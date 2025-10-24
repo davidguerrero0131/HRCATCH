@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title>Atender llamado</title>
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script><style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="../static/css/form-validation.css" rel="stylesheet" th:href="@{/css/form-validation.css}">
+</head>
+
+<body class="bg-light">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+				aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="navbar-nav me-auto mb-2 mb-md-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+							aria-expanded="false">Más información</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown01">
+							<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+									reclamos</a></li>
+							<li><a class="dropdown-item"
+									href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+									tuto</a></li>
+
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+	</nav>
+	<main>
+		<div class="container">
+			<div class="py-5 text-center">
+
+				<h2>Atender llamado</h2>
+				<p class="lead">Complete los datos correspondientes</p>
+			</div>
+			<form class="needs-validation" validate th:action="@{/atenderllamado/}+${allamado.id_Llamado}"
+				th:object="${allamado}" enctype="multipart/form-data" method="post">
+				<div class="row g-3 mb-3">
+					<div class="col-md-5 col-lg-4 order-md-last">
+						<h4 class="d-flex justify-content-between align-items-center mb-3">
+							<span class="text-muted">Seccion de datos</span>
+							<span class="badge bg-secondary rounded-pill" th:text="${servicio.id_Servicio}"></span>
+						</h4>
+						<ul class="list-group mb-3">
+
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Tipo de equipo</h6>
+									<small class="text-muted" th:text="${tipo_equipo.nombre_Tipo_equipo}"></small>
+								</div>
+
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Servicio/Ubicación</h6>
+									<small class="text-muted"
+										th:text="${servicio.Nombre_servicio}+'/'+${servicio.Ubicacion_servicio}"></small>
+								</div>
+
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">Palabras clave</h6>
+									<small class="text-muted" th:text="${allamado.Palabras_clave}"></small>
+								</div>
+
+							</li>
+
+
+						</ul>
+						<div class="input-group">
+							<button class="btn btn-success" type="submit">Atender llamado</button>
+							<button class="btn btn-secondary" type="button">Cancelar</button>
+						</div>
+					</div>
+
+
+
+					<div class="col-md-7 col-lg-8">
+						<div class="row g-3">
+							<div class="col-sm-5">
+								<div class="form-check">
+									<input type="checkbox" id="phone" th:field="*{Por_telefono}"
+										class="form-check-input">
+									<label class="form-check-label" for="phone">Complete si fue atendido fuera del
+										hospital</label>
+								</div>
+
+							</div>
+							<div class="col-sm-3">
+								<input class="form-control mb-2" type="time" name="hora_respuesta" id="horar">
+							</div>
+							<div class="col-sm-4">
+
+								<input class="form-control mb-2" type="date" name="fecha_respuesta" id="fechar">
+							</div>
+							<div class="col-sm-5">
+								<label for="input_starttime" class="form-label lead">Ubicación exacta</label>
+								<input th:field="*{Ubicacion_exacta}" onkeyup="mayus(this);"
+									placeholder="Especifique ubicación exacta" type="text" class="form-control"
+									required></input>
+
+							</div>
+
+
+							<div class="col-md-7">
+								<label for="device" class="form-label lead">Equipo</label>
+
+								<select class="form-control" th:name="serie" id="device" required>
+									<option selected disabled value="0">Seleccione el equipo</option>
+									<option th:each="equipo : ${equipos}" th:value="${equipo.id_Equipo}"
+										th:text="${equipo.tipo_equipo.nombre_Tipo_equipo} + ',' + ${equipo.Marca} + ',' + ${equipo.Modelo} + ',' + ${equipo.Serie} + ',' + ${equipo.Placa_inventario}">
+									</option>
+								</select>
+							</div>
+							<div class="col-sm-5">
+								<h4 class="form-label lead">Tipo llamado:</h4>
+								<select class="form-control" th:field="*{Tipo}" required>
+									<option selected disabled value=0> Seleccione</option>
+									<option value="1">Entrega</option>
+									<option value="2">Desconocimiento técnico</option>
+									<option value="3">Daño externo</option>
+									<option value="4">Sin accesorios</option>
+									<option value="5">Golpe</option>
+									<option value="6">Alarma</option>
+									<option value="7">Correctivo</option>
+									<option value="8">Otro</option>
+								</select>
+							</div>
+
+							<div class="col-md-5">
+								<h4 for="country" class="form-label lead">Equipo fuera de servicio:</h4>
+								<select class="form-select" aria-label="Default select example"
+									th:name="equipo_operativo" id="operativo" required>
+									<option selected>Seleccione</option>
+									<option value=true>Si</option>
+									<option value=false>No</option>
+								</select>
+							</div>
+
+							<h4 class="mb-3">Foto del equipo</h4>
+							<label class="form-label" for="customFile">Subir</label>
+							<input type="file" class="form-control" name="foto" id="customFile" accept="image/*">
+
+						</div>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+	</main>
+
+
+	<footer class="my-5 pt-5 text-muted text-center text-small">
+		<p class="mb-1">&copy; 2022 HRCatch</p>
+
+	</footer>
+	</div>
+
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		$("#fechar").hide();
+		$("#horar").hide();
+
+		$(document).ready(function () {
+			$('#device').select2();
+		});
+
+		$('#phone').on('change', function () {
+			var phone = document.getElementById("phone").checked;
+
+			console.log(document.getElementById("fechar"))
+			if (phone) {
+				$("#fechar").show();
+				$("#horar").show();
+				$("#fechar").prop('required', true);
+				$("#horar").prop('required', true);
+			} else {
+				$("#fechar").hide();
+				$("#horar").hide();
+				$("#fechar").prop('required', false);
+				$("#horar").prop('required', false);
+
+			}
+
+		})
+		function mayus(e) {
+			e.value = e.value.toUpperCase();
+
+		}
+
+		/*]]>*/
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>

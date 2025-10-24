@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Nueva licencia</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+    
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/form-validation.css" rel="stylesheet" th:href = "@{/css/form-validation.css}">
+  </head>
+  <body class="bg-light">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" th:href="@{/usuarios}">Usuarios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Más opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+    
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>      
+
+  <main>
+  <div class="container">
+    <div class="py-5 text-center">
+     
+      <h2>Nueva licencia</h2>
+      <p class="lead">Complete los datos correspondientes</p>
+    </div>
+ <form class="needs-validation" validate th:action="@{/nuevalicencia}"th:object="${licencia}"enctype = "multipart/form-data" method="post">  
+    
+    <div class="row g-3 mb-3">
+      
+
+     <div class="col-lg-12">
+        <h4 class="mb-3">Datos de la licencia</h4>
+        
+          <div class="row g-3">           
+            <div class="col-md-5">
+              <label class="form-label">Resolución</label>
+              <input th:field="*{Resolucion}"onkeyup="mayus(this);" placeholder= "Ej. 640 2023" type="text" class="form-control" required></input>
+            </div>
+            <div class="col-md-7">
+              <label class="form-label">Formato</label>
+              <input type = "file" class = "form-control" name = "file" accept = "application/pdf" required> 
+          </div>
+        
+       </div>
+       </div>
+
+		
+          
+          <div class="btn-group">
+            <button class="w-150 btn btn-dark btn-lg" type="submit" value = "Guardar">Guardar</button>
+
+            <button th:onclick= "'window.location.href = \''+@{/nuevalicencia}+'\''"type="button" class="w-150 btn btn-dark btn-lg">Nueva licencia</button>              
+            
+          </div>    
+               
+        </form>
+     
+    </div>
+  
+  </main>
+  
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2022 HRCatch</p>
+    
+  </footer>
+</div>
+<script th:inline = "javascript">
+/*<![CDATA[*/
+
+var fecha = /*[[${fechacal}]]*/ 'default';
+var fecharec = /*[[${fecharec}]]*/ 'default';
+
+
+function mayus(e){
+	e.value = e.value.toUpperCase();
+}
+/*]]>*/
+</script>
+	
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	
+      
+  </body>
+</html>

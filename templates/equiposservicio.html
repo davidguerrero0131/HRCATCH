@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title th:text="${nombreservicio}"></title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+        
+      }
+      .containers{
+		position:relative;
+		max-width:650px;
+		margin: 0px auto;
+		margin-top:50px;
+	  }
+      .comment{
+		float:left;
+		width:100%;
+		height:auto;
+	  }
+	  .commenter{
+		float:left;
+	  }
+	  .commenter img{
+		width:35px;
+		height:35px;
+	  }
+	  .commenter-text-area{
+		float:left;
+		width:auto;
+		
+		height:auto;
+	  }
+	  .textinput{
+		float:left;
+		width:100%;
+		min-height:75px;
+		outline: none;
+		resize:none;
+		border:1px solid grey;
+	  }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+  </head>
+  <body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/periodicidad}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+            
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+<main class="container">  
+
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+  	
+    <div class="starter-template text-center py-5 px-3">   
+      <h1><medium class="text-muted"th:text="${nombreservicio}"></medium><small th:text="': '+${ubicacionservicio}"></small></h1>
+      <small><p class = "lead"th:text="${numequipos}"></p></small>  
+      <p class="lead">A continuación podrás ver los equipos asignados al servicio</p>
+     
+    </div>
+      <nav>
+          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+          
+            <a class="nav-link active" id="nav-bio-tab" data-bs-toggle="tab" href="#nav-bio" role="tab" aria-controls="nav-bio" aria-selected="true">Biomédica</a>
+           
+            <a class="nav-link" id="nav-sys-tab" data-bs-toggle="tab" href="#nav-sys" role="tab" aria-controls="nav-sys" aria-selected="false">Sistemas</a>
+          
+          
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+        	<div class="tab-pane fade show active" id="nav-bio" role="tabpanel" aria-labelledby="nav-bio-tab">
+        		<div class="col-md-12 col-lg-12">
+			        <div class="input-group">
+			          <input class="form-control"id="myInput"onkeyup="myFunction()" type="text" placeholder="Ingrese el nombre, la marca, el modelo o la serie del equipo" aria-label="Search">
+			          <span class="input-group-btn">
+			            <button type="button" class="w-200 btn btn-lg btn-dark" onclick="myFunction()">Buscar</button>
+			          </span>
+			        </div>
+			      </div>
+			      <div class="bd-example">
+				        <div th:if="${#lists.isEmpty(equiposservice)}"
+				        	 class="alert alert-info my-4"
+				        	 th:text="'No existen equipos'">
+				        </div>
+				    <div class="table-responsive" >
+				    
+			        <table class="table table-hover"th:if="${not #lists.isEmpty(equiposservice)}" id= "myTable">
+			          <thead>
+			          <tr class="table-secondary">
+						<th scope="col">Nombre</th>
+			            <th scope="col">Marca</th>
+			            <th scope="col">Modelo</th>
+			            <th scope="col">Serie</th>
+			            <th scope="col">Sede</th>
+			            <th scope="col">Ubicación específica</th>
+			            <th scope="col">Más acerca de tu equipo</th>
+			            
+			           
+			          </tr>
+			          </thead>
+			          <tbody>
+			          <tr class="table-light" th:each="equipo,iter:${equiposservice}">
+			            <td th:text="${equipo.nombre_Equipo}"></td>
+			            <td th:text="${equipo.Marca}"></td>
+			            <td th:text="${equipo.Modelo}"></td>
+			            <td th:text="${equipo.Serie}"></td>
+			            <td th:text="${equipo.hospital.Nombre_hospital}"></td>
+			                     
+			            <td th:text="${equipo.Ubicacion_especifica}"></td>
+			
+			            <td>
+			              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${equipo.id_Equipo}">
+			                Más
+			             </button>
+						  
+						  <a th:href="@{/matrizhv/}+${equipo.id_Equipo}" class="btn btn-success btn-sm">HV</a>
+						  <a th:href="@{/guiaequipo/}+${equipo.id_Equipo}" class="btn btn-warning btn-sm">Guia</a>
+
+			
+			              <!-- Modal -->
+			              <div class="modal fade" th:id="'staticBackdrop'+${equipo.id_Equipo}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			                <div class="modal-dialog modal-xl">
+			                  <div class="modal-content">
+			                    <div class="modal-header">
+		                      <h5 class="modal-title" id="staticBackdropLabel" th:text= "${equipo.nombre_Equipo}"></h5>
+			                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			                    </div>
+			                    <div class="modal-body">
+			                      <div class="container-fluid">
+			                        <div class="row" th:if="${hojas_vida.get(iter.index)}">
+			                         <div class = "col-md-4">
+			                         	<div class = "table-responsive">
+			                         		<table class="table table-hover">
+			                         			<thead>
+			                         				<tr class="table-secondary">
+			                         					<th scope="col">Información importante</th>
+			                         					<th scope="col">Dato</th>
+			                         				</tr>
+			                         			</thead>
+			                         			<tbody>
+			                         				<tr class="table-white">
+			                         					<td>Registro INVIMA</td>
+			                         					<td th:text="${hojas_vida.get(iter.index).Registro_invima}"></td>
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Fabricante</td>
+			                         					<td th:text="${hojas_vida.get(iter.index).Fabricante}"></td>
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Riesgo</td>
+			                         					<div th:if="${hojas_vida.get(iter.index).Riesgoi}">
+			                         						<td>I</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Riesgoiia}">
+			                         						<td>IIA</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Riesgoiib}">
+			                         						<td>IIB</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Riesgoiii}">
+			                         						<td>III</td>
+			                         					</div>
+			                         					
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Uso</td>
+			                         					<div th:if="${hojas_vida.get(iter.index).Usomedico}">
+			                         						<td>Médico</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Usobasico}">
+			                         						<td>Básico</td>
+			                         					</div>	
+			                         					<div th:if="${hojas_vida.get(iter.index).Usoapoyo}">
+			                         						<td>Apoyo</td>
+			                         					</div>	
+			                         						                         					
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Clasificación biomédica</td>
+			                         					<div th:if="${hojas_vida.get(iter.index).Biomedicdiagnostico}">
+			                         						<td>Diagnóstico</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Biomedictratamiento}">
+			                         						<td>Tratamiento y mantenimiento a la vida</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Biomedicrehabilitacion}">
+			                         						<td>Rehabilitación</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Biomedicprevencion}">
+			                         						<td>Prevención</td>
+			                         					</div>
+			                         					<div th:if="${hojas_vida.get(iter.index).Biomedicanalisis}">
+			                         						<td>Análisis</td>
+			                         					</div>
+			                         					
+			                         				</tr>
+			                         			</tbody>
+			                         		</table>
+			                         	</div>
+			                         </div>
+			                         <div class = "col-md-4">
+			                         	<p><b>ACCESORIOS DEL EQUIPO</b></p>
+						                  <div class="bd-example g-3">
+						                  <ul class="list-group">
+						                    
+						                    <li class="list-group-item" th:text="${hojas_vida.get(iter.index).Accesorio1}"></li>
+						                    <li class="list-group-item" th:text="${hojas_vida.get(iter.index).Accesorio2}"></li>
+						                    <li class="list-group-item" th:text="${hojas_vida.get(iter.index).Accesorio3}"></li>
+						                    <li class="list-group-item" th:text="${hojas_vida.get(iter.index).Accesorio4}"></li>
+						                  </ul>
+						                  </div>
+						                  <a class = "btn btn-success" th:href = "@{/downloadHV/}+${equipo.id_Equipo}" th:if="${hojas_vida.get(iter.index).Foto} AND ${hojas_vida.get(iter.index).Foto!=''}">Hoja de vida</a>
+			                         </div>
+			                         <div class = "col-md-4">	                         
+					                 	<img th:src="@{${hojas_vida.get(iter.index).Foto}}" width="250" height="200">		                         
+			                         	<a th:href="@{/visualpdfguia/}+${equipo.id_Equipo}"class = "btn btn-danger" th:if="${equipo.Guia}">Guia rápida</a>
+			                         </div>
+			                       
+			
+			                        </div>
+			                        <div class="row">
+			                        	<div class = "table-responsive">
+			                        		<table class="table table-hover">
+			                         			<thead>
+			                         				<tr class="table-secondary">
+			                         					<th scope="col">Marca</th>
+			                         					<th scope="col">Modelo</th>
+			                         					<th scope="col">Serie</th>
+			                         					<th scope="col">Placa inventario</th>
+			                         					<th scope="col">Días de mantenimiento</th>
+			                         					<th scope="col">Meses de mantenimiento</th>
+			                         				</tr>
+			                         			</thead>
+			                         			<tbody>
+			                         				<tr class="table-white">
+			                         					<td th:text="${equipo.Marca}"></td>
+			                         					<td th:text="${equipo.Modelo}"></td>
+			                         					<td th:text="${equipo.Serie}"></td>
+			                         					<td th:text="${equipo.Placa_inventario}"></td>
+			                         					<td th:text="${equipo.Dias_mantenimiento}"></td>
+			                         					<td th:text="${equipo.Meses_mantenimiento}"></td>
+			                         				</tr>
+			                         			</tbody>
+			                        		</table>
+			                        	</div>
+			                        </div>
+			                       
+			                      </div>
+			                    </div>
+			                    <div class="modal-footer">
+			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			                      <button th:onclick = "'window.location.href=\''+@{/visualizacionreportes/}+${equipo.id_Equipo}+'\''"type="button" class="btn btn-primary" >Reportes</button>                   
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			            </td>
+			          </tr>     
+			
+			          </tbody>
+			        </table>
+			        </div>
+			        </div>
+        	</div>
+        	<div class="tab-pane fade" id="nav-sys" role="tabpanel" aria-labelledby="nav-sys-tab">
+        		<div class="col-md-12 col-lg-12">
+			        <div class="input-group">
+			          <input class="form-control"id="myInputsys"onkeyup="myFunctionsys()" type="text" placeholder="Ingrese el nombre, la marca, el modelo o la serie del equipo" aria-label="Search">
+			          <span class="input-group-btn">
+			            <button type="button" class="w-200 btn btn-lg btn-dark" onclick="myFunctionsys()">Buscar</button>
+			          </span>
+			        </div>
+			      </div>
+			      <div class="bd-example">
+				        <div th:if="${#lists.isEmpty(sysequipos)}"
+				        	 class="alert alert-info my-4"
+				        	 th:text="'No existen equipos'">
+				        </div>
+				    <div class="table-responsive" >
+				    
+			        <table class="table table-hover"th:if="${not #lists.isEmpty(sysequipos)}" id= "myTablesys">
+			          <thead>
+			          <tr class="table-secondary">
+			            <th scope="col">ID</th>
+						<th scope="col">Nombre</th>
+			            <th scope="col">Marca</th>
+			            <th scope="col">Modelo</th>
+			            <th scope="col">Serie</th>
+			            <th scope="col">Año de ingreso</th>
+			            <th scope="col">Ubicación específica</th>
+			            <th scope="col">Más acerca de tu equipo</th>
+			            
+			           
+			          </tr>
+			          </thead>
+			          <tbody>
+			          <tr class="table-light" th:each="equipo,iter:${sysequipos}">
+			         
+			            <th th:text="${equipo.id_Sysequipo}"></th>
+			            <td th:text="${equipo.tipo_equipo.nombre_Tipo_equipo}"></td>
+			            <td th:text="${equipo.Marca}"></td>
+			            <td th:text="${equipo.Modelo}"></td>
+			            <td th:text="${equipo.Serie}"></td>
+			            <td th:text="${equipo.Ano_ingreso}"></td>
+			                     
+			            <td th:text="${equipo.Ubicacion_especifica}"></td>
+			
+			            <td>
+			              <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${equipo.id_Sysequipo}">
+			                Más
+			              </button>
+			
+			              <!-- Modal -->
+			              <div class="modal fade" th:id="'staticBackdrop'+${equipo.id_Sysequipo}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			                <div class="modal-dialog modal-xl">
+			                  <div class="modal-content">
+			                    <div class="modal-header">
+			                      <h5 class="modal-title" id="staticBackdropLabel" th:text= "${equipo.Nombre_equipo}"></h5>
+			                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			                    </div>
+			                    <div class="modal-body">
+			                      <div class="container-fluid">
+			                        <div class="row" th:if="${syshoja_vida.get(iter.index)}">
+			                         <div class = "col-md-4">
+			                         	<div class = "table-responsive">
+			                         		<table class="table table-hover">
+			                         			<thead>
+			                         				<tr class="table-secondary">
+			                         					<th scope="col">Información importante</th>
+			                         					<th scope="col">Dato</th>
+			                         				</tr>
+			                         			</thead>
+			                         			<tbody>
+			                         				<tr class="table-white">
+			                         					<td>Procesador</td>
+			                         					<td th:text="${syshoja_vida.get(iter.index).Procesador}"></td>
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Disco duro</td>
+			                         					<td th:text="${syshoja_vida.get(iter.index).Disco_duro}"></td>
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Responsabilidad</td>
+			                         					<div th:if="${syshoja_vida.get(iter.index).Contrato}">
+			                         						<td>Contrato</td>
+			                         					</div>
+			                         					<div th:if="${syshoja_vida.get(iter.index).Compraddirecta}">
+			                         						<td>Propio</td>
+			                         					</div>
+			                         					<div th:if="${syshoja_vida.get(iter.index).Convenio}">
+			                         						<td>Convenio</td>
+			                         					</div>
+			                         					<div th:if="${syshoja_vida.get(iter.index).Asignadoporministerio}">
+			                         						<td>Asignado ministerio</td>
+			                         					</div>
+			                         					<div th:if="${syshoja_vida.get(iter.index).Asignadoporgobernacion}">
+			                         						<td>Asignado gobernación</td>
+			                         					</div>
+			                         					<div th:if="${syshoja_vida.get(iter.index).Comodato}">
+			                         						<td>Comodato</td>
+			                         					</div>
+			                         					
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Sistema operativo</td>
+			                         					<td th:text="${syshoja_vida.get(iter.index).Sistema_operativo}"></td>
+			                         					
+			                         						                         					
+			                         				</tr>
+			                         				<tr class="table-white">
+			                         					<td>Nombre usuario</td>
+			                         					
+			                         					<td th:text="${syshoja_vida.get(iter.index).Nombre_usuario}"></td>
+			                         				</tr>
+			                         			</tbody>
+			                         		</table>
+			                         	</div>
+			                         </div>
+			                         <div class = "col-md-4">
+			                         
+						               
+						                  <a class = "btn btn-success" th:href="@{/downlandHVSYS/}+${equipo.id_Sysequipo}"  th:if="${syshoja_vida.get(iter.index).Foto} AND ${syshoja_vida.get(iter.index).Foto!=''}">Hoja de vida</a>
+			                         </div>
+			                         <div class = "col-md-4">	                         
+					                 	<img th:src="@{${syshoja_vida.get(iter.index).Foto}}" width="250" height="200">		                         
+			                         	
+			                         </div>
+			                       
+			
+			                        </div>
+			                        <div class="row">
+			                        	<div class = "table-responsive">
+			                        		<table class="table table-hover">
+			                         			<thead>
+			                         				<tr class="table-secondary">
+			                         					<th scope="col">Marca</th>
+			                         					<th scope="col">Modelo</th>
+			                         					<th scope="col">Serie</th>
+			                         					<th scope="col">Placa inventario</th>
+			                         					<th scope="col">Días de mantenimiento</th>
+			                         			
+			                         				</tr>
+			                         			</thead>
+			                         			<tbody>
+			                         				<tr class="table-white">
+			                         					<td th:text="${equipo.Marca}"></td>
+			                         					<td th:text="${equipo.Modelo}"></td>
+			                         					<td th:text="${equipo.Serie}"></td>
+			                         					<td th:text="${equipo.Placa_inventario}"></td>
+			                         					<td th:text="${equipo.Dias_mantenimiento}"></td>
+			                         				
+			                         				</tr>
+			                         			</tbody>
+			                        		</table>
+			                        	</div>
+			                        </div>
+			                       
+			                      </div>
+			                    </div>
+			                    <div class="modal-footer">
+			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			                      <button th:onclick = "'window.location.href=\''+@{/sysreportes/}+${equipo.id_Sysequipo}+'\''"type="button" class="btn btn-primary" >Reportes</button>                   
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			            </td>
+			          </tr>     
+			
+			          </tbody>
+			        </table>
+			        </div>
+			        </div>
+        	
+        	</div>
+        </div>
+
+        </div>
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p> 2021-2022 Company, Inc. </p>
+  </footer>
+  
+</main>
+<script >
+      function myFunction(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTable");
+		tr = div.getElementsByClassName("table-light");
+		console.log(tr.length)
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			
+			td2 = tr[i].getElementsByTagName("td")[1];
+			td3 = tr[i].getElementsByTagName("td")[2];
+			td4 = tr[i].getElementsByTagName("td")[3];
+			
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				
+				txtValue4 = td4.textContent || td4.innerText;
+				
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				
+				
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+	function myFunctionsys(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInputsys");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTablesys");
+		tr = div.getElementsByClassName("table-light");
+		console.log(tr.length)
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+			
+			td2 = tr[i].getElementsByTagName("td")[1];
+			td3 = tr[i].getElementsByTagName("td")[2];
+			td4 = tr[i].getElementsByTagName("td")[3];
+			
+			if(td1 || td2 || td3){
+				txtValue1 = td1.textContent || td1.innerText;
+				txtValue2 = td2.textContent || td2.innerText;
+				txtValue3 = td3.textContent || td3.innerText;
+				
+				txtValue4 = td4.textContent || td4.innerText;
+				
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue2.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue3.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				else if((txtValue4.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				
+				
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+    </script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>      
+  </body>
+</html>

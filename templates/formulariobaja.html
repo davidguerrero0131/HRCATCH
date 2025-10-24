@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${equipo.Serie}+' Dar de baja'">Nuevo reporte</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+
+
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="../static/css/form-validation.css" rel="stylesheet" th:href="@{/css/form-validation.css}">
+</head>
+
+<body class="bg-light">
+	<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/periodicidad}">HRCatch</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06"
+				aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExample06">
+				<ul class="navbar-nav me-auto mb-2 mb-xl-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/clasificacion}">Clasificacion</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
+							aria-expanded="false">Más opciones</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown06">
+							<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+									reclamos</a></li>
+							<li><a class="dropdown-item"
+									href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+									tuto</a></li>
+
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container">
+			<div class="py-5 text-center">
+
+				<h2>Nueva proceso de baja</h2>
+				<p class="lead">Complete los datos correspondientes</p>
+			</div>
+			<form class="needs-validation" validate th:action="@{/darbaja/}+${equipo.id_Equipo}" method="post">
+
+				<div class="row">
+
+
+
+					<div class="row">
+						<div class="col-md-6">
+							<h2 class="mb-3">Causa de la baja</h2>
+							<textarea class="form-control" name="causa" rows="3" onkeyup="mayus(this);"
+								required></textarea>
+							<h2>Selecccione 2 Razones:</h2>
+							<div class="form-check">
+								<input type="checkbox" name="preguntas" value="1" class="form-check-input" checked>
+								<label class="form-check-label" >No hay disponibilidad repuestos para el equipo </label>
+							</div>
+							<div class="form-check">
+								<input type="checkbox" name="preguntas" value="2" class="form-check-input" checked>
+								<label class="form-check-label">Equipo descompuesto con relación costo/beneficio
+									negativa</label>
+							</div>
+							<div class="form-check">
+								<input type="checkbox" name="preguntas" value="3" class="form-check-input">
+								<label class="form-check-label">Renovación tecnológica</label>
+							</div>
+
+							<div class="form-check">
+								<input type="checkbox" name="preguntas" value="4" class="form-check-input">
+								<label class="form-check-label">No cumplimiento normativo o no es seguro</label>
+							</div>
+							<div class="form-check">
+								<input type="checkbox" name="preguntas" value="5" class="form-check-input">
+								<label class="form-check-label">Cambio en la práctica clínica</label>
+							</div>
+
+
+						</div>
+						<div class="col-md-6">
+							<ul class="list-group mb-3">
+								<li class="list-group-item d-flex justify-content-between lh-sm">
+
+									<h6 class="my-0">Periodicidad</h6>
+
+									<div th:if="${equipo.Periodicidad==4}">
+										<small class="text-muted">CUATRIMESTRAL</small>
+									</div>
+
+									<div th:if="${equipo.Periodicidad==3}">
+										<small class="text-muted">TRIMESTRAL</small>
+									</div>
+									<div th:if="${equipo.Periodicidad==2}">
+										<small class="text-muted">SEMESTRAL</small>
+									</div>
+									<div th:if="${equipo.Periodicidad==1}">
+										<small class="text-muted">ANUAL</small>
+									</div>
+
+
+
+									<span class="text-muted" th:text="${equipo.Periodicidad}"></span>
+								</li>
+								<li class="list-group-item d-flex justify-content-between lh-sm">
+									<div>
+										<h6 class="my-0">Tipo de equipo/Marca/Modelo</h6>
+										<small class="text-muted"
+											th:text="${equipo.nombre_Equipo}+'/'+${equipo.Marca}+'/'+${equipo.Modelo}"></small>
+									</div>
+
+								</li>
+								<li class="list-group-item d-flex justify-content-between lh-sm">
+									<div>
+										<h6 class="my-0">Servicio/Ubicación</h6>
+										<small class="text-muted"
+											th:text="${equipo.Servicios}+'/'+${equipo.Ubicacion}"></small>
+									</div>
+
+								</li>
+								<li class="list-group-item d-flex justify-content-between lh-sm">
+									<div class="text-muted">
+										<h6 class="my-0">Serie/Placa</h6>
+										<small th:text="${equipo.Serie}+'/'+${equipo.Placa_inventario}"></small>
+									</div>
+
+								</li>
+
+							</ul>
+							<label class="form-label">Código</label>
+							<input type="text" name="codigo" class="form-control"
+								placeholder="Ingrese el código del equipo" required>
+
+						</div>
+
+
+
+
+					</div>
+
+
+
+					<hr class="my-4">
+
+
+
+					<div class="btn-group">
+						<button class="w-150 btn btn-dark btn-lg" type="submit"
+							onclick="return confirm('¿Estás seguro que quieres dar de baja este equipo?');"
+							value="Guardar">Dar de baja</button>
+
+						<button th:onclick="'window.location.href = \''+@{/semaforizacion}+'\''" type="button"
+							class="w-150 btn btn-dark btn-lg">Cancelar</button>
+
+					</div>
+
+			</form>
+
+		</div>
+
+	</main>
+
+
+	<footer class="my-5 pt-5 text-muted text-center text-small">
+		<p class="mb-1">&copy; 2023
+		 HRCatch</p>
+
+	</footer>
+	</div>
+	<script>
+
+		function mayus(e) {
+			e.value = e.value.toUpperCase();
+		}
+
+
+		function BajaEquipo(idEquipo){
+			if (confirm('¿Estás seguro que quieres dar de baja este equipo?') == true) {
+
+				text = "You pressed OK!";
+			} else {
+				text = "You canceled!";
+			}
+		}
+	</script>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>

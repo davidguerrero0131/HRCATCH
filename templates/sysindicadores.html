@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Seleccione para evaluar por tipos de equipo</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+	
+	<script th:src = "@{/js/chart.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+    	.modal-body{
+		  height: 350px;
+		  width: 100%;
+		  overflow-y: auto;
+		  overflow-x: auto;
+		}
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/pricing.css" rel="stylesheet" th:href="@{/css/pricing.css}">
+  </head>
+  <body>
+    
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/syshome}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/syshome}">Atras</a>
+          </li>        
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/systipos}">Inventario</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" th:href="@{/sysusuarios}">Usuarios</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown04">
+              <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+              <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+        
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+
+<main class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Indicadores HUSRT</h1>
+    <p class="lead">Indique el rango de fechas para realizar el cálculo</p>
+  </div>
+ 
+  <form th:action="@{/sysindicadores}" method="post">
+  	<div class="row">
+  		<div class="col-md-3">
+  			<label for = "fechainicialind">Fecha inicial</label>
+            <input th:name="fecha_inicial" type = "date"id="fechainicialind" class = "form-control" required>
+  		</div>
+  		<div class="col-md-3">
+  			<label for = "fechafinalind">Fecha final</label>
+            <input th:name="fecha_final" type = "date"id="fechafinalind" class = "form-control" required>
+  		</div>
+  		<div class="col-md-4" style = "text-align: center;">
+  			<br><small><small><small> Nota: No se incluye el dia de la fecha final en el cálculo</small></small> </small>
+  			
+  		
+  		</div>
+  		<div class="col-md-1">
+  			<label >&nbsp</label>
+  			<button type="submit" class="w-200 btn btn-dark">Buscar</button>
+  		</div>
+  	</div>
+  	<hr class="my-4">
+  	<div class="row">
+  		<div class="col-md-12 mb-3" style="text-align: center;">
+			<h4 th:text="${fechaanterior}+' a '+${fechaactual}"></h4>
+			<nav>
+	          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+	          
+	            <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Grupal</a>
+	           
+	            <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Individual</a>
+				
+				<a class="nav-link" id="nav-inventory-tab" data-bs-toggle="tab" href="#nav-inventory" role="tab" aria-controls="nav-inventory" aria-selected="false">Inventario</a>
+	          
+	          	   
+	          </div>
+	        </nav>
+	        <div class="tab-content" id="nav-tabContent">
+	        	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+	        		<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		                <div class="modal-dialog modal-xl"role="document">
+		                  <div class="modal-content">
+		                    <div class="modal-header">
+		                      <h5 class="modal-title"  id = "titlemodal"></h5>
+		                      <button type="button" id=  "xmodal"class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+		                    </div>
+		                    <div class="modal-body">
+		                    	<div class="table-responsive">
+			            			<table class="table table-sm">
+				            			<thead class = "table-secondary">
+				            				<tr>
+				            					<th scope = "col">Nombre</th>
+				            					<th scope = "col">Marca</th>
+				            					<th scope = "col">Modelo</th>
+				            					<th scope = "col">Serie</th>
+				            					
+				            					
+				            					<th scope = "col" id = "tipo">Falla</th>
+				            					<th scope = "col">Realizado</th>
+				            					<th scope = "col">Trabajo</th>
+				            					<th scope = "col">Fecha</th>
+				            					<th scope = "col">Reporte</th>
+				            				</tr>
+				            			</thead>
+				            			<tbody id = "table">
+				            				<tr>
+				            				</tr>
+				            				
+				            			</tbody>
+			            			</table>
+			            		</div>
+		                   
+					    	
+		                        
+		                    </div>
+		                    <div class="modal-footer">
+		                      <button type="button" id=  "closemodal"class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		                                                
+		                    
+		                  </div>
+		                </div>
+		             </div>
+					</div>
+					<div class = "row">
+						<div class="col-md-6">
+			  			<h4>Tabla de indicadores</h4>
+			  			<div class="table-responsive">
+			  				<table class="table table-hover">
+			  					<thead>
+			  						<tr>
+				  						<th scope = "col">Nombre indicador</th>
+				  						<th scope = "col">Relación</th>
+				  						<th scope = "col">Resultado</th>
+			  						</tr>
+			  					</thead>
+			  					<tbody>
+			  		
+			  						<tr>
+			  							<td>2</td>
+			  							<td>Correctivos/Preventivos</td>
+			  							<td th:text= "${correctivosmactual}+'/'+${preventivosmactual} +' = '+${correcvspreven}"></td>
+			  						</tr>
+			  						<tr>
+			  							<td>3</td>
+			  							<td>Correctivos mes actual/Correctivos mes anterior</td>
+			  							<td th:text="${correctivosmactual}+'/'+${correctivosmpasado} +' = '+${correctivos}"></td>
+			  						</tr>
+			  						<tr>
+			  							<td>4</td>
+			  							<td>Cumplimiento preventivos/previstos</td>
+			  							<td th:text= "${preventivosmactual}+'/'+${mantprevistos}+' = '+${prevenvsprevistos}"></td>
+			  						</tr>
+			  						<tr>
+			  							<td>5</td>
+			  							<td>Tiempo de respuesta </td>
+			  							<td th:text= "${tiempoderespuesta}"></td>
+			  						</tr>
+			  						<tr>
+			  							<td>6</td>
+			  							<td>Operación indebida/Correctivos</td>
+			  							<td th:text="${correctivosopindebida}+'/'+${correctivosmactual}+' = '+${opincorrecvscorrecactual}"></td>
+			  						</tr>
+			  						<tr>
+			  							<td>7</td>
+			  							<td>Causa externa/Correctivos</td>
+			  							<td th:text="${correctivoscausaexterna}+'/'+${correctivosmactual} +' = '+${causaexcorrecvscorrecactual}"></td>
+			  						</tr>
+			  						
+			  					</tbody>
+			  				</table>
+			  			</div>
+			  		</div>
+			  		<div class="col-md-6">
+			  			
+			  			<div class = "row">
+			  				<div class= "col-md-6">
+			  					<canvas id = "piemttotype" width = "50" height = "50"></canvas>
+			  					
+			  					
+			  					<h6>Tipo de mantenimiento</h6>
+			  					
+			  				</div>
+			  				<div class = "col-md-6">
+			  					
+			  					<canvas id="pietypefbycorrectivo" width = "50" height = "50"></canvas>
+			  					
+			  					<h6>Tipo de falla correctivos</h6>
+			  				</div>
+			  				<div class = "col-md-12" style="height: 20;">
+			  					<canvas id = "pietypefailure" width = "30" height = "30"></canvas>
+			  					
+			  					<h5 style = "text-align:center;" >Tipo de falla </h5>
+			  				</div>
+			  				
+			  			</div>
+			  			
+			  		</div>
+					</div>
+	        	</div>
+	        	<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+	        		
+	        		<div class = "row">
+	        			<div class = "col-md-12">
+	        				<canvas id="barmtto" width = "50" height = "50"></canvas>
+	        		
+	        			</div>
+	        		</div>
+	        	</div>
+				
+				<div class="tab-pane fade" id="nav-inventory" role="tabpanel" aria-labelledby="nav-inventory-tab">
+					
+					<div class = "row">
+						<div class = "col-md-12">
+							<canvas id="barmtto" width = "50" height = "50"></canvas>
+					
+							<table class="table table-hover" id="myTable">
+													<thead>
+														<tr class="table-secondary">
+															<th scope="col">Nombre</th>
+															<th scope="col">Cantidad</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr class="table-light" th:each="tipoEquipo:${cantidadEquiposTipos}">
+															<td th:text="${tipoEquipo.getObjetoA().getNombre_Tipo_equipo()}"></td>
+															<td th:text="${tipoEquipo.getObjetoB()}"></td>
+														</tr>
+														
+														<tr class="table-light">
+															<td ><strong> TOTAL EQUIPOS: </strong></td>
+															<td th:text="${totalEquiposSys}"></td	>
+														</tr>
+													</tbody>
+												</table>
+							
+						</div>
+					</div>
+				</div>
+	        </div>
+			
+  		</div>
+  		
+  		
+  	</div>
+  	
+    
+ 
+  </form>
+
+  
+    
+        
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+     
+        <small class="d-block mb-3 text-muted"> 2022</small>
+      </div>
+    
+    </div>
+  </footer>
+</main>
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    
+  </body>
+  <script th:inline = "javascript">
+  /*<![CDATA[*/
+  	var Pietipomtto = document.getElementById("piemttotype").getContext("2d");
+  	var Pietipofalla = document.getElementById("pietypefailure").getContext("2d");
+  	var Pietipofallac = document.getElementById("pietypefbycorrectivo").getContext("2d");
+  	
+  	var predictivo = /*[[${predictivosmactual}]]*/ 'default';
+  	var correctivo = /*[[${correctivosmactual}]]*/ 'default';
+  	var preventivo = /*[[${preventivosmactual}]]*/ 'default';
+  	var otrosm = /*[[${otrosmactual}]]*/ 'default';
+  	var desgaste = /*[[${desgaste}]]*/ 'default';
+	var opindebida = /*[[${opindebida}]]*/ 'default';
+	var causaexterna = /*[[${causaexterna}]]*/ 'default';
+	var accesorios = /*[[${accesorios}]]*/ 'default';
+	var desconocido = /*[[${desconocido}]]*/ 'default';
+	var sinfallas = /*[[${sinfallas}]]*/ 'default';
+	var otro = /*[[${otros}]]*/ 'default';
+	
+	var desgastec = /*[[${correctivosdesgaste}]]*/ 'default';
+	
+	
+	var opindebidac = /*[[${correctivosopindebida}]]*/ 'default';
+	var causaexternac = /*[[${correctivoscausaexterna}]]*/ 'default';
+	var accesoriosc = /*[[${correctivosaccesorios}]]*/ 'default';
+	var desconocidoc = /*[[${correctivosdesconocido}]]*/ 'default';
+	var sinfallasc = /*[[${correctivossinfallas}]]*/ 'default';
+	var otroc = /*[[${correctivosotros}]]*/ 'default';
+	
+	var spredictivo = /*[[${spredictivos}]]*/ 'default';
+  	var scorrectivo = /*[[${scorrectivos}]]*/ 'default';
+  	var spreventivo = /*[[${spreventivos}]]*/ 'default';
+  	var sotrosm = /*[[${sotrosmtto}]]*/ 'default';
+  	
+  	var sbpredictivo = /*[[${sbpredictivos}]]*/ 'default';
+  	var sbcorrectivo = /*[[${sbcorrectivos}]]*/ 'default';
+  	var sbpreventivo = /*[[${sbpreventivos}]]*/ 'default';
+  	var sbotrosm = /*[[${sbotrosmtto}]]*/ 'default';
+  
+	var fcdesgastec = /*[[${fcdesgaste}]]*/ 'default';
+	var fcopindebidac = /*[[${fcopindebida}]]*/ 'default';
+	var fccausaexternac = /*[[${fccausaex}]]*/ 'default';
+	var fcaccesoriosc = /*[[${fcaccesorios}]]*/ 'default';
+	var fcdesconocidoc = /*[[${fcdesconocido}]]*/ 'default';
+	var fcsinfallasc = /*[[${fcsinfallas}]]*/ 'default';
+	var fcotroc = /*[[${fcotros}]]*/ 'default';
+	
+	var ftdesgastec = /*[[${fdesgaste}]]*/ 'default';
+	var ftopindebidac = /*[[${fopindebida}]]*/ 'default';
+	var ftcausaexternac = /*[[${fcausaex}]]*/ 'default';
+	var ftaccesoriosc = /*[[${faccesorios}]]*/ 'default';
+	var ftdesconocidoc = /*[[${fdesconocido}]]*/ 'default';
+	var ftsinfallasc = /*[[${fsinfallas}]]*/ 'default';
+	var ftotroc = /*[[${fotros}]]*/ 'default';
+	  
+	var tecs = /*[[${listsystecs}]]*/ 'default';
+	var grouptec = /*[[${sysmttobytecs}]]*/ 'default';
+
+  	var chart = new Chart(Pietipomtto,{
+		type: "pie",
+		data:{
+			labels:['Preventivos','Correctivos','Preventivo y correctivo','Otros(Entregas)    '],
+			datasets:[{
+					label:"Tipo de mantenimiento en el rango de fechas",
+					data:[preventivo,correctivo,predictivo,otrosm],
+					backgroundColor:['rgb(59,131,189)','rgb(255,0,0)','rgb(0,143,57)','rgb(255,164,32)'],
+					hoverOffset:4
+					
+				}]
+		}
+	});
+	var chart2 = new Chart(Pietipofalla,{
+		type: "bar",
+		data:{
+			labels:['Desgaste','Operación indebida','Causa externa','Accesorios','Desconocido','Sin fallas','Otro'],
+			datasets:[{
+					label:"Tipo falla",
+					data:[desgaste,opindebida,causaexterna,accesorios,desconocido,sinfallas,otro],
+					backgroundColor:['rgb(255,225,53)','rgb(139,0,0)','rgb(244,70,17)','rgb(144,238,144)','rgb(130,130,130)','rgb(0,143,57)','rgb(87,35,100)'],
+					hoverOffset:4
+					
+				}]
+		},
+		options:{
+			scales:{
+				y:{
+					beginAtZero:true
+				}
+			}
+			
+		}
+	});
+	var chart3 = new Chart(Pietipofallac,{
+		type: "pie",
+		data:{
+			labels:['Desgaste','Operación indebida','Causa externa','Accesorios','Desconocido','Sin fallas','Otro'],
+			datasets:[{
+					label:"Tipo falla correctivos",
+					data:[desgastec,opindebidac,causaexternac,accesoriosc,desconocidoc,sinfallasc,otroc],
+					backgroundColor:['rgb(255,225,53)','rgb(139,0,0)','rgb(244,70,17)','rgb(144,238,144)','rgb(130,130,130)','rgb(0,143,57)','rgb(87,35,100)'],
+					hoverOffset:4
+					
+				}]
+		}
+	});
+	
+	var chart4;
+	var Tecs = document.getElementById("barmtto").getContext("2d");
+	tecns = [];tecen = [];tecdt = [];tecde = [];tecdano =[]
+		for(ll of grouptec){
+			group = ll.split(',');
+			console.log(group)
+			if(group[3]== "0"){
+				tecns.push(group);
+			}
+			else if(group[3]=="1"){
+				tecen.push(group);
+			}
+			else if(group[3]=="2"){
+				tecdt.push(group);
+			}
+			else if(group[3]=="3"){
+				tecde.push(group);
+			}
+			else if(group[3]=="4"){
+				tecdano.push(group);
+			}
+		
+		}
+	value0 = [];value1 = [];value2 = [];value3 = [];value4 = []
+	console.log(tecs)
+	for(tecnico of tecs){
+			
+			for(var i = 0;i<tecns.length;i++){
+		
+				if(tecns[i][1].indexOf(tecnico)!=-1){
+					value0.push(parseInt(tecns[i][4],10))
+					break;
+				}
+				else if(tecns[i][1].indexOf(tecnico)==-1 && i==tecns.length-1){
+					value0.push(0)
+				}
+			}
+			for(var i = 0;i<tecen.length;i++){
+		
+				if(tecen[i][1].indexOf(tecnico)!=-1){
+					value1.push(parseInt(tecen[i][4],10))
+					break;
+				}
+				else if(tecen[i][1].indexOf(tecnico)==-1 && i==tecen.length-1){
+					value1.push(0)
+				}
+			}
+			for(var i = 0;i<tecdt.length;i++){
+		
+				if(tecdt[i][1].indexOf(tecnico)!=-1){
+					value2.push(parseInt(tecdt[i][4],10))
+					break;
+				}
+				else if(tecdt[i][1].indexOf(tecnico)==-1 && i==tecdt.length-1){
+					value2.push(0)
+				}
+			}
+			for(var i = 0;i<tecde.length;i++){
+		
+				if(tecde[i][1].indexOf(tecnico)!=-1){
+					value3.push(parseInt(tecde[i][4],10))
+					break;
+				}
+				else if(tecde[i][1].indexOf(tecnico)==-1 && i==tecde.length-1){
+					value3.push(0)
+				}
+			}
+			for(var i = 0;i<tecdano.length;i++){
+		
+				if(tecdano[i][1].indexOf(tecnico)!=-1){
+					value4.push(parseInt(tecdano[i][4],10))
+					break;
+				}
+				else if(tecdano[i][1].indexOf(tecnico)==-1 && i==tecdano.length-1){
+					value4.push(0)
+				}
+			}
+	}
+	chart = new Chart(Tecs,{
+			type: "bar",
+			data:{
+				labels:tecs,
+				datasets:[
+			    {
+			      label: 'Entrega',
+			      data: value0,
+			      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+			    },
+			    {
+			      label: 'Preventivo',
+			      data: value1,
+			      backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+			    },
+			    {
+			      label: 'Correctivo',
+			      data: value2,
+			      backgroundColor: ['rgba(255, 206, 86, 0.2)'],
+			    },
+			    {
+			      label: 'Preventivo y correctivo',
+			      data: value3,
+			      backgroundColor: ['rgba(0, 143, 57, 0.2)'],
+			    },
+			    {
+			      label: 'Reporte de daños',
+			      data: value4,
+			      backgroundColor: ['rgba(214, 0, 255, 0.2)'],
+			    },
+			  
+			  ]
+				},
+			options: {
+		    plugins: {
+		      title: {
+		        display: true,
+		        text: 'Actividades ejecutadas'
+		      },
+		    },
+		    responsive: true,
+		    scales: {
+		      x: {
+		        stacked: true,
+		      },
+		      y: {
+		        stacked: true
+		      }
+		    }
+		  }
+		});
+	
+	document.getElementById("pietypefailure").onclick = function(evt) {
+			document.getElementById("tipo").innerHTML = 'Mantenimiento';
+            var activePoints = chart2.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            var tablamtto= document.getElementById('table')
+			tablamtto.innerHTML = '';
+            var titlemodal = document.getElementById("titlemodal")
+            var firstPoint = activePoints[0];
+            var indexP = firstPoint.index;
+            var arraysend = [];
+           	titlemodal.innerHTML = chart2.data.labels[firstPoint.index];
+            if (indexP ==0){
+				//Desgaste
+				arraysend = ftdesgastec;
+				
+			}
+			else if(indexP ==1){
+				//Operacion indebida
+				arraysend = ftopindebidac;
+				
+			}
+			else if(indexP ==2){
+				//Accesorios 
+				arraysend = ftcausaexternac;
+			}
+			else if(indexP == 3){
+				//Causa externa
+				arraysend = ftaccesoriosc;
+			}
+			else if(indexP == 4){
+				//Desconocido
+				arraysend = ftdesconocidoc;			
+			}
+			else if(indexP == 5){
+				//Sin fallas
+				arraysend = ftsinfallasc;
+				
+			}
+			else{
+				//Otros
+				arraysend = ftotroc;
+			}
+			
+			for(mtto of arraysend){
+				mttosep = mtto.split(',');
+				if(mttosep[14]!="" && mttosep[14].length>5){
+					tablamtto.innerHTML+=`
+							<tr>
+								<td>${mttosep[6]}</td>
+								<td>${mttosep[7]}</td>
+								<td>${mttosep[8]}</td>
+								<td>${mttosep[9]}</td>
+								
+								<td>${mttosep[11]}</td>
+								<td>${mttosep[4]}</td>
+								<td>${mttosep[12]}</td>
+								<td>${mttosep[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/visualpdfsysmtto/ ${mttosep[5]}">Reporte</a>
+								</td>
+							
+							</tr>
+						`	
+				}	
+				else{
+					tablamtto.innerHTML+=`
+							<tr>
+								<td>${mttosep[6]}</td>
+								<td>${mttosep[7]}</td>
+								<td>${mttosep[8]}</td>
+								<td>${mttosep[9]}</td>
+								
+								<td>${mttosep[11]}</td>
+								<td>${mttosep[4]}</td>
+								<td>${mttosep[12]}</td>
+								<td>${mttosep[0]}</td>
+								<td>
+									<a class = "btn btn-warning" href="/sysreportes/ ${mttosep[15]}">Subir reporte</a>
+								</td>
+							
+							</tr>
+						`	
+				}	
+			}
+			document.getElementById('myModal').style.display = 'block';
+			
+		
+       		
+        };
+	document.getElementById("pietypefbycorrectivo").onclick = function(evt) {
+			document.getElementById("tipo").innerHTML = 'Total horas';
+            var activePoints = chart3.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            var tablamtto= document.getElementById('table')
+			tablamtto.innerHTML = '';
+            var titlemodal = document.getElementById("titlemodal")
+            var firstPoint = activePoints[0];
+            var indexP = firstPoint.index;
+            var arraysend = [];
+           	titlemodal.innerHTML = chart3.data.labels[firstPoint.index];
+            if (indexP ==0){
+				//Desgaste
+				arraysend = fcdesgastec;
+				
+			}
+			else if(indexP ==1){
+				//Operacion indebida
+				arraysend = fcopindebidac;
+				
+			}
+			else if(indexP ==2){
+				//Accesorios 
+				arraysend = fccausaexternac;
+			}
+			else if(indexP == 3){
+				//Causa externa
+				arraysend = fcaccesoriosc;
+			}
+			else if(indexP == 4){
+				//Desconocido
+				arraysend = fcdesconocidoc;			
+			}
+			else if(indexP == 5){
+				//Sin fallas
+				arraysend = fcsinfallasc;
+				
+			}
+			else{
+				//Otros
+				arraysend = fcotroc;
+			}
+			
+			for(mtto of arraysend){
+				mttosep = mtto.split(',');
+				console.log(mttosep[14])
+				if(mttosep[14]!="" && mttosep[14].length>5){
+					tablamtto.innerHTML+=`
+							<tr>
+								<td>${mttosep[6]}</td>
+								<td>${mttosep[7]}</td>
+								<td>${mttosep[8]}</td>
+								<td>${mttosep[9]}</td>
+								
+								<td>${mttosep[11]}</td>
+								<td>${mttosep[4]}</td>
+								<td>${mttosep[12]}</td>
+								<td>${mttosep[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/visualpdfsysmtto/ ${mttosep[5]}">Reporte</a>
+								</td>
+							
+							</tr>
+						`	
+				}	
+				else{
+					tablamtto.innerHTML+=`
+							<tr>
+								<td>${mttosep[6]}</td>
+								<td>${mttosep[7]}</td>
+								<td>${mttosep[8]}</td>
+								<td>${mttosep[9]}</td>
+								
+								<td>${mttosep[11]}</td>
+								<td>${mttosep[4]}</td>
+								<td>${mttosep[12]}</td>
+								<td>${mttosep[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/sysreportes/ ${mttosep[15]}">Subir reporte</a>
+								</td>
+							
+							</tr>
+						`	
+				}		
+				
+			}
+			document.getElementById('myModal').style.display = 'block';
+			
+		
+       		
+        };
+	document.getElementById("piemttotype").onclick = function(evt) {
+		
+			document.getElementById("tipo").innerHTML = 'Falla';
+            var activePoints = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            var tablamtto= document.getElementById('table')
+			tablamtto.innerHTML = '';
+            var titlemodal = document.getElementById("titlemodal")
+            var firstPoint = activePoints[0];
+            var indexP = firstPoint.index;
+            var arraysend = [];
+            var arraysendbj = [];
+           	titlemodal.innerHTML = chart.data.labels[firstPoint.index];
+            if (indexP ==0){
+				arraysend = spreventivo;
+				arraysendbj = sbpreventivo;
+			}
+			else if(indexP ==1){
+				arraysend = scorrectivo;
+				arraysendbj = sbcorrectivo;
+			}
+			else if(indexP ==2){
+				arraysend = spredictivo;
+				arraysendbj = sbpredictivo;
+			}
+	
+			else{
+				arraysend = sotrosm;
+				arraysendbj = sbotrosm;
+			}
+			
+			for(mtto of arraysend){
+				mttosep = mtto.split(',');
+				if(indexP>2){
+					if(mttosep[16]!="" && mttosep[16].length>5){
+					tablamtto.innerHTML+=`
+							<tr>
+								<td>${mttosep[6]}</td>
+								<td>${mttosep[7]}</td>
+								<td>${mttosep[8]}</td>
+								<td>${mttosep[9]}</td>
+								
+								<td>${mttosep[11]}</td>
+								<td>${mttosep[4]}</td>
+								<td>${mttosep[12]}</td>
+								<td>${mttosep[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/visualpdfentrega/ ${mttosep[5]}">Reporte</a>
+								</td>
+							
+							</tr>
+						`	
+					}	
+					else{
+						tablamtto.innerHTML+=`
+								<tr>
+									<td>${mttosep[6]}</td>
+									<td>${mttosep[7]}</td>
+									<td>${mttosep[8]}</td>
+									<td>${mttosep[9]}</td>
+									
+									<td>${mttosep[11]}</td>
+									<td>${mttosep[4]}</td>
+									<td>${mttosep[12]}</td>
+									<td>${mttosep[0]}</td>
+									<td>
+										<a class = "btn btn-success" href="/sysreportes/ ${mttosep[15]}">Subir reporte</a>
+									</td>
+								
+								</tr>
+							`	
+					}
+				}
+				else{
+					if(mttosep[14]!="" && mttosep[14].length>5){
+					tablamtto.innerHTML+=`
+							<tr>
+								<td>${mttosep[6]}</td>
+								<td>${mttosep[7]}</td>
+								<td>${mttosep[8]}</td>
+								<td>${mttosep[9]}</td>
+								
+								<td>${mttosep[11]}</td>
+								<td>${mttosep[4]}</td>
+								<td>${mttosep[12]}</td>
+								<td>${mttosep[0]}</td>
+								<td>
+									<a class = "btn btn-success" href="/visualpdfsysmtto/ ${mttosep[5]}">Reporte</a>
+								</td>
+							
+							</tr>
+						`	
+					}	
+					else{
+						tablamtto.innerHTML+=`
+								<tr>
+									<td>${mttosep[6]}</td>
+									<td>${mttosep[7]}</td>
+									<td>${mttosep[8]}</td>
+									<td>${mttosep[9]}</td>
+									
+									<td>${mttosep[11]}</td>
+									<td>${mttosep[4]}</td>
+									<td>${mttosep[12]}</td>
+									<td>${mttosep[0]}</td>
+									<td>
+										<a class = "btn btn-success" href="/sysreportes/ ${mttosep[15]}">Subir reporte</a>
+									</td>
+								
+								</tr>
+							`	
+					}
+				}
+				
+			}
+		
+			document.getElementById('myModal').style.display = 'block';
+			
+			console.log(firstPoint.index)
+           	console.log(chart.data.labels[firstPoint.index])
+			console.log(chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index])
+       		
+        };
+	$("#closemodal").click(function(){
+	  document.getElementById('myModal').style.display = 'none';
+
+	});
+	$("#xmodal").click(function(){
+	  document.getElementById('myModal').style.display = 'none';
+
+	});
+	/*]]>*/
+  </script>
+ 
+</html>

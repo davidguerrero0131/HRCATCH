@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title>Funciones de usuario</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/periodicidad}">Atras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/semaforizacion}">Semaforización</a>
+
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<main class="container-fluid">
+
+		<div class="my-3 p-3 bg-body rounded shadow-sm">
+			<div class="starter-template text-center py-5 px-3">
+				<div class="py-4 text-center">
+
+					<h2>Funciones de usuario</h2>
+					<p class="lead">A continuación puede crear nuevos equipos, hojas de vida fuera del inventario,
+						listar usuarios y más</p>
+				</div>
+				<form autocomplete="off" th:action="@{/nuevoequipomtto}" method="post">
+					<div class="row mb-3">
+						<div class="col-md-3">
+							<label class="label label-secondary mb-3" style="text-align: left;">Presione para crear la
+								hoja de vida de equipos no pertenecientes al inventario</label>
+
+						</div>
+						<div class="col-md-2">
+							<button class="w-200 btn btn btn-dark"
+								th:onclick="'window.location.href =\''+@{/nuevohvind}+'\''" type="button">Nueva hoja de
+								vida</button>
+
+						</div>
+
+
+						<div class="col-md-3">
+
+							<label class="label label-secondary" style="text-align: left;">Presione para crear un nuevo
+								equipo con su planeación</label>
+						</div>
+						<div class="col-md-2">
+							<div class="autocomplete">
+								<input id="myInput" name="myTipo" type="text" class="form-control"
+									placeholder="Tipo de equipo">
+
+							</div>
+						</div>
+						<div class="col-md-2">
+							<button class="w-200 btn btn btn-dark" type="submit">Nuevo equipo</button>
+
+						</div>
+				</form>
+				<form autocomplete="off" th:action="@{/editarportipo}" method="post">
+					<div class="row">
+						<div class="col-md-3">
+							<label class="label label-secondary mb-3" style="text-align: left;">Presione para ver los
+								equipos inactivos</label>
+
+						</div>
+						<div class="col-md-2">
+							<button class="w-200 btn btn btn-dark"
+								th:onclick="'window.location.href =\''+@{/listinactivos}+'\''"
+								type="button">Inactivos</button>
+
+						</div>
+						<div class="col-md-3">
+
+							<label class="label label-secondary" style="text-align: left;">Presione para editar por tipo
+								de equipo</label>
+						</div>
+						<div class="col-md-2">
+							<div class="autocomplete">
+								<input id="myInputedit" name="myTipoedit" type="text" class="form-control"
+									placeholder="Tipo de equipo">
+
+							</div>
+						</div>
+						<div class="col-md-2">
+							<button class="w-200 btn btn btn-dark" type="submit">Editar</button>
+
+						</div>
+					</div>
+				</form>
+
+				<div sec:authorize="hasAnyAuthority('ADMIN')">
+
+					<div class="row">
+						<div class="col-md-2">
+							Edite guias rápidas y rutinas de los equipos
+						</div>
+
+						<div class="col-md-3">
+							<button class="w-200 btn btn btn-dark"
+								th:onclick="'window.location.href =\''+@{/revisarguiarutina}+'\''" type="button">Rutinas
+								y guias</button>
+
+						</div>
+
+						<div class="col-md-2">
+							Planear calibraciones, calificaciones y validaciones
+						</div>
+
+						<div class="col-md-3">
+							<button class="w-200 btn btn btn-dark"
+								th:onclick="'window.location.href =\''+@{/programarcalval}+'\''"
+								type="button">Planeación</button>
+
+						</div>
+						<div class="col-md-2">
+							Editar fotos hv conjuntas
+						</div>
+
+						<div class="col-md-3">
+							<button class="w-200 btn btn btn-dark"
+								th:onclick="'window.location.href =\''+@{/assignfoto}+'\''"
+								type="button">Asignación</button>
+
+						</div>
+						<div class="col-md-2">
+							Editar fotos hv conjuntas
+						</div>
+
+						<div class="col-md-3">
+							<form th:action="@{/asignarcodigorand}" method="post">
+								<div class="input-group">
+									<select class="form-control" th:name="myService" id="services" required>
+										<option selected disabled value="0">Seleccione el equipo</option>
+
+										<div th:each="servicio:${servicios}">
+											<option th:text="${servicio.Nombre_servicio}"
+												th:value="${servicio.id_Servicio}"></option>
+										</div>
+									</select>
+									<button class="w-200 btn btn btn-dark" type="submit">Códigos</button>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-3">
+							<div class="input-group">
+								<label><span class="label label-primary"></span>Inventario ADMIN: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportinvadmin}">Excel</a>
+							</div>
+						</div>
+						<div class="col-md-2">
+							Frecuencia de mantenimiento Servicios
+						</div>
+
+						<div class="col-md-3">
+							<button class="w-200 btn btn btn-dark"
+								th:onclick="'window.location.href =\''+@{/frecuenciamtto}+'\''"
+								type="button">Calificación</button>
+
+						</div>
+						<div class="col-md-3">
+							<div class="input-group">
+								<label><span class="label label-primary"></span>Ejecutar planeación</label>
+								<a class="btn btn-primary" th:href="@{/listplanning}">Listar</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+			</div>
+
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row">
+						<p class="lead"> Genere los documentos de excel segun corresponda</p>
+						<form th:action="@{/exportarreportes}" method="post">
+							<div class="row">
+								<div class="col-md-2">
+									<br>
+									<label><span class="label label-primary"></span>Reportes</label>
+								</div>
+								<div class="col-md-4">
+									<label for="fechainicialind">Fecha inicial</label>
+									<input th:name="fecha_inicial" type="date" class="form-control" required>
+								</div>
+								<div class="col-md-4">
+									<label for="fechafinalind">Fecha final</label>
+									<input th:name="fecha_final" type="date" class="form-control mb-3" required>
+								</div>
+								<div class="col-md-2">
+									<br>
+									<button type="submit" class="btn btn-success">Excel</button>
+								</div>
+							</div>
+
+						</form>
+
+
+							<div class="col-md-6" style="text-align: left;">
+								<div class="input-group">
+									<label><span class="label label-primary"></span>Inventario General: &nbsp</label>
+									<a class="btn btn-success" th:href="@{/export}">Excel</a>
+								</div>
+							</div>
+
+							<div class="col-md-6" style="text-align: left;">
+								<div class="input-group">
+									<label><span class="label label-primary "></span>Hojas de vida: &nbsp</label>
+									<a class="btn btn-success" th:href="@{/exporthv}">Excel</a>
+								</div>
+							</div>
+						<div class="col-md-6" style="text-align: left;">
+							<div class="col-md-6">
+								<label><span class="label label-primary"></span>Inventario Propio: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportequipossincomodatos}">Excel</a>
+							</div>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<div class="input-group">
+								<label><span class="label label-primary "></span>Inventario Comodatos: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportcomodatos}">Excel</a>
+							</div>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<div class="col-md-6">
+								<label><span class="label label-primary"></span>Inventario UMI: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportumi}">Excel</a>
+							</div>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<div class="input-group">
+								<label><span class="label label-primary "></span>Inventario CE: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exportconsultaexterna}">Excel</a>
+							</div>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<div class="input-group">
+								<label><span class="label label-primary "></span>Otras HV: &nbsp</label>
+								<a class="btn btn-success" th:href="@{/exporthvotros}">Excel</a>
+							</div>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<label><span class="label label-primary"></span>Bajas: &nbsp</label>
+							<a class="btn btn-success" th:href="@{/exportbajas}">Excel</a>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<label><span class="label label-primary"></span>Reportes baja: &nbsp</label>
+							<a class="btn btn-success" th:href="@{/exportreportesbajas}">Excel</a>
+						</div>
+
+						<div class="col-md-6" style="text-align: left;">
+							<label><span class="label label-primary"></span>Mantenimiento: &nbsp</label>
+							<a class="btn btn-success" th:href="@{/exportplan}">Excel</a>
+						</div>
+
+					</div>
+
+					<p class="lead">Usuarios registrados</p>
+					<div class="table-responsive">
+						<table class="table table-hover" style="text-align: left;">
+							<thead>
+								<tr>
+									<th scope="col">Nombre completo</th>
+
+									<th scope="col">Tipo de cargo</th>
+									<th scope="col">Registro INVIMA</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="usuario:${usuarios}">
+									<div th:if="${usuario.Tipo_cargo_usuario!='1' and usuario.id_Usuario<14}">
+										<td th:text="${usuario.Nombre} +' '+${usuario.Apellido}"></td>
+
+										<div th:switch="${usuario.Tipo_cargo_usuario}">
+											<td th:case="'1'">Desarrollador</td>
+											<td th:case="'2'">Coordinador</td>
+											<td th:case="'3'">Técnico biomédico</td>
+											<td th:case="'4'">Auxiliar biomédico</td>
+											<td th:case="'5'">Técnico administrativo</td>
+											<td th:case="'6'">Auxiliar administrativo</td>
+											<td th:case="'7'">Visitante</td>
+											<td th:case="'8'">Técnico biomédico administrativo</td>
+										</div>
+										<td th:text="${usuario.Registro_invima}"></td>
+									</div>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<p class="lead">Repuestos cambiados en las últimas dos semanas</p>
+					<div class="table-responsive">
+						<div th:if="${#lists.isEmpty(repuestos)}" class="alert alert-info my-4"
+							th:text="'No hay repuestos cambiados recientemente'">
+						</div>
+						<table class="table table-info" id="tablaRepuestos" th:if="${not #lists.isEmpty(repuestos)}">
+							<thead>
+								<tr>
+									<th scope="col">Repuesto</th>
+									<th scope="col">Nombre</th>
+									<th scope="col">Serie</th>
+									<th scope="col">Responsable</th>
+									<th scope="col">Fecha</th>
+									<th scope="col">Ver reporte</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="repuesto:${repuestos}">
+
+									<td th:text="${repuesto.Repuesto_cambiado}"></td>
+									<td th:text="${repuesto.Nombre_equipo}"></td>
+									<td th:text="${repuesto.Serie}"></td>
+									<td th:text="${repuesto.Autor_realizado}"></td>
+									<td th:text="${repuesto.Fecha}"></td>
+									<td> <button
+											th:onclick="'window.location.href=\''+@{/formatoreporte/}+${repuesto.id_Reporte}+'\''"
+											type="button" class="btn btn-primary">Reporte</button>
+									</td>
+
+								</tr>
+
+							</tbody>
+						</table>
+						<button type="button" th:onclick="exportTableToExcel('tablaRepuestos', 'RepuestosCambiados')"
+							class="btn btn-success">Descargar</button>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<p class="lead">Equipos que salieron de garantía en los últimos dos meses</p>
+					<div class="table-responsive">
+						<div th:if="${#lists.isEmpty(vencidos)}" class="alert alert-info my-4"
+							th:text="'No hay equipos que hayan salido de garantía recientemente'">
+						</div>
+						<table class="table table-danger" id="tablaSinGarantia" th:if="${not #lists.isEmpty(vencidos)}">
+							<thead>
+								<tr>
+									<th scope="col">Nombre</th>
+
+									<th scope="col">Modelo</th>
+									<th scope="col">Marca</th>
+									<th scope="col">Serie</th>
+									<th scope="col">Fecha de vencimiento</th>
+									<th scope="col">Programar</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="hoja_vida:${vencidos}">
+									<div th:if="${hoja_vida.equipo}">
+										<td th:text="${hoja_vida.equipo.nombre_Equipo}"></td>
+										<td th:text="${hoja_vida.equipo.Modelo}"></td>
+										<td th:text="${hoja_vida.equipo.Marca}"></td>
+										<td th:text="${hoja_vida.equipo.Serie}"></td>
+										<td th:text="${hoja_vida.Fecha_vencimientogarantia}"></td>
+										<td> Programar</td>
+									</div>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+						<button type="button"
+							th:onclick="exportTableToExcel('tablaSinGarantia', 'equiposquesalierodegarantia')"
+							class="btn btn-success">Descargar</button>
+					</div>
+					<p>&nbsp</p>
+					<p>&nbsp</p>
+
+					<p class="lead">Equipos que saldrán de garantía en los proximos dos meses</p>
+					<div class="table-responsive">
+						<div th:if="${#lists.isEmpty(paravencer)}" class="alert alert-info my-4"
+							th:text="'No hay equipos que vayan a salir de garantía en dos meses'">
+						</div>
+						<table class="table table-warning" id="tablagarantiaP"
+							th:if="${not #lists.isEmpty(paravencer)}">
+							<thead>
+								<tr>
+									<th scope="col">Nombre</th>
+
+									<th scope="col">Modelo</th>
+									<th scope="col">Marca</th>
+									<th scope="col">Serie</th>
+									<th scope="col">Fecha de vencimiento</th>
+									<th scope="col">Programar</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="hoja_vida:${paravencer}">
+									<div th:if="${hoja_vida.equipo}">
+										<td th:text="${hoja_vida.equipo.nombre_Equipo}"></td>
+										<td th:text="${hoja_vida.equipo.Modelo}"></td>
+										<td th:text="${hoja_vida.equipo.Marca}"></td>
+										<td th:text="${hoja_vida.equipo.Serie}"></td>
+										<td th:text="${hoja_vida.Fecha_vencimientogarantia}"></td>
+										<td> Programar</td>
+									</div>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button"
+							th:onclick="exportTableToExcel('tablagarantiaP', 'Equiposproximosacumplirgarantia')"
+							class="btn btn-success">Descargar</button>
+					</div>
+					<p>&nbsp</p>
+					<p>&nbsp</p>
+					<h4 class="lead">Formatos </h4>
+					<div class "row">
+						<div class="col-md-4">
+
+
+							<form method="get" th:action="@{/formatoreportepdf}" enctype="multipart/form-data"
+								class="container">
+								<div class="input-group">
+									<label><span class="label label-primary"></span>Reporte: &nbsp</label>
+									<button type="submit" class="btn btn-danger">PDF</button>
+								</div>
+							</form>
+
+
+						</div>
+						<div class="col-md-4">
+							<form method="get" th:action="@{/formatohvpdf}" enctype="multipart/form-data"
+								class="container">
+								<div class="input-group">
+									<label><span class="label label-primary"></span>HV: &nbsp</label>
+									<button type="submit" class="btn btn-danger">PDF</button>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-4">
+							<form method="get" th:action="@{/formatoreporteMSVpdf}" enctype="multipart/form-data"
+								class="container">
+								<div class="input-group">
+									<label><span class="label label-primary"></span>ReporteMSV: &nbsp</label>
+									<button type="submit" class="btn btn-danger">PDF</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</main>
+
+	<script type="text/javascript">
+		function exportTableToExcel(tableID, filename = '') {
+			var downloadLink;
+			var dataType = 'application/vnd.ms-excel';
+			var tableSelect = document.getElementById(tableID);
+			var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+			// Specify file name
+			filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+			// Create download link element
+			downloadLink = document.createElement("a");
+
+			document.body.appendChild(downloadLink);
+
+			if (navigator.msSaveOrOpenBlob) {
+				var blob = new Blob(['ufeff', tableHTML], {
+					type: dataType
+				});
+				navigator.msSaveOrOpenBlob(blob, filename);
+			} else {
+				// Create a link to the file
+				downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+				// Setting the file name
+				downloadLink.download = filename;
+
+				//triggering the function
+				downloadLink.click();
+			}
+		}
+	</script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var dicttipos = /*[[${tipos}]]*/ 'default';
+		var listnamestipo = [];
+		for (tipo of dicttipos) {
+			listnamestipo.push(tipo.nombre_Tipo_equipo)
+
+		}
+		$(document).ready(function () {
+			$('#services').select2();
+
+		});
+		function autocomplete(inp, arr) {
+			/*the autocomplete function takes two arguments,
+			the text field element and an array of possible autocompleted values:*/
+			var currentFocus;
+			/*execute a function when someone writes in the text field:*/
+			inp.addEventListener("input", function (e) {
+				var a, b, i, val = this.value;
+				/*close any already open lists of autocompleted values*/
+				closeAllLists();
+				if (!val) {return false;}
+				currentFocus = -1;
+				/*create a DIV element that will contain the items (values):*/
+				a = document.createElement("DIV");
+				a.setAttribute("id", this.id + "autocomplete-list");
+				a.setAttribute("class", "autocomplete-items");
+				/*append the DIV element as a child of the autocomplete container:*/
+				this.parentNode.appendChild(a);
+				/*for each item in the array...*/
+				for (i = 0; i < arr.length; i++) {
+					/*check if the item starts with the same letters as the text field value:*/
+					if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+						/*create a DIV element for each matching element:*/
+						b = document.createElement("DIV");
+						/*make the matching letters bold:*/
+						b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+						b.innerHTML += arr[i].substr(val.length);
+						/*insert a input field that will hold the current array item's value:*/
+						b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+						/*execute a function when someone clicks on the item value (DIV element):*/
+						b.addEventListener("click", function (e) {
+							/*insert the value for the autocomplete text field:*/
+							inp.value = this.getElementsByTagName("input")[0].value;
+							/*close the list of autocompleted values,
+							(or any other open lists of autocompleted values:*/
+							closeAllLists();
+						});
+						a.appendChild(b);
+					}
+				}
+			});
+			/*execute a function presses a key on the keyboard:*/
+			inp.addEventListener("keydown", function (e) {
+				var x = document.getElementById(this.id + "autocomplete-list");
+				if (x) x = x.getElementsByTagName("div");
+				if (e.keyCode == 40) {
+					/*If the arrow DOWN key is pressed,
+					increase the currentFocus variable:*/
+					currentFocus++;
+					/*and and make the current item more visible:*/
+					addActive(x);
+				} else if (e.keyCode == 38) { //up
+					/*If the arrow UP key is pressed,
+					decrease the currentFocus variable:*/
+					currentFocus--;
+					/*and and make the current item more visible:*/
+					addActive(x);
+				} else if (e.keyCode == 13) {
+					/*If the ENTER key is pressed, prevent the form from being submitted,*/
+					e.preventDefault();
+					if (currentFocus > -1) {
+						/*and simulate a click on the "active" item:*/
+						if (x) x[currentFocus].click();
+					}
+				}
+			});
+			function addActive(x) {
+				/*a function to classify an item as "active":*/
+				if (!x) return false;
+				/*start by removing the "active" class on all items:*/
+				removeActive(x);
+				if (currentFocus >= x.length) currentFocus = 0;
+				if (currentFocus < 0) currentFocus = (x.length - 1);
+				/*add class "autocomplete-active":*/
+				x[currentFocus].classList.add("autocomplete-active");
+			}
+			function removeActive(x) {
+				/*a function to remove the "active" class from all autocomplete items:*/
+				for (var i = 0; i < x.length; i++) {
+					x[i].classList.remove("autocomplete-active");
+				}
+			}
+			function closeAllLists(elmnt) {
+				/*close all autocomplete lists in the document,
+				except the one passed as an argument:*/
+				var x = document.getElementsByClassName("autocomplete-items");
+				for (var i = 0; i < x.length; i++) {
+					if (elmnt != x[i] && elmnt != inp) {
+						x[i].parentNode.removeChild(x[i]);
+					}
+				}
+			}
+			/*execute a function when someone clicks in the document:*/
+			document.addEventListener("click", function (e) {
+				closeAllLists(e.target);
+			});
+		}
+		autocomplete(document.getElementById("myInput"), listnamestipo);
+		autocomplete(document.getElementById("myInputedit"), listnamestipo);
+/*]]>*/
+	</script>
+
+</body>
+
+</html>

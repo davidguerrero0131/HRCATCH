@@ -1,0 +1,1561 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit = no">
+
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${serieequipo}+' '+${nombreequipo}"></title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/offcanvas/">
+
+
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+
+	<!-- Custom styles for this template -->
+
+	<link href="hojadevida.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="hojadevida.css" rel="stylesheet" type="text/css" media="print">
+	<link href="../static/css/hojadevida.css" rel="stylesheet" th:href="@{/css/hojadevida.css}">
+
+</head>
+
+<body class="bg-light">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="table-responsive">
+				<table class="table" style="border-color: black;text-align: center">
+					<a class="btn btn-primary" th:href="@{/downloadHV/}+${idequipo}">Descargar hv en PDF</a>
+					<h1></h1>
+					<tbody>
+						<tr>
+							<td><b>Código: IB-F-25</b></td>
+							<td rowspan="2" align="center" colspan="4"><br><b>E.S.E HOSPITAL UNIVERSITARIO SAN RAFAEL DE
+									TUNJA</b></td>
+							<td rowspan="3">
+								<img th:src="@{/images/Escudo_husrt.png}" width="180" height="130">
+
+							</td>
+						</tr>
+						<tr>
+							<td rowspan="3"><br><br><b>Versión:01</b></td>
+
+
+						</tr>
+						<tr>
+
+							<td colspan="4"><b>III NIVEL DE ATENCIÓN</b></td>
+						</tr>
+						<tr>
+							<td colspan="4"><b>HOJA DE VIDA DIGITAL EQUIPO BIOMEDICO HRCATCH</b></td>
+							<td><b>07/02/2022</b></td>
+
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+
+			<div class=row>
+				<div class="col-md-9">
+					<b>IDENTIFICACIÓN</b>
+					<div class="row" th:each="hoja_vida:${hoja_vidaequipo}">
+						<div class="col-md-2">
+							<label>DEPARTAMENTO:</label><br>
+							<label>DIRECCCIÓN:</label><br>
+							<label>E-MAIL:</label><br>
+							<label><big>SERVICIO:</big></label>
+						</div>
+						<div class="col-md-4">
+							<label th:text="${hoja_vida.Departamento}">&nbsp</label><br>
+							<label th:text="${hoja_vida.Direccion}">&nbsp</label><br>
+							<label><small><small
+										th:text="${hoja_vida.Emailinstitucion}">&nbsp</small></small></label><br>
+							<label><b th:text="${servicioequipo}">&nbsp</b></label>
+						</div>
+						<div class="col-md-3">
+							<label>MUNICIPIO:</label><br>
+							<label>TELÉFONO:</label><br>
+							<label>COD. INTERNACIONAL:</label><br>
+							<label><big>UBICACIÓN:</big></label>
+							<label><big>UBICACIÓN ESPECIFICA:</big></label>
+						</div>
+						<div class="col-md-3">
+							<label th:text="${hoja_vida.Municipio}">&nbsp</label><br>
+							<label th:text="${hoja_vida.Telefonoinstitucion}">&nbsp</label><br>
+							<label th:text="${hoja_vida.Codinternacional}">&nbsp</label><br>
+							<label th:text="${ubicacionequipo}">&nbsp</label><br>
+							<label><b th:text="${hoja_vida.equipo.Ubicacion_especifica}">&nbsp</b></label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3" th:each="hoja_vida:${hoja_vidaequipo}">
+
+					<img th:src="@{${hoja_vida.Foto}}" width="250" height="200">
+
+				</div>
+
+
+
+
+			</div>
+			<hr>
+			<div class="table-responsive">
+				<table>
+					<thead>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width: 17%">
+								<div class="table-responsive">
+									<div class="col-md-12">
+										<table class="table table-sm" style="border-color: black;">
+											<thead>
+												<tr>
+													<th scope="col" colspan="2">FORMA DE ADQUISICIÓN</th>
+												</tr>
+											</thead>
+											<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+												<tr>
+													<td>COMPRA DIRECTA</td>
+													<td>
+														<div class="form-check"
+															th:if="${hoja_vida.Compraddirecta==true}">
+															<input type="checkbox"
+																th:value="${hoja_vida.Compraddirecta}" name="radioscd1"
+																class="form-check-input"
+																th:id="'HVcompradirecta'+${hoja_vida.id_Hoja_vida}"
+																checked disabled>
+
+														</div>
+														<div class="form-check"
+															th:unless="${hoja_vida.Compraddirecta=true}">
+															<input type="checkbox" name="radioscd2"
+																class="form-check-input"
+																th:id="'HVcompradirectan'+${hoja_vida.id_Hoja_vida}"
+																disabled>
+
+														</div>
+
+													</td>
+												</tr>
+												<tr>
+													<td>CONVENIO</td>
+													<td>
+														<div class="form-check" th:if="${hoja_vida.Convenio==true}">
+															<input type="checkbox" name="radioscd3"
+																class="form-check-input"
+																th:id="'HVconvenio'+${hoja_vida.id_Hoja_vida}" checked
+																disabled>
+
+														</div>
+														<div class="form-check" th:unless="${hoja_vida.Convenio==true}">
+															<input type="checkbox" name="radioscd4"
+																class="form-check-input"
+																th:id="'HVconvenion'+${hoja_vida.id_Hoja_vida}"
+																disabled>
+
+														</div>
+
+													</td>
+												</tr>
+												<tr>
+													<td>DONADO</td>
+													<td>
+														<div class="form-check" th:if="${hoja_vida.Donado==true}">
+															<input type="checkbox" name="radioscd5"
+																class="form-check-input"
+																th:id="'HVdonado'+${hoja_vida.id_Hoja_vida}" checked
+																disabled>
+
+														</div>
+														<div class="form-check" th:unless="${hoja_vida.Donado==true}">
+															<input type="checkbox" name="radioscd6"
+																class="form-check-input"
+																th:id="'HVdonadon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+														</div>
+													</td>
+												</tr>
+												<td>ASIGNADO POR EL MINISTERIO</td>
+												<td th:each="hoja_vida:${hoja_vidaequipo}">
+													<div class="form-check"
+														th:if="${hoja_vida.Asignadoporministerio==true}">
+														<input type="checkbox" name="radioscd7" class="form-check-input"
+															th:id="'HVAsignadoporministerio'+${hoja_vida.id_Hoja_vida}"
+															checked disabled>
+
+													</div>
+													<div class="form-check"
+														th:unless="${hoja_vida.Asignadoporministerio==true}">
+														<input type="checkbox" name="radioscd8" class="form-check-input"
+															th:id="'HVAsignadoporministerion'+${hoja_vida.id_Hoja_vida}"
+															disabled>
+
+													</div>
+												</td>
+												<tr>
+													<td>ASIGNADO POR LA GOBERNACIÓN</td>
+													<td th:each="hoja_vida:${hoja_vidaequipo}">
+														<div class="form-check"
+															th:if="${hoja_vida.Asignadoporgobernacion==true}">
+															<input type="checkbox" name="radioscd9"
+																class="form-check-input"
+																th:id="'HVAsignadoporgobernacion'+${hoja_vida.id_Hoja_vida}"
+																checked disabled>
+
+														</div>
+														<div class="form-check"
+															th:unless="${hoja_vida.Asignadoporgobernacion==true}">
+															<input type="checkbox" name="radioscd10"
+																class="form-check-input"
+																th:id="'HVAsignadoporgobernacionn'+${hoja_vida.id_Hoja_vida}"
+																disabled>
+
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>COMODATO</td>
+													<td th:each="hoja_vida:${hoja_vidaequipo}">
+														<div class="form-check" th:if="${hoja_vida.Comodato==true}">
+															<input type="checkbox" name="radioscd11"
+																class="form-check-input"
+																th:id="'HVComodato'+${hoja_vida.id_Hoja_vida}" checked
+																disabled>
+
+														</div>
+														<div class="form-check" th:unless="${hoja_vida.Comodato==true}">
+															<input type="checkbox" name="radioscd12"
+																class="form-check-input"
+																th:id="'HVComodaton'+${hoja_vida.id_Hoja_vida}"
+																disabled>
+
+														</div>
+													</td>
+												</tr>
+												<tr>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+							</td>
+							<td>
+								<div class="col-md-12" th:each="hoja_vida:${hoja_vidaequipo}">
+									<div class="table-responsive">
+										<table class="table table-sm" style="border-color: black">
+											<thead>
+												<tr>
+													<th scope="col" rowspan="2">NOMBRE DEL EQUIPO:</th>
+													<th th:text="${nombreequipo}">&nbsp</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>FECHA DE COMPRA:</td>
+													<td><small th:text="${hoja_vida.Fecha_compra}"></small></td>
+												</tr>
+												<tr>
+													<td>FECHA DE INSTALACIÓN:</td>
+													<td> <small th:text="${hoja_vida.Fecha_instalacion}"></small></td>
+												</tr>
+												<tr>
+													<td>FECHA INICIO DE OPERACIÓN:</td>
+													<td><small th:text="${hoja_vida.Fecha_iniciooperacion}"></small>
+													</td>
+												</tr>
+												<tr>
+													<td>FECHA VCTO DE GARANTÍA:</td>
+													<div
+														th:if="${#dates.format(hoja_vida.Fecha_vencimientogarantia, 'dd/MMM/yyyy')=='11-11-1111'}">
+														<td><small>ND</small></td>
+													</div>
+													<div
+														th:unless="${#dates.format(hoja_vida.Fecha_vencimientogarantia, 'dd/MMM/yyyy')=='11-11-1111'}">
+														<td><small
+																th:text="${hoja_vida.Fecha_vencimientogarantia}"></small>
+														</td>
+													</div>
+
+												</tr>
+												<tr>
+													<td>COSTO EN PESOS:</td>
+													<td><small th:text="${hoja_vida.Costo_compra}"></small></td>
+												</tr>
+
+
+											</tbody>
+
+										</table>
+									</div>
+
+								</div>
+							</td>
+							<td>
+								<div class="col-md-12" th:each="hoja_vida:${hoja_vidaequipo}">
+									<div class="table-responsive">
+										<table class="table table-sm " style="border-color: black">
+											<thead>
+												<tr>
+													<th scope="col">PLACA INVENTARIO:</th>
+													<td th:text="${placainventario}">
+														&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+													</td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>MARCA:</td>
+													<td th:text="${marcaequipo}">&nbsp</td>
+												</tr>
+												<tr>
+													<td>MODELO:</td>
+													<td th:text="${modeloequipo}">&nbsp</td>
+												</tr>
+												<tr>
+													<td>SERIE:</td>
+													<td th:text="${serieequipo}">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+												</tr>
+												<tr>
+													<td>AÑO DE FABRICACIÓN:</td>
+													<div th:if="${hoja_vida.Ano_fabricacion != 0}">
+														<td th:text="${hoja_vida.Ano_fabricacion}">
+															&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+													</div>
+													<div th:unless="${hoja_vida.Ano_fabricacion != 0}">
+														<td>NE</td>
+
+													</div>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</td>
+							<td style="width:31%">
+								<div class="col-md-12" th:each="hoja_vida:${hoja_vidaequipo}">
+
+									<table class="table table-sm" style="border-color: black">
+										<thead>
+											<tr>
+												<td>REGISTRO INVIMA:</td>
+												<td><small th:text="${hoja_vida.Registro_invima}"></small></td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>FABRICANTE:</td>
+												<td th:text="${hoja_vida.Fabricante}">&nbsp</td>
+											</tr>
+											<tr>
+												<td>PAIS:</td>
+												<td th:text="${hoja_vida.Paisfabricante}">&nbsp</td>
+											</tr>
+											<tr>
+												<td>PROVEEDOR:</td>
+												<td th:text="${hoja_vida.Proveedor}">&nbsp</td>
+											</tr>
+											<tr>
+												<td>TELÉFONO:</td>
+												<td th:text="${hoja_vida.Telefonoproveedor}">&nbsp</td>
+											</tr>
+											<tr>
+												<td>CORREO:</td>
+												<td> <small><small><small><small><small
+																		th:text="${hoja_vida.Correoproveedor}"></small></small></small></small></small>
+												</td>
+											</tr>
+											<tr>
+												<td>CIUDAD:</td>
+												<td th:text="${hoja_vida.Ciudadproveedor}">&nbsp</td>
+											</tr>
+											<tr>
+												<td>REPRESENTANTE:</td>
+												<td th:text="${hoja_vida.Representante}">&nbsp&nbsp&nbsp&nbsp</td>
+											</tr>
+											<tr>
+												<td>TELÉFONO:</td>
+												<td th:text="${hoja_vida.Telefonorepresentante}">
+													&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+
+
+
+			<hr>
+
+			<table style="border-color: black;">
+				<thead>
+
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+
+							<div class="table-responsive">
+								<div class="col-md-12">
+									<table class="table table-sm" style="border-color: black">
+										<thead>
+											<th scope="col" colspan="6">REGISTRO TÉCNICO</th>
+
+										</thead>
+										<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+											<tr>
+
+												<td>VOLTAJE MÁXIMO:</td>
+												<td th:text="${hoja_vida.Vmaxoperacion}">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+												</td>
+												<td><small><small>VOLTIOS</small></small></td>
+												<td>PRESIÓN:</td>
+												<td th:text="${hoja_vida.Presion}">&nbsp</td>
+												<td><small><small>PSI</small></small></td>
+											</tr>
+											<tr>
+												<td>VOLTAJE MÍNIMO:</td>
+												<td th:text="${hoja_vida.Vminoperacion}">&nbsp</td>
+												<td><small><small>VOLTIOS</small></small></td>
+												<td>VELOCIDAD:</td>
+												<td th:text="${hoja_vida.Velocidad}">&nbsp</td>
+												<td><small><small>RPM</small></small></td>
+											</tr>
+											<tr>
+												<td>CORRIENTE MÁXIMA:</td>
+												<td th:text="${hoja_vida.Imaxoperacion}">&nbsp</td>
+												<td><small><small>AMPERIOS</small></small></td>
+												<td>TEMPERATURA:</td>
+												<td th:text="${hoja_vida.Temperatura}">&nbsp&nbsp</td>
+												<td><small><small>°C</small></small></td>
+											</tr>
+											<tr>
+												<td>CORRIENTE MÍNIMA:</td>
+												<td th:text="${hoja_vida.Iminoperacion}">&nbsp</td>
+												<td><small><small>AMPERIOS</small></small></td>
+												<td>PESO:</td>
+												<td th:text="${hoja_vida.Peso}">&nbsp</td>
+												<td><small><small>Kg</small></small></td>
+											</tr>
+											<tr>
+												<td>POTENCIA CONSUMIDA:</td>
+												<td th:text="${hoja_vida.Wconsumida}">&nbsp</td>
+												<td><small><small>WATTS</small></small></td>
+												<td>CAPACIDAD:</td>
+												<td th:text="${hoja_vida.Capacidad}">&nbsp</td>
+												<td><small><small>L</small></small></td>
+											</tr>
+											<tr>
+												<td>FRECUENCIA:</td>
+												<td th:text="${hoja_vida.Frecuencia}">&nbsp</td>
+												<td><small><small>HERTZ</small></small></td>
+												<td>OTROS:</td>
+												<td th:text="${hoja_vida.Otrosdatostecnicos}">
+													&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+												<td><small>&nbsp</small></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="col-md-12" th:each="hoja_vida:${hoja_vidaequipo}">
+								<table class="table table-sm" style="border-color: black">
+									<thead>
+										<tr>
+											<th scope="col" colspan="4"> FUENTE DE ALIMENTACIÓN</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>ELECTRICIDAD:</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Fuenteaelectricidad==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnico'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+												</div>
+												<div class="form-check"
+													th:unless="${hoja_vida.Fuenteaelectricidad==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+											<td>VAPOR DE AGUA:</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Fuenteavaporagua==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicovapor'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+
+												</div>
+												<div class="form-check" th:unless="${hoja_vida.Fuenteavaporagua==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicovaporn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>ENERGIA SOLAR:</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Fuenteaenergiasolar==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicoea'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+
+												</div>
+												<div class="form-check"
+													th:unless="${hoja_vida.Fuenteaenergiasolar==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicoean'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+											<td>DERIVADOS DEL PETROLEO:</td>
+											<td>
+												<div class="form-check"
+													th:if="${hoja_vida.Fuenteaderivadospetroleo==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicoderi'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+
+												</div>
+												<div class="form-check"
+													th:unless="${hoja_vida.Fuenteaderivadospetroleo==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicoderin'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>AGUA:</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Fuenteaagua==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicoag'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+
+												</div>
+												<div class="form-check" th:unless="${hoja_vida.Fuenteaagua==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicoagn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+											<td>OTROS:</td>
+											<td>
+												<div class="mb-3 form-check" th:if="${hoja_vida.Fuenteaotros==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicootros'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+
+												</div>
+												<div class="mb-3 form-check"
+													th:unless="${hoja_vida.Fuenteaotros==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicootrosn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>GAS:</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Fuenteagas==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicogas'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+												</div>
+												<div class="form-check" th:unless="${hoja_vida.Fuenteagas==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtecnicogasn'+${hoja_vida.id_Hoja_vida}" disabled>
+												</div>
+											</td>
+											<td colspan="2"></td>
+										</tr>
+
+									</tbody>
+								</table>
+
+							</div>
+						</td>
+						<td th:each="hoja_vida:${hoja_vidaequipo}" align="left">
+							<div class="col-md-3">
+								<table class="table table-sm" style="border-color: black">
+									<thead>
+										<tr>
+											<th scope="col" colspan="4">CONTRATO</th>
+										</tr>
+									</thead>
+									<tbody>
+										<td>No.</td>
+										<td colspan="3" th:text="${contratoequipo}"></td>
+									</tbody>
+									<thead>
+										<tr>
+											<th scope="col" colspan="4">EQUIPO</th>
+										</tr>
+									</thead>
+									<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+										<tr>
+											<td>FIJO</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Equipotipofijo==true}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'HVtipofijo'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+												</div>
+												<div class="form-check" th:unless="${hoja_vida.Equipotipofijo==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtipofijon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+											<td>PORTATIL</td>
+											<td>
+												<div class="form-check" th:if="${hoja_vida.Equipotipoportatil==true}">
+													<input type="checkbox" name="radios" class="form-check-input"
+														th:id="'HVtipoportatil'+${hoja_vida.id_Hoja_vida}" checked
+														disabled>
+
+												</div>
+												<div class="form-check"
+													th:unless="${hoja_vida.Equipotipoportatil==true}">
+													<input type="checkbox" class="form-check-input" value=""
+														th:id="'HVtipoportatiln'+${hoja_vida.id_Hoja_vida}" disabled>
+
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</td>
+
+					</tr>
+				</tbody>
+
+			</table>
+
+
+			<hr>
+			<div class="table-responsive">
+				<div class="col-md-12" th:each="hoja_vida:${hoja_vidaequipo}">
+					<table style="border-color: black;">
+						<thead>
+
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="col-md-12">
+										<div class="row">
+											<p><b>REGISTRO DE APOYO TÉCNICO</b></p>
+											<div class="col-md-4">
+												<table class="table table-sm" style="border-color: black">
+													<thead>
+														<tr>
+															<th scope="col" colspan="2">MANUALES</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>OPERACIONAL<br>-USUARIO</td>
+
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Manual_operacion==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVmanualop'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Manual_operacion==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVmanualopn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>TÉCNICO</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Manual_tecnico==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVmanualtec'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Manual_tecnico==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVmanualtecn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+
+											</div>
+											<div class="col-md-4">
+												<table class="table table-sm"
+													style="border-color: black;text-align: center;">
+													<thead>
+														<tr>
+															<th scope="col" colspan="2">USO</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>MÉDICO</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Usomedico==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVusom'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Usomedico==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVusomn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>BÁSICO</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Usobasico==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVusobasico'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Usobasico==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVusobasicon'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>APOYO</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Usoapoyo==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVusoapoyo'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Usoapoyo==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVusoapoyon'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+
+													</tbody>
+												</table>
+											</div>
+											<div class="col-md-4">
+												<table class="table table-sm"
+													style="border-color: black;text-align: center">
+													<thead>
+														<tr>
+															<th scope="col" colspan="2">RIESGO</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>I</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Riesgoi==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVI'+${hoja_vida.id_Hoja_vida}" checked
+																		disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Riesgoi==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVIn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>IIA</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Riesgoiia==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVIIA'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Riesgoiia==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVIIAn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>IIB</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Riesgoiib==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVIIB'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Riesgoiib==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVIIBn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+														</tr>
+
+														<tr>
+
+															<td>III</td>
+															<td>
+																<div class="form-check"
+																	th:if="${hoja_vida.Riesgoiii==true}">
+																	<input type="checkbox" name="radios"
+																		class="form-check-input"
+																		th:id="'HVIII'+${hoja_vida.id_Hoja_vida}"
+																		checked disabled>
+
+																</div>
+																<div class="form-check"
+																	th:unless="${hoja_vida.Riesgoiii==true}">
+																	<input type="checkbox" class="form-check-input"
+																		value=""
+																		th:id="'HVIIIn'+${hoja_vida.id_Hoja_vida}"
+																		disabled>
+
+																</div>
+															</td>
+
+														</tr>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+									</div>
+				</div>
+
+				</td>
+				<td style="width: 31%">
+					<div class="table-responsive">
+						<div class="col-md-12">
+							<table class="table table-sm" style="border-color: black;text-align: center">
+								<thead>
+									<tr>
+										<th scope="col" colspan="4">CLASE DE TECNOLOGÍA PREDOMINANTE</th>
+									</tr>
+								</thead>
+								<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+									<tr>
+										<td>ELÉCTRICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Claseelectrico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcelectrico'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Claseelectrico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcelectricon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+										<td>ELECTRÓNICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Claseelectronico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcelectronico'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Claseelectronico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcelectronicon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>MECÁNICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Clasemecanico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcmecanico'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Clasemecanico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcmecanicon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+										<td>ELECTROMECÁNICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Claseelectromecanico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcelectromecanico'+${hoja_vida.id_Hoja_vida}" checked
+													disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Claseelectromecanico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcelectromecanicon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>HIDRAÚLICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Clasehidraulico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVchidraulico'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Clasehidraulico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVchidraulicon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+										<td>NEUMÁTICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Claseneumatico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcneumatico'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Claseneumatico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcneumaticon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+									</tr>
+									<tr>
+
+										<td>VAPOR</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Clasevapor==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcvapor'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Clasevapor==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcvaporn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+										<td>SOLAR</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Clasesolar==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVcsolar'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Clasesolar==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVcsolarn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</td>
+				<td style="width: 26%">
+					<div class="table-responsive">
+						<div class="col-md-12">
+							<table class="table table-sm" style="border-color: black;">
+								<thead>
+									<tr>
+										<th scope="col" colspan="2">CLASIFICACIÓN BIOMÉDICA</th>
+									</tr>
+								</thead>
+								<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+									<tr>
+										<td>DIAGNÓSTICO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Biomedicdiagnostico==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVbiodi'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Biomedicdiagnostico==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVbiodin'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>TRATAMIENTO Y MTTO. A LA VIDA</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Biomedictratamiento==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVbiotra'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Biomedictratamiento==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVbiotran'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>REHABILITACIÓN</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Biomedicrehabilitacion==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVrehab'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check"
+												th:unless="${hoja_vida.Biomedicrehabilitacion==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVrehabn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+									</tr>
+									<tr>
+
+										<td>PREVENCIÓN</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Biomedicprevencion==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVpre'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Biomedicprevencion==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVpren'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+
+									</tr>
+									<tr>
+
+										<td>ANÁLISIS DE LABORATORIO</td>
+										<td>
+											<div class="form-check" th:if="${hoja_vida.Biomedicanalisis==true}">
+												<input type="checkbox" name="radios" class="form-check-input"
+													th:id="'HVanal'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+											</div>
+											<div class="form-check" th:unless="${hoja_vida.Biomedicanalisis==true}">
+												<input type="checkbox" class="form-check-input" value=""
+													th:id="'HVanaln'+${hoja_vida.id_Hoja_vida}" disabled>
+
+											</div>
+										</td>
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</td>
+				</tr>
+				</tbody>
+				</table>
+			</div>
+			<hr>
+			<div class="table-responsive">
+				<table style="border-color: black;align-content: center;">
+					<thead>
+
+					</thead>
+					<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+						<tr>
+							<td rowspan="2" style="width: 48%">
+								<div class="col-md-12">
+									<p><b>ACCESORIOS DEL EQUIPO</b></p>
+									<div class="bd-example">
+										<ul class="list-group" style="border-color: black;color: black;">
+
+											<li class="list-group-item" th:text="${hoja_vida.Accesorio1}">&nbsp</li>
+											<li class="list-group-item" th:text="${hoja_vida.Accesorio2}">&nbsp</li>
+											<li class="list-group-item" th:text="${hoja_vida.Accesorio3}">&nbsp</li>
+											<li class="list-group-item" th:text="${hoja_vida.Accesorio4}">&nbsp</li>
+										</ul>
+									</div>
+								</div>
+							</td>
+
+							<td rowspan="2" style="width: 15%">
+								<div class="table-responsive">
+									<div class="col-md-12">
+										<table class="table table-sm" style="border-color: black;text-align: center;">
+											<thead>
+												<tr>
+													<th scope="col" colspan="4">REQUIERE CALIBRACIÓN Y/O VALIDACIÓN</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>SI</td>
+													<td>
+														<div class="form-check form-check-inline"
+															th:if="${hoja_vida.Requierecalibracion==true}">
+															<input type="checkbox" name="radios"
+																class="form-check-input"
+																th:id="'HVRequierecalibracion'+${hoja_vida.id_Hoja_vida}"
+																checked disabled>
+
+														</div>
+														<div class="form-check form-check-inline"
+															th:unless="${hoja_vida.Requierecalibracion==true}">
+															<input type="checkbox" class="form-check-input" value=""
+																th:id="'HVRequierecalibracionn'+${hoja_vida.id_Hoja_vida}"
+																disabled>
+
+														</div>
+													</td>
+
+													<td>NO</td>
+													<td>
+														<div class="form-check form-check-inline"
+															th:if="${hoja_vida.Norequierecalibracion==true}">
+															<input type="checkbox" name="radios"
+																class="form-check-input"
+																th:id="'HVNorequierecalibracion'+${hoja_vida.id_Hoja_vida}"
+																checked disabled>
+
+														</div>
+														<div class="form-check form-check-inline"
+															th:unless="${hoja_vida.Norequierecalibracion==true}">
+															<input type="checkbox" class="form-check-input" value=""
+																th:id="'HVNorequierecalibracionn'+${hoja_vida.id_Hoja_vida}"
+																disabled>
+
+														</div>
+													</td>
+												</tr>
+											</tbody>
+											<thead>
+												<th colspan="4">PERIODICIDAD</th>
+											</thead>
+											<tr>
+												<td colspan="3">SEMESTRAL</td>
+												<td>
+													<div class="form-check form-check-inline"
+														th:if="${hoja_vida.Pcalsemestral==true}">
+														<input type="checkbox" name="radios" class="form-check-input"
+															th:id="'HVPcalsemestral'+${hoja_vida.id_Hoja_vida}" checked
+															disabled>
+
+													</div>
+													<div class="form-check form-check-inline"
+														th:unless="${hoja_vida.Pcalsemestral==true}">
+														<input type="checkbox" class="form-check-input" value=""
+															th:id="'HVPcalsemestraln'+${hoja_vida.id_Hoja_vida}"
+															disabled>
+
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3">ANUAL</td>
+												<td>
+													<div class="form-check form-check-inline"
+														th:if="${hoja_vida.Pcalanual==true}">
+														<input type="checkbox" name="radios" class="form-check-input"
+															th:id="'HVPcalanual'+${hoja_vida.id_Hoja_vida}" checked
+															disabled>
+
+													</div>
+													<div class="form-check form-check-inline"
+														th:unless="${hoja_vida.Pcalanual==true}">
+														<input type="checkbox" class="form-check-input" value=""
+															th:id="'HVPcalanualn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+													</div>
+												</td>
+											</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	</td>
+	<td style="width: 20%;height: 10%;">
+		<div class="table-responsive">
+			<div class="col-md-12">
+				<table class="table table-sm" style="border-color: black;">
+					<thead>
+						<tr>
+							<th scope="col" colspan="2">PERIODICIDAD DEL MANTENIMIENTO</th>
+						</tr>
+					</thead>
+					<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+						<tr>
+							<td>TRIMESTRAL</td>
+							<td>
+								<div class="form-check" th:if="${period==3}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVmtri'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${period==3}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVmtrin'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>CUATRIMESTRALES</td>
+							<td>
+								<div class="form-check" th:if="${period==4}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVmcua'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${period==4}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVmcuan'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>SEMESTRAL</td>
+							<td>
+								<div class="form-check" th:if="${period==2}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVmse'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${period==2}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVmsen'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>ANUAL</td>
+							<td>
+								<div class="form-check" th:if="${period==1}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVmanu'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${period==1}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVmanun'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</td>
+	<td>
+		<div class="table-responsive">
+			<div class="col-md-12">
+				<table class="table table-sm" style="border-color: black;">
+					<thead>
+						<tr>
+							<th scope="col" colspan="2">MANTENIMIENTO ACTUAL</th>
+						</tr>
+					</thead>
+					<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+						<tr>
+							<td>PROPIO</td>
+							<td>
+								<div class="form-check" th:if="${hoja_vida.Mapropio==true}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVMapropio'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${hoja_vida.Mapropio==true}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVMapropion'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>CONTRATADO</td>
+							<td>
+								<div class="form-check" th:if="${hoja_vida.Macontratado==true}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVMacontratado'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${hoja_vida.Macontratado==true}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVMacontratadon'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>COMODATO</td>
+							<td>
+								<div class="form-check" th:if="${hoja_vida.Macomodato==true}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVMacomodato'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${hoja_vida.Macomodato==true}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVMacomodaton'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>GARANTÍA</td>
+							<td>
+								<div class="form-check" th:if="${hoja_vida.Magarantia==true}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVMagarantia'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${hoja_vida.Magarantia==true}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVMagarantian'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</td>
+	</tr>
+
+	<tr>
+
+
+
+		<td colspan="2">
+			<div class="table-responsive">
+				<div class="col-md-12">
+					<table class="table table-sm" style="border-color: black;">
+						<thead>
+							<tr>
+								<th scope="col" colspan="6">PROPIEDAD DEL EQUIPO</th>
+							</tr>
+						</thead>
+						<tbody th:each="hoja_vida:${hoja_vidaequipo}">
+							<tr>
+								<td>HOSPITAL</td>
+								<td>
+									<div class="form-check form-check-inline" th:if="${hoja_vida.Prophospital==true}">
+										<input type="checkbox" name="radios" class="form-check-input"
+											th:id="'HVProphospital'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+									</div>
+									<div class="form-check form-check-inline"
+										th:unless="${hoja_vida.Prophospital==true}">
+										<input type="checkbox" class="form-check-input" value=""
+											th:id="'HVProphospitaln'+${hoja_vida.id_Hoja_vida}" disabled>
+
+									</div>
+								</td>
+
+								<td>PROVEEDOR</td>
+								<td>
+									<div class="form-check form-check-inline" th:if="${hoja_vida.Propproveedor==true}">
+										<input type="checkbox" name="radios" class="form-check-input"
+											th:id="'HVPropproveedor'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+									</div>
+									<div class="form-check form-check-inline"
+										th:unless="${hoja_vida.Propproveedor==true}">
+										<input type="checkbox" class="form-check-input" value=""
+											th:id="'HVPropproveedorn'+${hoja_vida.id_Hoja_vida}" disabled>
+
+									</div>
+								</td>
+
+								<td>OTRO</td>
+								<td>
+									<div class="form-check form-check-inline" th:if="${hoja_vida.Propotro==true}">
+										<input type="checkbox" name="radios" class="form-check-input"
+											th:id="'HVPropotro'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+									</div>
+									<div class="form-check form-check-inline" th:unless="${hoja_vida.Propotro==true}">
+										<input type="checkbox" class="form-check-input" value=""
+											th:id="'HVPropotron'+${hoja_vida.id_Hoja_vida}" disabled>
+
+									</div>
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</td>
+
+	</tr>
+	</tbody>
+	</table>
+
+
+	</div>
+	<hr>
+	</hr>
+
+
+	<table class="table table-sm" style="border-color: black;">
+		<thead></thead>
+		<tbody>
+			<td>
+				<div class="row">
+					<div class="col-md-2">
+						<p><b>OBSERVACIONES</b></p>
+					</div>
+					<div class="col-md-10">
+						<div class="bd-example">
+							<ul class="list-group">
+
+								<li class="list-group-item">NR</li>
+
+								<li class="list-group-item"></li>
+
+
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</td>
+
+		</tbody>
+	</table>
+
+	<p><b><small>ND:</small></b><small>NO DISPONIBLE</small>
+		<b><small>NR:</small></b><small>NO REGISTRA</small>
+		<b><small>NE:</small></b><small>NO ESPECIFICA</small>
+		<b><small>NA:</small></b><small>NO APLICA</small>
+	</p>
+
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<a class="btn btn-danger" th:href="@{/downloadHV/}+${idequipo}">Descargar hv en PDF</a>
+		</div>
+	</div>
+
+	</div>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+
+</html>

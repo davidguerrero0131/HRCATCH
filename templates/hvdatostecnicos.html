@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit = no">
+
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Datos tecnicos del equipo</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/offcanvas/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">    
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/offcanvas.css" rel="stylesheet"th:href="@{/css/offcanvas.css}">
+
+  </head>
+  <body class="bg-light">
+
+    <div class="d-flex">
+          <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+        
+          </ul>
+        </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+    </header>
+      <div id ="sidebar-container" class="bg-white">
+        <div class="Datos hoja de vida">
+          <h4 class="text-dark font-weigth-bold">Datos hoja de vida</h4>
+        </div>
+        <div class="menu">
+          <hr class="featurette-divider">
+          <a th:href = "@{/matrizhv/}+${idequipo}" class="dropdown-item text-secondary p-2"><i class="icon ion-md-apps"></i>Resumen</a>
+		  <a th:href = "@{/hvdocumentosequipo/}+${idequipo}" class="dropdown-item text-secondary p-2"><i class="icon ion-md-apps"></i>Documentos</a>
+          <a th:href = "@{/hvdatosequipo/}+${idequipo}" class="dropdown-item text-secondary p-2"><i class="icon ion-md-apps"></i>Datos generales</a>
+ 
+          <a th:href = "@{/hvdatoscompra/}+${idequipo}" class="dropdown-item text-secondary p-2">Datos de la compra</a>
+          <a th:href = "@{/hvdatostecnicos/}+${idequipo}" class="dropdown-item text-secondary p-2">Datos técnicos</a>
+      
+    
+          <a th:href = "@{/hvdatosregulatorios/}+${idequipo}" class="dropdown-item text-secondary p-2">Datos regulatorios y apoyo técnico</a>
+          <a th:href = "@{/hvclasificacionequipo/}+${idequipo}" class="dropdown-item text-secondary p-2">Clasificación del equipo</a>
+          
+          <a th:href = "@{/hvmantenimientoequipo/}+${idequipo}" class="dropdown-item text-secondary p-2">Mantenimiento</a>
+          <a th:href = "@{/hvaccesorios/}+${idequipo}" class="dropdown-item text-secondary p-2">Accesorios</a>
+
+        </div>
+      </div>
+      <div id = "content">
+      <main class="container">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <div class="starter-template text-center py-4 px-3">        
+            <h1>Datos técnicos</h1>
+            <div class="bd-example">
+              <table class="table table-hover">
+                <thead>
+                  <tr class="table-secondary">
+                    <th scope="col">Variable(operación)</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Variable(operación)</th>
+                    <th scope="col">Valor</th>
+              
+                  </tr>
+                </thead>                
+                <tbody th:each="hoja_vida:${hoja_vidadt}">
+                  <tr class="table-light">
+                    <td scope="row" class="table-success">Voltaje máximo</td>
+                    <td th:text="${hoja_vida.Vmaxoperacion}"> <span class="badge rounded-pill bg-secondary">V</span> </td> 
+                    <td scope="row" class="table-success">Voltaje mínimo</td>
+                    <td th:text="${hoja_vida.Vminoperacion}"><span class="badge rounded-pill bg-secondary">V</span></td>                                      
+                  </tr>
+                  <tr class="table-light">
+                    <td scope="row" class="table-success">Corriente máxima</td>
+                    <td th:text="${hoja_vida.Imaxoperacion}"><span class="badge rounded-pill bg-secondary">A</span></td>  
+                    <td scope="row" class="table-success">Corriente mínima</td>
+                    <td th:text="${hoja_vida.Iminoperacion}"><span class="badge rounded-pill bg-secondary">A</span></td>                                       
+                  </tr>
+                  <tr class="table-light">
+                    <td scope="row" class="table-success">Potencia consumida</td>
+                    <td th:text="${hoja_vida.Wconsumida}"><span class="badge rounded-pill bg-secondary">W</span></td> 
+                    <td scope="row" class="table-success">Frecuencia</td>
+                    <td th:text="${hoja_vida.Frecuencia}"><span class="badge rounded-pill bg-secondary">Hz</span></td>                                     
+                  </tr>
+                  <tr class="table-light">
+                    <td scope="row" class="table-success">Presión</td>
+                    <td th:text="${hoja_vida.Presion}"><span class="badge rounded-pill bg-secondary">PSI</span></td>  
+                    <td scope="row" class="table-success">Velocidad</td>
+                    <td th:text="${hoja_vida.Velocidad}"><span class="badge rounded-pill bg-secondary">RPM</span></td>                                       
+                  </tr>
+                  <tr class="table-light">
+                    <td scope="row" class="table-success">Temperatura</td>
+                    <td th:text="${hoja_vida.Temperatura}"><span class="badge rounded-pill bg-secondary">°C</span></td>    
+                    <td scope="row" class="table-success">Peso</td>
+                    <td th:text="${hoja_vida.Peso}"><span class="badge rounded-pill bg-secondary">Kg</span></td>                    
+                  </tr>
+                  <tr class="table-light">
+                    <td scope="row" class="table-success">Capacidad</td>
+                    <td th:text="${hoja_vida.Capacidad}"><span class="badge rounded-pill bg-secondary">L</span></td>   
+                    <td scope="row" class="table-success">Otros</td>
+                    <td th:text="${hoja_vida.Otrosdatostecnicos}">
+                       
+                    </td> 
+                  </tr>                                                                                                                   
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+                  
+    <div id = "content">
+      <main class="container">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <div class="starter-template py-4 px-3">        
+            <h1>Fuente de alimentación</h1>
+            <div class="bd-example">
+              
+            <fieldset class="mb-3" th:each="hoja_vida:${hoja_vidadt}">
+        
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteaelectricidad==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnico'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnico'+${hoja_vida.id_Hoja_vida}">Electricidad</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteaelectricidad==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicon'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicon'+${hoja_vida.id_Hoja_vida}">Electricidad</label>
+              </div>
+              
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteaenergiasolar==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicoea'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicoea'+${hoja_vida.id_Hoja_vida}">Energia solar</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteaenergiasolar==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicoean'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicoean'+${hoja_vida.id_Hoja_vida}">Energia solar</label>
+              </div>
+              
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteaagua==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicoag'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicoag'+${hoja_vida.id_Hoja_vida}">Agua</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteaagua==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicoagn'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicoagn'+${hoja_vida.id_Hoja_vida}">Agua</label>
+              </div>
+              
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteagas==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicogas'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicogas'+${hoja_vida.id_Hoja_vida}">Gas</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteagas==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicogasn'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicogasn'+${hoja_vida.id_Hoja_vida}">Gas</label>
+              </div>
+              
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteavaporagua==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicovapor'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicovapor'+${hoja_vida.id_Hoja_vida}">Vapor agua</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteavaporagua==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicovaporn'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicovaporn'+${hoja_vida.id_Hoja_vida}">Vapor agua</label>
+              </div>
+              
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteaderivadospetroleo==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicoderi'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicoderi'+${hoja_vida.id_Hoja_vida}">Derivados del petroleo</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteaderivadospetroleo==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicoderin'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicoderin'+${hoja_vida.id_Hoja_vida}">Derivados del petroleo</label>
+              </div>
+              
+              <div class="mb-3 form-check" th:if="${hoja_vida.Fuenteaotros==true}">
+                <input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicootros'+${hoja_vida.id_Hoja_vida}"checked disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicootros'+${hoja_vida.id_Hoja_vida}">Otros</label>
+              </div>
+              <div class = "mb-3 form-check" th:unless="${hoja_vida.Fuenteaotros==true}">
+              	<input type="checkbox" class="form-check-input" value="" th:id = "'hvtecnicootrosn'+${hoja_vida.id_Hoja_vida}"disabled>
+                <label class="form-check-label" th:for =  "'hvtecnicootrosn'+${hoja_vida.id_Hoja_vida}">Otros</label>
+              </div>
+           
+            </fieldset>                        
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    </div>     
+
+     
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    <script th:src="@{/js/offcanvas.js}"></script>
+  </body>
+</html>

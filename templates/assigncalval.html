@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Planeación calibración, validación y calificación</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../static/ccs/bootstrap.min.css" rel="stylesheet"th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet"th:href="@{/css/carousel.css}">
+     <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+     <script >
+      function myFunction(){
+		var input,filter,div,tr,td,i,txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		div = document.getElementById("myTable");
+		tr = div.getElementsByTagName("tr");
+		for(i=0;i<tr.length;i++){
+			td1 = tr[i].getElementsByTagName("td")[0];
+		
+			if(td1){
+				txtValue1 = td1.textContent || td1.innerText;
+				
+				if((txtValue1.toUpperCase().indexOf(filter))>-1){
+					tr[i].style.display = "";					
+				}
+				
+				else{
+					tr[i].style.display = "none";
+				}
+				
+			}
+			
+			
+		}
+	}
+    </script>
+  </head>
+  <body>
+    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Más información</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y reclamos</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube tuto</a></li>
+             
+          </ul>
+        </li>          
+        </ul>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+<main class="container">  
+<form class="needs-validation" validate method = "post" th:action = "@{/planeacioncalval}" >
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="starter-template text-center py-5 px-3">
+      <h1><medium class="text-muted"th:text="Equipos"></medium></h1>
+      <p class="lead">Seleccione los equipos a asignar calibración, calificación o validación (En amarillo encontrara los tipos cuya hoja de vida específica la necesidad de esta actividad)</p>
+    </div>
+     
+    <div class="col-md-12 col-lg-12">
+      <div class="input-group">
+        <input class="form-control" id="myInput"onkeyup="myFunction()"type="text" placeholder="Ingrese la marca, el modelo o la serie del equipo" aria-label="Search">
+        <span class="input-group-btn">
+          <div class = "form-group" sec:authorize= "hasAnyAuthority('ADMIN','EDITOR','USER')">
+       
+        		<div class = "form-group">
+            		<button type = "submit"  class = "btn btn-success">Planear</button>
+            		
+        		</div>
+        	</div></span>
+      </div>
+    </div>
+
+  	  <div class = "table-responsive">
+	         <div class="bd-example">
+	        <table class="table table-hover" id = "myTable">
+	          <thead>
+	          <tr class="table-secondary">
+	            <th style="visibility:collapse; display:none;" scope="col">ID</th>
+	            <th scope="col">Nombre</th>      
+	          
+	            <th scope="col">Mes planeado</th>
+	            <th scope="col">Seleccione</th>
+	            <th scope="col">Planeación específica</th>
+	          </tr>
+	          </thead>
+	          <tbody>          
+		          <tr class="table-warning" th:each="tipo,iter:${tiposcalval}">
+		          	
+		          	<th style="visibility:collapse; display:none;" scope="row">
+		          		<div class="form-check">
+		                      <input type="checkbox" th:name="checktipo" th:id = "${tipo.id_Tipo_equipo}" th:value="${tipo.id_Tipo_equipo}" onclick="return false;">                 
+		                </div>	
+		          	</th>
+		            <td th:text="${tipo.id_Tipo_equipo}+'. '+${tipo.nombre_Tipo_equipo}">
+		            
+			            
+		            </td>
+		   
+		          
+		            <td>
+		            	<select class="form-select form-select-sm" th:name="mes" onchange = "ModifyMonth();" autocomplete="on"> 
+						    <option selected disabled value=0>Mes</option> 
+						    <option value=1>Enero</option> 
+						    <option value=2>Febrero</option> 
+						    <option value=3>Marzo</option>
+						    <option value=4>Abril</option> 
+						    <option value=5>Mayo</option> 
+						    <option value=6>Junio</option> 
+						    <option value=7>Julio</option> 
+						    <option value=8>Agosto</option> 
+						    <option value=9>Septiembre</option> 
+						    <option value=10>Octubre</option> 
+						    <option value=11>Noviembre</option> 
+						    <option value=12>Diciembre</option> 
+	  
+						 </select> 	            
+		            </td>  
+		            	
+		            <td>
+		            	<select class="form-select form-select-sm" th:name="proceso" autocomplete="on"> 
+						    <option selected disabled value="">Actividad</option> 
+						    <option value=1>Calibración</option> 
+						    <option value=2>Validación</option> 
+						    <option value=3>Calificación</option> 
+						 </select> 
+		            </td>
+		            <td>
+		            
+		            </td>
+		             
+		        
+		             
+		            
+		          </tr>
+		          <tr class="table-light" th:each="tipo,iter:${tiposnocalval}">
+		          	
+		          	<th style="visibility:collapse; display:none;" scope="row">
+		          		<div class="form-check">
+		                      <input type="checkbox" th:name="checktipo" th:id = "${tipo.id_Tipo_equipo}" th:value="${tipo.id_Tipo_equipo}" onclick="return false;">                 
+		                </div>	
+		          	</th>
+		            <td th:text="${tipo.id_Tipo_equipo}+'. '+${tipo.nombre_Tipo_equipo}">
+		            
+			            
+		            </td>
+		   
+		          
+		            <td>
+		            	<select class="form-select form-select-sm" th:name="mes" onchange = "ModifyMonth();" autocomplete="on"> 
+						    <option selected disabled value=0>Mes</option> 
+						    <option value=1>Enero</option> 
+						    <option value=2>Febrero</option> 
+						    <option value=3>Marzo</option>
+						    <option value=4>Abril</option> 
+						    <option value=5>Mayo</option> 
+						    <option value=6>Junio</option> 
+						    <option value=7>Julio</option> 
+						    <option value=8>Agosto</option> 
+						    <option value=9>Septiembre</option> 
+						    <option value=10>Octubre</option> 
+						    <option value=11>Noviembre</option> 
+						    <option value=12>Diciembre</option> 
+	  
+						 </select> 	            
+		            </td>  
+		            	
+		            <td>
+		            	<select class="form-select form-select-sm" th:name="proceso" autocomplete="on"> 
+						    <option selected disabled value="">Actividad</option> 
+						    <option value=1>Calibración</option> 
+						    <option value=2>Validación</option> 
+						    <option value=3>Calificación</option> 
+						 </select> 
+		            </td>
+		            <td>
+		            
+		            </td>
+		             
+		        
+		             
+		            
+		          </tr>
+	          </tbody>
+	        </table>
+	        
+	        </div>
+	        
+ 
+	        
+        	
+        	
+	  </div>
+ 
+  
+        </div>
+</form>
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p> 2021-2022 Company, Inc.</p>
+  </footer>
+</main>
+
+<script>
+
+	procesos  = document.getElementsByName("proceso");
+	for(proceso of procesos){
+		proceso.disabled = true;
+	}
+	function returnfalse(){
+		return false
+	}
+	function ModifyMonth(){
+		var meses = document.getElementsByName("mes");	
+		var actividades = document.getElementsByName("proceso");
+		var checkbox = document.getElementsByName("checktipo");
+		var count = 0;
+	
+		for(mes of meses){
+			if(mes.value!=0 && mes.value!=null){
+				actividades[count].setAttribute('required','required');  
+				checkbox[count].checked = true; 
+			
+				//document.getElementById(checkbox[count].id).checked = true;  				   
+				actividades[count].disabled=false;
+				
+								
+			}
+			else{
+				actividades[count].setAttribute('required','');  
+				checkbox[count].checked = false;   				   
+				actividades[count].disabled=true;
+			}
+			count+=1;
+		}
+	
+	
+	}
+
+</script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+   
+      
+  </body>
+</html>

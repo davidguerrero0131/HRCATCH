@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title th:text="${nombreservicio}"></title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/producto}">Atras</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/clasificacion}">Clasificación</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/periodicidad}">Periodicidad</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/usuarios}">Usuarios</a>
+
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+
+							</ul>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<main class="container">
+
+		<div class="my-3 p-3 bg-body rounded shadow-sm">
+			<div class="starter-template text-center py-5 px-3">
+				<h1>
+					<medium class="text-muted" th:text="${nombreservicio}"></medium><small
+						th:text="': '+${ubicacionservicio}"></small>
+				</h1>
+				<small>
+					<p class="lead" th:text="${numequipos}"></p>
+				</small>
+				<p class="lead">A continuación podra visualizar la hoja de vida y los reportes de los equipos</p>
+			</div>
+			<form>
+				<div class="col-md-12 col-lg-12">
+					<div class="input-group">
+						<input class="form-control" id="myInput" onkeyup="myFunction()" type="text"
+							placeholder="Ingrese la marca, el modelo o la serie del equipo" aria-label="Search">
+						<span class="input-group-btn">
+							<button type="button" class="w-200 btn btn-lg btn-dark"
+								onclick="myFunction()">Buscar</button>
+						</span>
+					</div>
+				</div>
+
+			</form>
+			<div class="table-responsive">
+				<div class="bd-example">
+					<table class="table table-hover" id="myTable">
+						<thead>
+							<tr class="table-secondary">
+								<th scope="col">id(HV)</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Marca</th>
+								<th scope="col">Modelo</th>
+								<th scope="col">Serie</th>
+
+								<th scope="col">Servicio</th>
+								<th scope="col">Ubicación específica</th>
+								<th scope="col">Días mtto</th>
+								<th scope="col">Mes mantenimiento</th>
+								<th scope="col">Registro</th>
+								<th scope="col">Riesgo</th>
+								<th scope="col">Reportes</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="table-light" th:each="equipo:${equipoHv}">
+								<th scope="row"><a th:href="@{/matrizhv/}+${equipo.getObjetoA().id_Equipo}"
+										th:text="${equipo.getObjetoA().id_Equipo}"></a>
+
+								</th>
+								<td th:text="${equipo.getObjetoA().nombre_Equipo}"></td>
+								<td th:text="${equipo.getObjetoA().Marca}"></td>
+								<td th:text="${equipo.getObjetoA().Modelo}">
+									</tdt>
+								<td th:text="${equipo.getObjetoA().Serie}"></td>
+
+								<td th:text="${equipo.getObjetoA().servicio.Nombre_servicio}"></td>
+								<td th:text="${equipo.getObjetoA().Ubicacion_especifica}"></td>
+								<td th:text="${equipo.getObjetoA().Dias_mantenimiento}"></td>
+								<td th:text="${equipo.getObjetoA().Meses_mantenimiento}"></td>
+								<div th:if="${equipo.getObjetoB() != null}">
+									<td th:text="${equipo.getObjetoB().Registro_invima}"></td>
+									<div th:if="${equipo.getObjetoB().isRiesgoi()}">
+										<td th:text="I"></td>
+									</div>
+									<div th:if="${equipo.getObjetoB().isRiesgoiia()}">
+										<td th:text="IIA"></td>
+									</div>
+									<div th:if="${equipo.getObjetoB().isRiesgoiib()}">
+										<td th:text="IIB"></td>
+									</div>
+									<div th:if="${equipo.getObjetoB().isRiesgoiii()}">
+										<td th:text="III"></td>
+									</div>
+									<div th:if="${equipo.getObjetoB().isRiesgona()}">
+										<td th:text="NA"></td>
+									</div>
+
+								</div>
+								<div th:if="${equipo.getObjetoB() == null}">
+									<td th:text="--"></td>
+									<td th:text="--"></td>
+
+								</div>
+								<div th:if="${equipo.getObjetoA().id_Equipo==11111}">
+									<td><a th:href="@{/visualizacionotrosreportes}"
+											th:text="${equipo.getObjetoA().id_Equipo}+R"></a>
+										<button th:onclick="'window.location.href = \''+@{/nuevoreporteotro}+'\''"
+											type="button" class="w-100 btn btn-primary btn-xs">Nuevo</button>
+								</div>
+								<div th:unless="${equipo.getObjetoA().id_Equipo==11111}">
+									<td><a th:href="@{/visualizacionreportes/}+${equipo.getObjetoA().id_Equipo}"
+											th:text="${equipo.getObjetoA().id_Equipo}+R"></a>
+										<div class="input-group">
+											<button sec:authorize="hasAnyAuthority('ADMIN','EDITOR')"
+												th:onclick="'window.location.href=\''+@{/editarequipomtto/}+${equipo.getObjetoA().id_Equipo}+'\''"
+												type="button" class="btn btn-danger" th:text="'Editar'"></button>
+											<button
+												th:onclick="'window.location.href = \''+@{/nuevoreporte/}+${equipo.getObjetoA().id_Equipo}+'\''"
+												type="button" class="w-100 btn btn-primary btn-xs">Nuevo</button>
+
+										</div>
+									</td>
+								</div>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- FOOTER -->
+		<footer class="container">
+			<p class="float-end"><a href="#">Back to top</a></p>
+			<p> 2021-2022 Company, Inc.</p>
+		</footer>
+	</main>
+	<script>
+		function myFunction() {
+			var input, filter, div, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			div = document.getElementById("myTable");
+			tr = div.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td1 = tr[i].getElementsByTagName("td")[0];
+				td2 = tr[i].getElementsByTagName("td")[1];
+				td3 = tr[i].getElementsByTagName("td")[2];
+				td4 = tr[i].getElementsByTagName("td")[3];
+				if (td1 || td2 || td3) {
+					txtValue1 = td1.textContent || td1.innerText;
+					txtValue2 = td2.textContent || td2.innerText;
+					txtValue3 = td3.textContent || td3.innerText;
+					txtValue4 = td4.textContent || td4.innerText;
+					if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else {
+						tr[i].style.display = "none";
+					}
+
+				}
+
+
+			}
+		}
+	</script>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>
