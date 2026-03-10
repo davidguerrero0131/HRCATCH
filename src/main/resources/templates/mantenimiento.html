@@ -175,7 +175,7 @@
 		          						<div th:if="${asign}">
 		          							<th scope = "col">Asignado</th>
 		          						</div>
-		          						<th scope = "col">Dia programado</th>
+		          						<th scope = "col">Mes programado</th>
 		          						<th scope = "col">Realizado</th>
 		          					</tr>
 		          				</thead>
@@ -193,7 +193,7 @@
 		          							<td th:text = "${equipo.usuario.Nombre}+' '+ ${equipo.usuario.Apellido}"></td>
 		          						</div>
 
-		          						<td th:text = "${equipo.Dias}"></td>
+		          						<td th:text = "${@utilidades.getNombreMes(equipo.Mes)}"></td>
 		          						<div th:if="${equipo.Realizado==true}">
 		          							<td class="table-success">
 		          								<div class="form-check">
@@ -280,7 +280,7 @@
 		      						
 		      						<th scope = "col">Servicio</th>
 		     	
-		      						<th scope = "col">Dias</th>
+		      						<th scope = "col">Mes</th>
 									<th scope = "col">Responsable</th>
 		      						<th scope = "col">Realizar</th>
 		      					</tr>
@@ -296,7 +296,7 @@
 		      						<td th:text="${equipo.Servicio}"></td>
 		      					
 		
-		      						<td th:text = "${equipo.Dias}"></td>
+		      						<td th:text = "${@utilidades.getNombreMes(equipo.Mes)}"></td>
 									<td th:text = "${equipo.usuario.Nombre} + ' ' + ${equipo.usuario.Apellido}"></td>
 		      						<td>
 		      						<div th:if="${equipo.equipo}">

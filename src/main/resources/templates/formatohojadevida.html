@@ -1099,7 +1099,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td>REHABILITACIÓN</td>
+										<td>TERAPIA Y REHABILITACIÓN</td>
 										<td>
 											<div class="form-check" th:if="${hoja_vida.Biomedicrehabilitacion==true}">
 												<input type="checkbox" name="radios" class="form-check-input"
@@ -1116,7 +1116,7 @@
 									</tr>
 									<tr>
 
-										<td>PREVENCIÓN</td>
+										<td>APOYO</td>
 										<td>
 											<div class="form-check" th:if="${hoja_vida.Biomedicprevencion==true}">
 												<input type="checkbox" name="radios" class="form-check-input"
@@ -1133,7 +1133,7 @@
 									</tr>
 									<tr>
 
-										<td>ANÁLISIS DE LABORATORIO</td>
+										<td>ANÁLISIS DE LABORATORIO CLINICO</td>
 										<td>
 											<div class="form-check" th:if="${hoja_vida.Biomedicanalisis==true}">
 												<input type="checkbox" name="radios" class="form-check-input"
@@ -1293,12 +1293,12 @@
 						<tr>
 							<td>TRIMESTRAL</td>
 							<td>
-								<div class="form-check" th:if="${period==3}">
+								<div class="form-check" th:if="${period==4}">
 									<input type="checkbox" name="radios" class="form-check-input"
 										th:id="'HVmtri'+${hoja_vida.id_Hoja_vida}" checked disabled>
 
 								</div>
-								<div class="form-check" th:unless="${period==3}">
+								<div class="form-check" th:unless="${period==4}">
 									<input type="checkbox" class="form-check-input" value=""
 										th:id="'HVmtrin'+${hoja_vida.id_Hoja_vida}" disabled>
 
@@ -1308,12 +1308,12 @@
 						<tr>
 							<td>CUATRIMESTRALES</td>
 							<td>
-								<div class="form-check" th:if="${period==4}">
+								<div class="form-check" th:if="${period==3}">
 									<input type="checkbox" name="radios" class="form-check-input"
 										th:id="'HVmcua'+${hoja_vida.id_Hoja_vida}" checked disabled>
 
 								</div>
-								<div class="form-check" th:unless="${period==4}">
+								<div class="form-check" th:unless="${period==3}">
 									<input type="checkbox" class="form-check-input" value=""
 										th:id="'HVmcuan'+${hoja_vida.id_Hoja_vida}" disabled>
 
@@ -1344,6 +1344,21 @@
 
 								</div>
 								<div class="form-check" th:unless="${period==1}">
+									<input type="checkbox" class="form-check-input" value=""
+										th:id="'HVmanun'+${hoja_vida.id_Hoja_vida}" disabled>
+
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>NO APLICA</td>
+							<td>
+								<div class="form-check" th:if="${period==0}">
+									<input type="checkbox" name="radios" class="form-check-input"
+										th:id="'HVmanu'+${hoja_vida.id_Hoja_vida}" checked disabled>
+
+								</div>
+								<div class="form-check" th:unless="${period==0}">
 									<input type="checkbox" class="form-check-input" value=""
 										th:id="'HVmanun'+${hoja_vida.id_Hoja_vida}" disabled>
 
@@ -1518,17 +1533,13 @@
 			<td>
 				<div class="row">
 					<div class="col-md-2">
-						<p><b>OBSERVACIONES</b></p>
+						<p><b>OBSERVACIONES:</b></p>
 					</div>
 					<div class="col-md-10">
 						<div class="bd-example">
 							<ul class="list-group">
-
-								<li class="list-group-item">NR</li>
-
-								<li class="list-group-item"></li>
-
-
+								<li class="list-group-item" th:text = "${hoja_vidaequipo.Observaciones}">
+								</li>
 							</ul>
 						</div>
 

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 @Entity
 @Table(name = "servicio")
 public class Servicio implements Serializable{
@@ -32,7 +34,8 @@ public class Servicio implements Serializable{
 	@Column(name = "fmpp")
 	private int Fmpp;
 
-	
+	@Column(name = "activo", columnDefinition = "BOOLEAN DEFAULT true")
+	private boolean activo;
 	
 	/********************* GET Y SET *****************************/
 	public static long getSerialVersionUID(){
@@ -78,6 +81,15 @@ public class Servicio implements Serializable{
 	public void setFmpp(int fmpp) {
 		Fmpp = fmpp;
 	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+	
 	
 	
 	

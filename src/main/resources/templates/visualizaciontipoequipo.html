@@ -117,7 +117,6 @@
 
 								<th scope="col">Servicio</th>
 								<th scope="col">Ubicación específica</th>
-								<th scope="col">Días mtto</th>
 								<th scope="col">Mes mantenimiento</th>
 								<th scope="col">Registro</th>
 								<th scope="col">Riesgo</th>
@@ -139,7 +138,6 @@
 
 								<td th:text="${equipo.getObjetoA().Servicios}"></td>
 								<td th:text="${equipo.getObjetoA().Ubicacion_especifica}"></td>
-								<td th:text="${equipo.getObjetoA().Dias_mantenimiento}"></td>
 								<td th:text="${equipo.getObjetoA().Meses_mantenimiento}"></td>
 								<div th:if="${equipo.getObjetoB() != null}">
 									<td th:text="${equipo.getObjetoB().Registro_invima}"></td>

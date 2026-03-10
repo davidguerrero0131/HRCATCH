@@ -1,0 +1,2014 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.80.0">
+	<title>Lista de llamados </title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+
+
+
+	<!-- Bootstrap core CSS -->
+	<link href="../static/ccs/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/font/bootstrap-icons.css}">
+	<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/daterangepicker.js}"></script>
+	<script th:src="@{/js/chart.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+	<style>
+		.loader {
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+			opacity: .8;
+		}
+
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+
+		.clasificacion {
+			direction: rtl;
+			/* right to left */
+			unicode-bidi: bidi-override;
+			/* bidi de bidireccional */
+		}
+
+		input[type="radio"] {
+			display: none;
+		}
+
+		label {
+			color: grey;
+		}
+
+		#form {
+			width: 250px;
+			margin: 0 auto;
+			height: 50px;
+		}
+
+		#form p {
+			text-align: center;
+		}
+
+		#form label {
+			font-size: 20px;
+		}
+
+		input[type="radio"] {
+			display: none;
+		}
+
+		label {
+			color: grey;
+		}
+
+		.clasificacion {
+			direction: rtl;
+			unicode-bidi: bidi-override;
+		}
+
+		label:hover,
+		label:hover~label {
+			color: orange;
+		}
+
+		input[type="radio"]:checked~label {
+			color: orange;
+		}
+
+		body {
+			margin-top: 20px;
+		}
+
+		.timeline {
+			border-left: 3px solid #727cf5;
+			border-bottom-right-radius: 5px;
+			border-top-right-radius: 8px;
+			background: #DAF1EF;
+			margin: 0 auto;
+			letter-spacing: 0.2px;
+			position: relative;
+			line-height: 1.4em;
+			font-size: 1.03em;
+			padding: 50px;
+			list-style: none;
+			text-align: left;
+			line-height: normal;
+			max-width: 60%;
+		}
+
+		@media (max-width: 767px) {
+			.timeline {
+				max-width: 98%;
+				padding: 25px;
+			}
+		}
+
+		.timeline h1 {
+			font-weight: 300;
+			font-size: 1.4em;
+		}
+
+		.timeline h2,
+		.timeline h3 {
+			font-weight: 500;
+			font-size: 0.9rem;
+			margin-bottom: 5px;
+		}
+
+		.timeline p {
+			font-weight: 500;
+			font-size: 0.75rem;
+			margin-bottom: 5px;
+			color: #4B4B4B;
+		}
+
+		.timeline button {
+			color: #0099CC;
+			/*Color texto */
+			background: transparent;
+			/* Eliminar color de fondo */
+			border: 1px solid #0099CC;
+			/* Ancho de borde, estilo de línea y color */
+
+			text-decoration: none;
+			text-transform: uppercase;
+			/* Mayúsculas */
+			border: none;
+			color: #727cf5;
+			padding: 2px 2px;
+			text-align: center;
+			text-decoration: none;
+
+			font-size: 20px;
+			margin: 1px 1px;
+			-webkit-transition-duration: 0.4s;
+			/* Safari */
+			transition-duration: 0.4s;
+			cursor: pointer;
+			width: 10px;
+			height: 50px;
+			border-radius: 50%;
+			display: block;
+		}
+
+		.redondo {
+			color: #0099CC;
+			/*Color texto */
+			background: transparent;
+			/* Eliminar color de fondo */
+			border: 1px solid #0099CC;
+			/* Ancho de borde, estilo de línea y color */
+
+			text-decoration: none;
+			text-transform: uppercase;
+			/* Mayúsculas */
+			border: none;
+			color: #727cf5;
+			padding: 2px 2px;
+			text-align: center;
+			text-decoration: none;
+
+			font-size: 20px;
+			margin: 1px 1px;
+			-webkit-transition-duration: 0.4s;
+			/* Safari */
+			transition-duration: 0.4s;
+			cursor: pointer;
+			width: 65px;
+			height: 65px;
+			border-radius: 50%;
+			display: block;
+		}
+
+		.timeline .event {
+			border-bottom: 1px dashed #5DC1B9;
+			padding-bottom: 25px;
+			margin-bottom: 25px;
+			position: relative;
+		}
+
+		.timeline .check {
+			border-bottom: 2px dashed #e8ebf1;
+			padding-bottom: 25px;
+			margin-bottom: 25px;
+			position: relative;
+			border-bottom: 2px dashed #e8ebf1;
+			padding-bottom: 12px;
+			margin-bottom: 12px;
+			position: relative;
+		}
+
+		@media (max-width: 767px) {
+			.timeline .event {
+				padding-top: 30px;
+			}
+
+			.timeline .check {
+				padding-top: 30px;
+			}
+		}
+
+		.timeline .event:last-of-type {
+			padding-bottom: 0;
+			margin-bottom: 0;
+			border: none;
+		}
+
+		.timeline .check:last-of-type {
+			padding-bottom: 0;
+			margin-bottom: 0;
+			border: none;
+		}
+
+		.timeline .event:before,
+		.timeline .event:after {
+			position: absolute;
+			display: block;
+			top: 0;
+		}
+
+		.timeline .check:before,
+		.timeline .check:after {
+			position: absolute;
+			display: block;
+			top: 0;
+		}
+
+		.timeline .event:before {
+			left: -207px;
+			content: attr(data-date);
+			text-align: right;
+			font-weight: 100;
+			font-size: 0.7em;
+			min-width: 130px;
+		}
+
+		.timeline .check:before {
+			left: -207px;
+			content: attr(data-date);
+			text-align: right;
+			font-weight: 100;
+			font-size: 0.7em;
+			min-width: 130px;
+		}
+
+		@media (max-width: 767px) {
+			.timeline .event:before {
+				left: 0px;
+				text-align: left;
+			}
+
+			.timeline .check:before {
+				left: 0px;
+				text-align: left;
+			}
+		}
+
+		.timeline .event:after {
+			-webkit-box-shadow: 0 0 0 3px #727cf5;
+			box-shadow: 0 0 0 3px #727cf5;
+			left: -55.8px;
+			background: #fff;
+			border-radius: 50%;
+			height: 9px;
+			width: 9px;
+			content: "";
+			top: 5px;
+		}
+
+		.timeline .check:after {
+			-webkit-box-shadow: 0 0 0 3px #727cf5;
+			box-shadow: 0 0 0 3px #727cf5;
+			left: -57.8px;
+			background: #5E1914;
+			border-radius: 125%;
+			height: 13px;
+			width: 13px;
+			content: "";
+			top: 5px;
+
+
+		}
+
+		@media (max-width: 767px) {
+			.timeline .event:after {
+				left: -31.8px;
+			}
+
+			.timeline .check:after {
+				left: -31.8px;
+			}
+		}
+
+		.rtl .timeline {
+			border-left: 0;
+			text-align: right;
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+			border-bottom-left-radius: 4px;
+			border-top-left-radius: 4px;
+			border-right: 3px solid #5DC1B9;
+		}
+
+		.rtl .timeline .event::before {
+			left: 0;
+			right: -170px;
+		}
+
+		.rtl .timeline .event::after {
+			left: 0;
+			right: -55.8px;
+		}
+
+		.rtl .timeline .check::before {
+			left: 0;
+			right: -170px;
+		}
+
+		.rtl .timeline .check::after {
+			left: 0;
+			right: -55.8px;
+		}
+	</style>
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/carousel.css" rel="stylesheet" th:href="@{/css/carousel.css}">
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/producto}">HRCatch</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/usuarios}">Atras</a>
+						</li>
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+								aria-expanded="false">Más información</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdown01">
+								<li><a class="dropdown-item" href="mailto:david.cruz@udea.edu.co">Soporte, quejas y
+										reclamos</a></li>
+								<li><a class="dropdown-item"
+										href="https://www.youtube.com/watch?v=tCHhrFIZrRA&list=PL99rVemgq-J5bg7nqCtfQeN5eqgM_GPVd">Youtube
+										tuto</a></li>
+
+							</ul>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<main class="container">
+
+
+		<div class="my-3 p-3 bg-body rounded shadow-sm">
+			<div class="starter-template text-center py-5 px-3">
+				<h1>
+					<medium class="text-muted">Llamados</medium>
+				</h1>
+
+				<p class="lead">Presione según sea</p>
+				<form th:action="@{/servicellamados}" method="post">
+					<div class="row">
+						<div class="col-md-5">
+							<input type="text" name="daterange" id="rangofecha" required>
+						</div>
+						<div class="col-md-1 mb-3">
+							<button type="submit" class="w-200 btn btn-dark btn-sm">Buscar</button>
+						</div>
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-5">
+							<b>
+								<p>De <medium th:text="${fecha1}"></medium> a <medium th:text="${fecha2}"></medium>
+								</p>
+							</b>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="bd-example">
+
+
+				<nav>
+					<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+
+						<a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
+							aria-controls="nav-home" aria-selected="true">Pendientes</a>
+
+						<a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
+							aria-controls="nav-profile" aria-selected="false">Atendidos</a>
+
+						<a class="nav-link" id="nav-solve-tab" data-bs-toggle="tab" href="#nav-solve" role="tab"
+							aria-controls="nav-solve" aria-selected="false">Solucionados</a>
+
+						<a sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')" class="nav-link" id="nav-indice-tab"
+							data-bs-toggle="tab" href="#nav-indice" role="tab" aria-controls="nav-indice"
+							aria-selected="false">Estadísticas</a>
+
+					</div>
+				</nav>
+
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+						<form>
+							<div class="col-md-12 col-lg-12">
+								<div class="input-group">
+									<input class="form-control" id="myInput" onkeyup="myFunction()" type="text"
+										placeholder="Ingrese el tipo, servicio">
+									<span class="input-group-btn">
+										<button type="button" class="w-200 btn btn-lg btn-dark"
+											onclick="myFunction()">Buscar</button>
+									</span>
+								</div>
+							</div>
+
+						</form>
+						<div th:if="${#lists.isEmpty(llamados)}" class="alert alert-info my-4"
+							th:text="'No hay llamados sin atender en el momento'">
+						</div>
+						<div class="table-responsive">
+							<div class="bd-example">
+								<table class="table table-hover" th:if="${not #lists.isEmpty(llamados)}" id="myTable">
+									<thead>
+										<tr class="table-secondary">
+
+											<th scope="col">Fecha</th>
+											<th scope="col">Hora llamado</th>
+											<th scope="col">Prioridad</th>
+											<th scope="col">Tipo equipo</th>
+											<th scope="col">Servicio</th>
+											<th scope="col">Realizado</th>
+											<th scope="col">Impacto Paciente</th>
+											<th scope="col">Equipo Inoperativo</th>
+											<th scope="col">Estado</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-light" th:each="llamado:${llamados}">
+
+
+
+											<td th:text="${llamado.Fecha}"></td>
+											<td th:text="${llamado.Hora_llamado}"></td>
+											<td th:text="${llamado.Prioridad}"></td>
+											<td th:text="${llamado.tipo_equipo.nombre_Tipo_equipo}">
+
+											</td>
+											<th th:text="${llamado.servicio.Nombre_servicio}">
+												</td>
+											<td th:text="${llamado.Realizado}"></td>
+											<td th:if="!${llamado.afectaPaciente}">No</td>
+											<td th:if="${llamado.afectaPaciente}"> Si</td>
+											<td th:if="!${llamado.equipoDesabilitado}">No</td>
+											<td th:if="${llamado.equipoDesabilitado}">Si</td>
+
+											<td>
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+													th:attr="data-bs-target='#staticBackdrop'+${llamado.id_Llamado}">
+													Más
+												</button>
+
+												<!-- Modal -->
+												<div class="modal" th:id="'staticBackdrop'+${llamado.id_Llamado}"
+													data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+													aria-labelledby="staticBackdropLabel" aria-hidden="true">
+													<div class="modal-dialog modal-xl">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="staticBackdropLabel"
+																	th:text="${llamado.id_Llamado}"></h5>
+																<button type="button" class="btn-close"
+																	data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																<div class="container">
+																	<div class="row">
+																		<div class="col-md-12">
+																			<div class="card">
+																				<div class="card-body">
+																					<h6 class="card-title">Estado del
+																						llamado</h6>
+																					<div id="content">
+																						<ul class="timeline">
+																							<div
+																								th:if="${llamado.Estado == 0}">
+
+																								<li class="check"
+																									th:data-date="${llamado.Fecha}">
+
+
+																									<h3
+																										th:text="'Llamado ('+${llamado.Hora_llamado}+')'">
+
+																									</h3>
+																									<p
+																										th:text="${llamado.Descripcion}">
+																									</p>
+																									<p>
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/atenderllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</p>
+
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 0}">
+																								<li class="event"
+																									th:data-date="${llamado.Fecha}">
+																									<h3
+																										th:text="'Llamado ('+${llamado.Hora_llamado}+')'">
+																									</h3>
+																									<p
+																										th:text="${llamado.Descripcion}">
+																									</p>
+																								</li>
+																							</div>
+
+																							<div
+																								th:if="${llamado.Estado == 1}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_r}">
+																									<h3
+																										th:text="'Atención ('+${llamado.Hora_respuesta}+')'">
+																									</h3>
+																									<p
+																										th:text="'Atendido por: '+${llamado.Atendido}+' Ubicación: '+${llamado.Ubicacion_exacta}">
+																									</p>
+																									<div
+																										th:if="${llamado.Estado == 1}">
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/solucionarllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</div>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="${llamado.Fecha_r}">
+																									<h3
+																										th:text="'Atención ('+${llamado.Hora_respuesta}+')'">
+																									</h3>
+																									<p
+																										th:text="'Atendido por: '+${llamado.Atendido}+' Ubicación: '+${llamado.Ubicacion_exacta}">
+																									</p>
+																									<div
+																										th:if="${llamado.Estado == 1}">
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/solucionarllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</div>
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 1} or ${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Atención</h3>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_sn}">
+																									<h3
+																										th:text="'Solución ('+${llamado.Hora_solucion}+')'">
+																									</h3>
+																									<p
+																										th:text="${llamado.Solucion}">
+																									</p>
+
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Solución</h3>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 3}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_sn}">
+																									<h3>Calificación
+																									</h3>
+																									<p
+																										th:text="'Calificación: '+${llamado.Calificacion}">
+																									</p>
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Calificación
+																									</h3>
+																									<div
+																										th:if="${llamado.Estado == 2}">
+																										<form
+																											th:action="@{/calificacionllamado/}+${llamado.id_Llamado}"
+																											th:object="${allamado}"
+																											method="post">
+																											<p
+																												class="clasificacion">
+																												<input
+																													id="radio1"
+																													type="radio"
+																													th:name="calificacion"
+																													value="5"><!--
+																	    --><label for="radio1">★</label><!--
+																	    --><input id="radio2" type="radio" th:name="calificacion" value="4"><!--
+																	    --><label for="radio2">★</label><!--
+																	    --><input id="radio3" type="radio" th:name="calificacion" value="3"><!--
+																	    --><label for="radio3">★</label><!--
+																	    --><input id="radio4" type="radio" th:name="calificacion" value="2"><!--
+																	    --><label for="radio4">★</label><!--
+																	    --><input id="radio5" type="radio" th:name="calificacion" value="1"><!--
+																	    --><label for="radio5">★</label>
+																											</p>
+
+																											<p>
+																												<button
+																													style:"align:center;"type="submit"
+																													class="redondo">
+																													<div
+																														class="icon">
+																														<i
+																															class="bi bi-save-fill"></i>
+																													</div>
+																												</button>
+																											</p>
+
+																										</form>
+																									</div>
+
+																								</li>
+																							</div>
+
+
+																						</ul>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+
+
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary"
+																	data-bs-dismiss="modal">Cerrar</button>
+
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</td>
+
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+
+
+					</div>
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+						<form>
+							<div class="col-md-12 col-lg-12">
+								<div class="input-group">
+									<input class="form-control" id="myInput" onkeyup="myFunction()" type="text"
+										placeholder="Ingrese el tipo, servicio">
+									<span class="input-group-btn">
+										<button type="button" class="w-200 btn btn-lg btn-dark"
+											onclick="myFunction()">Buscar</button>
+									</span>
+								</div>
+							</div>
+
+						</form>
+						<div th:if="${#lists.isEmpty(atendidos)}" class="alert alert-info my-4"
+							th:text="'No hay llamados atendidos en el momento'">
+						</div>
+						<div class="table-responsive">
+							<div class="bd-example">
+								<table class="table table-hover" th:if="${not #lists.isEmpty(atendidos)}" id="myTable">
+									<thead>
+										<tr class="table-secondary">
+
+											<th scope="col">Fecha</th>
+											<th scope="col">Hora llamado</th>
+											<th scope="col">Prioridad</th>
+											<th scope="col">Tipo equipo</th>
+											<th scope="col">Servicio</th>
+											<th scope="col">Realizado</th>
+											<th scope="col">Impacto Paciente</th>
+											<th scope="col">Equipo Inoperativo</th>
+											<th scope="col">Estado</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-light" th:each="llamado:${atendidos}">
+
+
+
+											<td th:text="${llamado.Fecha}"></td>
+											<td th:text="${llamado.Hora_llamado}"></td>
+											<td th:text="${llamado.Prioridad}"></td>
+											<td th:text="${llamado.tipo_equipo.nombre_Tipo_equipo}">
+
+											</td>
+											<td th:text="${llamado.servicio.Nombre_servicio}"></td>
+											<td th:text="${llamado.Realizado}"></td>
+											<td th:if="!${llamado.afectaPaciente}">No</td>
+											<td th:if="${llamado.afectaPaciente}"> Si</td>
+											<td th:if="!${llamado.equipoDesabilitado}">No</td>
+											<td th:if="${llamado.equipoDesabilitado}">Si</td>
+											<td>
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+													th:attr="data-bs-target='#staticBackdrop'+${llamado.id_Llamado}">
+													Más
+												</button>
+
+												<!-- Modal -->
+												<div class="modal" th:id="'staticBackdrop'+${llamado.id_Llamado}"
+													data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+													aria-labelledby="staticBackdropLabel" aria-hidden="true">
+													<div class="modal-dialog modal-xl">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="staticBackdropLabel"
+																	th:text="${llamado.id_Llamado}"></h5>
+																<button type="button" class="btn-close"
+																	data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																<div class="container">
+																	<div class="row">
+																		<div class="col-md-12">
+																			<div class="card">
+																				<div class="card-body">
+																					<h6 class="card-title">Estado del
+																						llamado</h6>
+																					<div th:if="${llamado.Foto}"
+																						class="mb-3"
+																						style="text-align: center;">
+																						<p class="lead">Registro</p>
+																						<img th:src="@{${llamado.Foto}}"
+																							width="250" height="200">
+
+																					</div>
+																					<div id="content">
+																						<ul class="timeline">
+																							<div
+																								th:if="${llamado.Estado == 0}">
+
+																								<li class="check"
+																									th:data-date="${llamado.Fecha}">
+
+
+																									<h3
+																										th:text="'Llamado ('+${llamado.Hora_llamado}+')'">
+
+																									</h3>
+																									<p
+																										th:text="${llamado.Descripcion}">
+																									</p>
+																									<p>
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/atenderllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</p>
+
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 0}">
+																								<li class="event"
+																									th:data-date="${llamado.Fecha}">
+																									<h3
+																										th:text="'Llamado ('+${llamado.Hora_llamado}+')'">
+																									</h3>
+																									<p
+																										th:text="${llamado.Descripcion}">
+																									</p>
+																								</li>
+																							</div>
+
+																							<div
+																								th:if="${llamado.Estado == 1}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_r}">
+																									<h3
+																										th:text="'Atención ('+${llamado.Hora_respuesta}+')'">
+																									</h3>
+																									<p
+																										th:text="'Atendido por: '+${llamado.Atendido}+' Ubicación: '+${llamado.Ubicacion_exacta}">
+																									</p>
+																									<div
+																										th:if="${llamado.Estado == 1}">
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/solucionarllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</div>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="${llamado.Fecha_r}">
+																									<h3
+																										th:text="'Atención ('+${llamado.Hora_respuesta}+')'">
+																									</h3>
+																									<p
+																										th:text="'Atendido por: '+${llamado.Atendido}+' Ubicación: '+${llamado.Ubicacion_exacta}">
+																									</p>
+																									<div
+																										th:if="${llamado.Estado == 1}">
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/solucionarllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</div>
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 1} or ${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Atención</h3>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_sn}">
+																									<h3
+																										th:text="'Solución ('+${llamado.Hora_solucion}+')'">
+																									</h3>
+																									<p
+																										th:text="${llamado.Solucion}">
+																									</p>
+
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Solución</h3>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 3}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_sn}">
+																									<h3>Calificación
+																									</h3>
+																									<p
+																										th:text="'Calificación: '+${llamado.Calificacion}">
+																									</p>
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Calificación
+																									</h3>
+																									<div
+																										th:if="${llamado.Estado == 2}">
+																										<form
+																											th:action="@{/calificacionllamado/}+${llamado.id_Llamado}"
+																											th:object="${allamado}"
+																											method="post">
+																											<p
+																												class="clasificacion">
+																												<input
+																													id="radio1"
+																													type="radio"
+																													th:name="calificacion"
+																													value="5"><!--
+																	    --><label for="radio1">★</label><!--
+																	    --><input id="radio2" type="radio" th:name="calificacion" value="4"><!--
+																	    --><label for="radio2">★</label><!--
+																	    --><input id="radio3" type="radio" th:name="calificacion" value="3"><!--
+																	    --><label for="radio3">★</label><!--
+																	    --><input id="radio4" type="radio" th:name="calificacion" value="2"><!--
+																	    --><label for="radio4">★</label><!--
+																	    --><input id="radio5" type="radio" th:name="calificacion" value="1"><!--
+																	    --><label for="radio5">★</label>
+																											</p>
+
+																											<p>
+																												<button
+																													style:"align:center;"type="submit"
+																													class="redondo">
+																													<div
+																														class="icon">
+																														<i
+																															class="bi bi-save-fill"></i>
+																													</div>
+																												</button>
+																											</p>
+
+																										</form>
+																									</div>
+
+																								</li>
+																							</div>
+
+
+																						</ul>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+
+
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary"
+																	data-bs-dismiss="modal">Cerrar</button>
+
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</td>
+
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="tab-pane fade" id="nav-solve" role="tabpanel" aria-labelledby="nav-solve-tab">
+						<form>
+							<div class="col-md-12 col-lg-12">
+								<div class="input-group">
+									<input class="form-control" id="myInputS" onkeyup="myFunctionS()" type="text"
+										placeholder="Ingrese el tipo, servicio">
+									<span class="input-group-btn">
+										<button type="button" class="w-200 btn btn-lg btn-dark"
+											onclick="myFunctionS()">Buscar</button>
+									</span>
+								</div>
+							</div>
+
+						</form>
+						<div th:if="${#lists.isEmpty(solves)}" class="alert alert-info my-4"
+							th:text="'No hay llamados solucionados en el momento'">
+						</div>
+						<div class="table-responsive">
+							<div class="bd-example">
+								<table class="table table-hover" th:if="${not #lists.isEmpty(solves)}" id="myTableS">
+									<thead>
+										<tr class="table-secondary">
+
+											<th scope="col">Fecha</th>
+											<th scope="col">Hora llamado</th>
+											<th scope="col">Prioridad</th>
+											<th scope="col">Tipo equipo</th>
+											<th scope="col">Servicio</th>
+											<th scope="col">Realizado</th>
+											<th scope="col">Impacto Paciente</th>
+											<th scope="col">Equipo Inoperativo</th>
+											<th scope="col">Tiempo Parada (Horas)</th>
+
+											<th scope="col">Estado</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-light" th:each="llamado:${solves}">
+
+
+
+											<td th:text="${llamado.Fecha}"></td>
+											<td th:text="${llamado.Hora_llamado}"></td>
+											<td th:text="${llamado.Prioridad}"></td>
+											<td th:text="${llamado.tipo_equipo.nombre_Tipo_equipo}">
+
+											</td>
+											<td th:text="${llamado.servicio.Nombre_servicio}"></td>
+											<td th:text="${llamado.Realizado}"></td>
+											<td th:if="!${llamado.afectaPaciente}">No</td>
+											<td th:if="${llamado.afectaPaciente}"> Si</td>
+											<td th:if="!${llamado.equipoDesabilitado}">No</td>
+											<td th:if="${llamado.equipoDesabilitado}">Si</td>
+											<td th:text="${llamado.tiempoParada}" style="width: 5ch;"></td>
+											<td>
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+													th:attr="data-bs-target='#staticBackdrop'+${llamado.id_Llamado}">
+													Más
+												</button>
+
+												<!-- Modal -->
+												<div class="modal" th:id="'staticBackdrop'+${llamado.id_Llamado}"
+													data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+													aria-labelledby="staticBackdropLabel" aria-hidden="true">
+													<div class="modal-dialog modal-xl">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="staticBackdropLabel"
+																	th:text="${llamado.id_Llamado}"></h5>
+																<button type="button" class="btn-close"
+																	data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																<div class="container">
+																	<div class="row">
+																		<div class="col-md-12">
+																			<div class="card">
+																				<div class="card-body">
+																					<h6 class="card-title">Estado del
+																						llamado</h6>
+																					<div id="content">
+																						<ul class="timeline">
+																							<div
+																								th:if="${llamado.Estado == 0}">
+
+																								<li class="check"
+																									th:data-date="${llamado.Fecha}">
+
+
+																									<h3
+																										th:text="'Llamado ('+${llamado.Hora_llamado}+')'">
+
+																									</h3>
+																									<p
+																										th:text="${llamado.Descripcion}">
+																									</p>
+																									<p>
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/atenderllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</p>
+
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 0}">
+																								<li class="event"
+																									th:data-date="${llamado.Fecha}">
+																									<h3
+																										th:text="'Llamado ('+${llamado.Hora_llamado}+')'">
+																									</h3>
+																									<p
+																										th:text="${llamado.Descripcion}">
+																									</p>
+																								</li>
+																							</div>
+
+																							<div
+																								th:if="${llamado.Estado == 1}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_r}">
+																									<h3
+																										th:text="'Atención ('+${llamado.Hora_respuesta}+')'">
+																									</h3>
+																									<p
+																										th:text="'Atendido por: '+${llamado.Atendido}+' Ubicación: '+${llamado.Ubicacion_exacta}">
+																									</p>
+																									<div
+																										th:if="${llamado.Estado == 1}">
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/solucionarllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</div>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="${llamado.Fecha_r}">
+																									<h3
+																										th:text="'Atención ('+${llamado.Hora_respuesta}+')'">
+																									</h3>
+																									<p
+																										th:text="'Atendido por: '+${llamado.Atendido}+' Ubicación: '+${llamado.Ubicacion_exacta}">
+																									</p>
+																									<div
+																										th:if="${llamado.Estado == 1}">
+																										<button
+																											sec:authorize="hasAnyAuthority('ADMIN','EDITOR','USER')"
+																											style:"align:center;"
+																											th:onclick="'window.location.href = \'' +@{/solucionarllamado/}+${llamado.id_Llamado}+'\''"
+																											type="button"
+																											class="redondo">
+																											<div
+																												class="icon">
+																												<i
+																													class="bi bi-arrow-down-circle-fill"></i>
+																											</div>
+																										</button>
+																									</div>
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 1} or ${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Atención</h3>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_sn}">
+																									<h3
+																										th:text="'Solución ('+${llamado.Hora_solucion}+')'">
+																									</h3>
+																									<p
+																										th:text="${llamado.Solucion}">
+																									</p>
+																									<p
+																										th:text="'Tiempo Parada (Horas): ' + ${llamado.tiempoParada}">
+																									</p>
+
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 2} or ${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Solución</h3>
+																								</li>
+																							</div>
+																							<div
+																								th:if="${llamado.Estado == 3}">
+																								<li class="check"
+																									th:data-date="${llamado.Fecha_sn}">
+																									<h3>Calificación
+																									</h3>
+																									<p
+																										th:text="'Calificación: '+${llamado.Calificacion}">
+																									</p>
+																								</li>
+																							</div>
+																							<div
+																								th:unless="${llamado.Estado == 3}">
+																								<li class="event"
+																									th:data-date="Pendiente">
+																									<h3>Calificación
+																									</h3>
+																									<div
+																										th:if="${llamado.Estado == 2}">
+																										<form
+																											th:action="@{/calificacionllamado/}+${llamado.id_Llamado}"
+																											th:object="${allamado}"
+																											method="post">
+																											<p
+																												class="clasificacion">
+																												<input
+																													id="radio1"
+																													type="radio"
+																													th:name="calificacion"
+																													value="5"><!--
+																	    --><label for="radio1">★</label><!--
+																	    --><input id="radio2" type="radio" th:name="calificacion" value="4"><!--
+																	    --><label for="radio2">★</label><!--
+																	    --><input id="radio3" type="radio" th:name="calificacion" value="3"><!--
+																	    --><label for="radio3">★</label><!--
+																	    --><input id="radio4" type="radio" th:name="calificacion" value="2"><!--
+																	    --><label for="radio4">★</label><!--
+																	    --><input id="radio5" type="radio" th:name="calificacion" value="1"><!--
+																	    --><label for="radio5">★</label>
+																											</p>
+
+																											<p>
+																												<button
+																													style:"align:center;"type="submit"
+																													class="redondo">
+																													<div
+																														class="icon">
+																														<i
+																															class="bi bi-save-fill"></i>
+																													</div>
+																												</button>
+																											</p>
+
+																										</form>
+																									</div>
+
+																								</li>
+																							</div>
+
+
+																						</ul>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+
+
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary"
+																	data-bs-dismiss="modal">Cerrar</button>
+
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</td>
+
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="tab-pane fade" id="nav-indice" role="tabpanel" aria-labelledby="nav-indice-tab">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="col">Prioridad</th>
+												<th scope="col">N°</th>
+												<th scope="col">Tiempo de respuesta</th>
+												<th scope="col">Prioridad de acuerdo técnico</th>
+												<th scope="col">Tiempo de ejecución</th>
+											<tr>
+										</thead>
+										<tbody>
+
+											<tr th:each="llamado,iter:${prior}">
+												<td th:text="${#strings.arraySplit(llamado, ',')[0]}"></td>
+												<td th:text="${#strings.arraySplit(llamado, ',')[1]}"></td>
+												<td th:text="${horasllamado.get(iter.index)}"></td>
+												<td th:text="${#strings.arraySplit(llamado, ',')[3]}"></td>
+												<td th:text="${horastotales.get(iter.index)}"></td>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+								<canvas id="bartec" width="50" height="50"></canvas>
+								<div class="table-responsive">
+									<p class="lead">Equipos de llamado frecuente</p>
+									<table class="table">
+										<thead>
+											<tr>
+
+												<th scope="col">N°</th>
+												<th scope="col">Equipo</th>
+
+											<tr>
+										</thead>
+										<tbody>
+
+											<tr th:each="llamado,iter:${top}">
+												<td th:text="${#strings.arraySplit(llamado, ',')[0]}"></td>
+												<td th:text="${#strings.arraySplit(llamado, ',')[1]}"></td>
+
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-5">
+										<div class="table-responsive">
+											<table class="table">
+
+												<tbody>
+
+													<tr>
+														<th scope="col">Total:</th>
+														<td th:text="${ltotal}"></td>
+													</tr>
+													<tr>
+														<th scope="col">Atendidos:</th>
+														<td th:text="${latend}"></td>
+													</tr>
+													<tr>
+														<th scope="col">Resueltos:</th>
+														<td th:text="${lsol}"></td>
+													</tr>
+													<tr>
+														<th scope="col">Tiempo de respuesta:</th>
+														<td th:text="${lrta}"></td>
+													</tr>
+													<tr>
+														<th scope="col">Tiempo de resolución:</th>
+														<td th:text="${lt}"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="col-md-7">
+										<div class="table-responsive">
+											<table class="table">
+
+												<tbody>
+													<tr>
+														<th colspan="2">POR TELÉFONO</th>
+													</tr>
+													<tr th:each="llamado,iter:${ltotalphone}">
+														<td th:text="${#strings.arraySplit(llamado, ',')[0]}"></td>
+														<td th:text="${#strings.arraySplit(llamado, ',')[1]}"></td>
+
+													</tr>
+													<tr>
+														<th colspan="2">CONFIRMACIÓN</th>
+													</tr>
+													<tr th:each="llamado,iter:${lrtaphone}">
+														<td th:text="${#strings.arraySplit(llamado, ',')[0]}"></td>
+														<td th:text="${#strings.arraySplit(llamado, ',')[1]}"></td>
+
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+								<canvas id="barservice" width="50" height="50"></canvas>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		<!-- FOOTER -->
+		<footer class="container">
+			<p class="float-end"><a href="#">Back to top</a></p>
+			<p> 2021-2022 Company, Inc.</p>
+		</footer>
+	</main>
+	<script th:inline="javascript" type="text/javascript">
+		/*<![CDATA[*/
+
+		var grouptec = /*[[${bytec}]]*/ 'default';
+		var tecs = /*[[${tecs}]]*/ 'default';
+
+		var groupser = /*[[${byservices}]]*/ 'default';
+		var sers = /*[[${services}]]*/ 'default';
+		let chart;
+
+		let chart2;
+		graphs();
+
+
+
+		function graphs() {
+			var Tecs = document.getElementById("bartec").getContext("2d");
+			var Service = document.getElementById("barservice").getContext("2d");
+			/*
+			0: No seleccionado
+			1: Entrega
+			2: Desconocimiento técnico
+			3: Dano externo
+			4: Sin accesorios
+			5: Golpe
+			6: Alarma
+			7: Correctivo
+			8: Otro
+			
+			*/
+			tecns = []; tecen = []; tecdt = []; tecde = [];
+			tecsa = []; tecg = []; teca = []; tecc = []; teco = [];
+			for (ll of grouptec) {
+				group = ll.split(',');
+				if (group[3] == "0") {
+					tecns.push(group);
+				}
+				else if (group[3] == "1") {
+					tecen.push(group);
+				}
+				else if (group[3] == "2") {
+					tecdt.push(group);
+				}
+				else if (group[3] == "3") {
+					tecde.push(group);
+				}
+				else if (group[3] == "4") {
+					tecsa.push(group);
+				}
+				else if (group[3] == "5") {
+					tecg.push(group);
+				}
+				else if (group[3] == "6") {
+					teca.push(group);
+				}
+				else if (group[3] == "7") {
+					tecc.push(group);
+				}
+				else if (group[3] == "8") {
+					teco.push(group);
+				}
+			}
+			value0 = []; value1 = []; value2 = []; value3 = []; value4 = []; value5 = []; value6 = []; value7 = []; value8 = [];
+			for (tecnico of tecs) {
+
+				for (var i = 0; i < tecns.length; i++) {
+
+					if (tecns[i][1].indexOf(tecnico) != -1) {
+						value0.push(parseInt(tecns[i][0], 10))
+						break;
+					}
+					else if (tecns[i][1].indexOf(tecnico) == -1 && i == tecns.length - 1) {
+						value0.push(0)
+					}
+				}
+				for (var i = 0; i < tecen.length; i++) {
+
+					if (tecen[i][1].indexOf(tecnico) != -1) {
+						value1.push(parseInt(tecen[i][0], 10))
+						break;
+					}
+					else if (tecen[i][1].indexOf(tecnico) == -1 && i == tecen.length - 1) {
+						value1.push(0)
+					}
+				}
+				for (var i = 0; i < tecdt.length; i++) {
+
+					if (tecdt[i][1].indexOf(tecnico) != -1) {
+						value2.push(parseInt(tecdt[i][0], 10))
+						break;
+					}
+					else if (tecdt[i][1].indexOf(tecnico) == -1 && i == tecdt.length - 1) {
+						value2.push(0)
+					}
+				}
+				for (var i = 0; i < tecde.length; i++) {
+
+					if (tecde[i][1].indexOf(tecnico) != -1) {
+						value3.push(parseInt(tecde[i][0], 10))
+						break;
+					}
+					else if (tecde[i][1].indexOf(tecnico) == -1 && i == tecde.length - 1) {
+						value3.push(0)
+					}
+				}
+				for (var i = 0; i < tecsa.length; i++) {
+
+					if (tecsa[i][1].indexOf(tecnico) != -1) {
+						value4.push(parseInt(tecsa[i][0], 10))
+						break;
+					}
+					else if (tecsa[i][1].indexOf(tecnico) == -1 && i == tecsa.length - 1) {
+						value4.push(0)
+					}
+				}
+				for (var i = 0; i < tecg.length; i++) {
+
+					if (tecg[i][1].indexOf(tecnico) != -1) {
+						value5.push(parseInt(tecg[i][0], 10))
+						break;
+					}
+					else if (tecg[i][1].indexOf(tecnico) == -1 && i == tecg.length - 1) {
+						value5.push(0)
+					}
+				}
+				for (var i = 0; i < teca.length; i++) {
+
+					if (teca[i][1].indexOf(tecnico) != -1) {
+						value6.push(parseInt(teca[i][0], 10))
+						break;
+					}
+					else if (teca[i][1].indexOf(tecnico) == -1 && i == teca.length - 1) {
+						value6.push(0)
+					}
+				}
+				for (var i = 0; i < tecc.length; i++) {
+
+					if (tecc[i][1].indexOf(tecnico) != -1) {
+						value7.push(parseInt(tecc[i][0], 10))
+						break;
+					}
+					else if (tecc[i][1].indexOf(tecnico) == -1 && i == tecc.length - 1) {
+						value7.push(0)
+					}
+				}
+				for (var i = 0; i < teco.length; i++) {
+
+					if (teco[i][1].indexOf(tecnico) != -1) {
+						value8.push(parseInt(teco[i][0], 10))
+						break;
+					}
+					else if (teco[i][1].indexOf(tecnico) == -1 && i == teco.length - 1) {
+						value8.push(0)
+					}
+				}
+			}
+
+			sns = []; sen = []; sdt = []; sde = [];
+			ssa = []; sg = []; sa = []; sc = []; so = [];
+			for (ll of groupser) {
+				group = ll.split(',');
+				if (group[3] == "0") {
+					sns.push(group);
+				}
+				else if (group[3] == "1") {
+					sen.push(group);
+				}
+				else if (group[3] == "2") {
+					sdt.push(group);
+				}
+				else if (group[3] == "3") {
+					sde.push(group);
+				}
+				else if (group[3] == "4") {
+					ssa.push(group);
+				}
+				else if (group[3] == "5") {
+					sg.push(group);
+				}
+				else if (group[3] == "6") {
+					sa.push(group);
+				}
+				else if (group[3] == "7") {
+					sc.push(group);
+				}
+				else if (group[3] == "8") {
+					so.push(group);
+				}
+			}
+			console.log(groupser)
+			console.log(sns, sen, sdt, sde, ssa, sg, sa, sc, so)
+			svalue0 = []; svalue1 = []; svalue2 = []; svalue3 = []; svalue4 = []; svalue5 = []; svalue6 = []; svalue7 = []; svalue8 = [];
+			for (servicio of sers) {
+
+				for (var i = 0; i < sns.length; i++) {
+
+					if (sns[i][1].indexOf(servicio) != -1) {
+						svalue0.push(parseInt(sns[i][0], 10))
+						break;
+					}
+					else if (sns[i][1].indexOf(servicio) == -1 && i == sns.length - 1) {
+						svalue0.push(0)
+					}
+				}
+				for (var i = 0; i < sen.length; i++) {
+
+					if (sen[i][1].indexOf(servicio) != -1) {
+						svalue1.push(parseInt(sen[i][0], 10))
+						break;
+					}
+					else if (sen[i][1].indexOf(servicio) == -1 && i == sen.length - 1) {
+						svalue1.push(0)
+					}
+				}
+				for (var i = 0; i < sdt.length; i++) {
+
+					if (sdt[i][1].indexOf(servicio) != -1) {
+						svalue2.push(parseInt(sdt[i][0], 10))
+						break;
+					}
+					else if (sdt[i][1].indexOf(servicio) == -1 && i == sdt.length - 1) {
+						svalue2.push(0)
+					}
+				}
+				for (var i = 0; i < sde.length; i++) {
+
+					if (sde[i][1].indexOf(servicio) != -1) {
+						svalue3.push(parseInt(sde[i][0], 10))
+						break;
+					}
+					else if (sde[i][1].indexOf(servicio) == -1 && i == sde.length - 1) {
+						svalue3.push(0)
+					}
+				}
+				for (var i = 0; i < ssa.length; i++) {
+
+					if (ssa[i][1].indexOf(servicio) != -1) {
+						svalue4.push(parseInt(ssa[i][0], 10))
+						break;
+					}
+					else if (ssa[i][1].indexOf(servicio) == -1 && i == ssa.length - 1) {
+						svalue4.push(0)
+					}
+				}
+				for (var i = 0; i < sg.length; i++) {
+
+					if (sg[i][1].indexOf(servicio) != -1) {
+						svalue5.push(parseInt(sg[i][0], 10))
+						break;
+					}
+					else if (sg[i][1].indexOf(servicio) == -1 && i == sg.length - 1) {
+						svalue5.push(0)
+					}
+				}
+				for (var i = 0; i < sa.length; i++) {
+
+					if (sa[i][1].indexOf(servicio) != -1) {
+						svalue6.push(parseInt(sa[i][0], 10))
+						break;
+					}
+					else if (sa[i][1].indexOf(servicio) == -1 && i == sa.length - 1) {
+						svalue6.push(0)
+					}
+				}
+				for (var i = 0; i < sc.length; i++) {
+
+					if (sc[i][1].indexOf(servicio) != -1) {
+						svalue7.push(parseInt(sc[i][0], 10))
+						break;
+					}
+					else if (sc[i][1].indexOf(servicio) == -1 && i == sc.length - 1) {
+						svalue7.push(0)
+					}
+				}
+				for (var i = 0; i < so.length; i++) {
+
+					if (so[i][1].indexOf(servicio) != -1) {
+						svalue8.push(parseInt(so[i][0], 10))
+						break;
+					}
+					else if (so[i][1].indexOf(servicio) == -1 && i == so.length - 1) {
+						svalue8.push(0)
+					}
+				}
+			}
+			if (chart) {
+				chart.destroy();
+			}
+			if (chart2) {
+				chart2.destroy();
+			}
+			chart = new Chart(Tecs, {
+				type: "bar",
+				data: {
+					labels: tecs,
+					datasets: [
+						{
+							label: 'No seleccionado',
+							data: value0,
+							backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+						},
+						{
+							label: 'Entrega',
+							data: value1,
+							backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+						},
+						{
+							label: 'Desconocimiento técnico',
+							data: value2,
+							backgroundColor: ['rgba(255, 206, 86, 0.2)'],
+						},
+						{
+							label: 'Daño externo',
+							data: value3,
+							backgroundColor: ['rgba(0, 143, 57, 0.2)'],
+						},
+						{
+							label: 'Sin accesorios',
+							data: value4,
+							backgroundColor: ['rgba(214, 0, 110, 0.2)'],
+						},
+						{
+							label: 'Golpe',
+							data: value5,
+							backgroundColor: ['rgba(205, 206, 205, 0.2)'],
+						},
+						{
+							label: 'Alarma',
+							data: value6,
+							backgroundColor: ['rgba(255,127,0, 0.2)'],
+						},
+						{
+							label: 'Correctivo',
+							data: value7,
+							backgroundColor: ['rgba(0, 49, 83, 0.2)'],
+						},
+						{
+							label: 'Otro',
+							data: value8,
+							backgroundColor: ['rgba(159, 213, 209, 0.2)'],
+						},
+					]
+				},
+				options: {
+					plugins: {
+						title: {
+							display: true,
+							text: 'Servicios reportados'
+						},
+					},
+					responsive: true,
+					scales: {
+						x: {
+							stacked: true,
+						},
+						y: {
+							stacked: true
+						}
+					}
+				}
+			});
+
+			chart2 = new Chart(Service, {
+				type: "bar",
+				data: {
+					labels: sers,
+					datasets: [
+						{
+							label: 'No seleccionado',
+							data: svalue0,
+							backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+						},
+						{
+							label: 'Entrega',
+							data: svalue1,
+							backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+						},
+						{
+							label: 'Desconocimiento técnico',
+							data: svalue2,
+							backgroundColor: ['rgba(255, 206, 86, 0.2)'],
+						},
+						{
+							label: 'Daño externo',
+							data: svalue3,
+							backgroundColor: ['rgba(0, 143, 57, 0.2)'],
+						},
+						{
+							label: 'Sin accesorios',
+							data: svalue4,
+							backgroundColor: ['rgba(214, 0, 110, 0.2)'],
+						},
+						{
+							label: 'Golpe',
+							data: svalue5,
+							backgroundColor: ['rgba(205, 206, 205, 0.2)'],
+						},
+						{
+							label: 'Alarma',
+							data: svalue6,
+							backgroundColor: ['rgba(255,127,0, 0.2)'],
+						},
+						{
+							label: 'Correctivo',
+							data: svalue7,
+							backgroundColor: ['rgba(0, 49, 83, 0.2)'],
+						},
+						{
+							label: 'Otro',
+							data: svalue8,
+							backgroundColor: ['rgba(159, 213, 209, 0.2)'],
+						},
+					]
+				},
+				options: {
+					plugins: {
+						title: {
+							display: true,
+							text: 'Tipos de llamados reportados'
+						},
+					},
+					responsive: true,
+					scales: {
+						x: {
+							stacked: true,
+						},
+						y: {
+							stacked: true
+						}
+					}
+				}
+			});
+		}
+
+
+		$(function () {
+			$('input[name="daterange"]').daterangepicker({
+				opens: 'right'
+			});
+
+		});
+
+		function myClose(buton) {
+			var id = buton.id;
+
+			document.getElementById(id + 'modal').style.display = 'none';
+		}
+
+		function myFunction() {
+			var input, filter, div, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			div = document.getElementById("myTable");
+			tr = div.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td1 = tr[i].getElementsByTagName("td")[0];
+				td2 = tr[i].getElementsByTagName("td")[1];
+				td3 = tr[i].getElementsByTagName("td")[2];
+				td4 = tr[i].getElementsByTagName("td")[3];
+				if (td1 || td2 || td3) {
+					txtValue1 = td1.textContent || td1.innerText;
+					txtValue2 = td2.textContent || td2.innerText;
+					txtValue3 = td3.textContent || td3.innerText;
+					txtValue4 = td4.textContent || td4.innerText;
+					if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+						tr[i].style.display = "";
+					}
+					else {
+						tr[i].style.display = "none";
+					}
+
+				}
+
+
+			}
+		}
+		
+		function myFunctionS() {
+					var input, filter, div, tr, td, i, txtValue;
+					input = document.getElementById("myInputS");
+					filter = input.value.toUpperCase();
+					div = document.getElementById("myTableS");
+					tr = div.getElementsByTagName("tr");
+					for (i = 0; i < tr.length; i++) {
+						td1 = tr[i].getElementsByTagName("td")[2];
+						td2 = tr[i].getElementsByTagName("td")[3];
+						td3 = tr[i].getElementsByTagName("td")[4];
+						td4 = tr[i].getElementsByTagName("td")[5];
+						if (td1 || td2 || td3) {
+							txtValue1 = td1.textContent || td1.innerText;
+							txtValue2 = td2.textContent || td2.innerText;
+							txtValue3 = td3.textContent || td3.innerText;
+							txtValue4 = td4.textContent || td4.innerText;
+							if ((txtValue1.toUpperCase().indexOf(filter)) > -1) {
+								tr[i].style.display = "";
+							}
+							else if ((txtValue2.toUpperCase().indexOf(filter)) > -1) {
+								tr[i].style.display = "";
+							}
+							else if ((txtValue3.toUpperCase().indexOf(filter)) > -1) {
+								tr[i].style.display = "";
+							}
+							else if ((txtValue4.toUpperCase().indexOf(filter)) > -1) {
+								tr[i].style.display = "";
+							}
+							else {
+								tr[i].style.display = "none";
+							}
+
+						}
+
+
+					}
+				}
+
+		/*]]>*/
+	</script>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>

@@ -14,14 +14,14 @@ public interface IMantenimiento_preventivoDao extends CrudRepository<Mantenimien
 	@Query("SELECT COUNT(mp) from Mantenimiento_preventivo mp")
     public int countAll();
 	
-	@Query("SELECT mp FROM Mantenimiento_preventivo mp "+
-			"INNER JOIN Usuario u ON mp.usuario.id_Usuario = u.id_Usuario "+
-			"WHERE u.id_Usuario=?1 AND mp.Mes=?2 AND mp.Ano=?3")
+	@Query("SELECT mp FROM Mantenimiento_preventivo mp JOIN mp.equipo e JOIN e.servicio s "
+			+ "WHERE mp.usuario.id_Usuario = ?1 AND mp.Mes = ?2 AND mp.Ano = ?3 "
+			+ "ORDER BY s.Nombre_servicio ASC")
 	public List<Mantenimiento_preventivo> findbytecnicomonthandyear(Long id,int mes, int ano);
 	
-	@Query("SELECT mp FROM Mantenimiento_preventivo mp "+
-			"INNER JOIN Usuario u ON mp.usuario.id_Usuario = u.id_Usuario "+
-			"WHERE mp.Mes=?1 AND mp.Ano=?2 and mp.equipo.EstadoBaja = false")
+	@Query("SELECT mp FROM Mantenimiento_preventivo mp JOIN mp.equipo e JOIN e.servicio s "
+			+ "WHERE mp.Mes = ?1 AND mp.Ano = ?2 AND e.EstadoBaja = false "
+			+ "ORDER BY s.Nombre_servicio ASC")
 	public List<Mantenimiento_preventivo> findMesAnoinitial(int mes,int ano);
 	
 	

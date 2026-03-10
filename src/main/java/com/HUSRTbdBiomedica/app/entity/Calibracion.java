@@ -28,7 +28,7 @@ public class Calibracion implements Serializable{
 	@Column(name = "fecha_recepcion")    
     private Date Fecha_recepcion;
 	
-	@Column(name = "tipo")
+	@Column(name = "tipo_actividad")
 	private String tipoActividad;
 	
 	@Column(name = "fecha_calibracion")
@@ -70,17 +70,17 @@ public class Calibracion implements Serializable{
 	public static long getSerialVersionUID() {
     	return serialVersionUID;
     }
-		
+	
+	public Long getId_Calibracion() {
+		return id_Calibracion;
+	}
+	
 	public String getTipoActividad() {
 		return tipoActividad;
 	}
 
 	public void setTipoActividad(String tipoActividad) {
 		this.tipoActividad = tipoActividad;
-	}
-
-	public Long getId_Calibracion() {
-		return id_Calibracion;
 	}
 
 	public void setId_Calibracion(Long id_Calibracion) {

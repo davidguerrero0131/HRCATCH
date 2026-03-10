@@ -4869,13 +4869,13 @@ public class PdfGenarator {
 		Chunk diagstyle = new Chunk("DIAGNÓSTICO:");
 		diagstyle.setFont(rta);
 
-		Chunk rehabstyle = new Chunk("REHABILITACIÓN:");
+		Chunk rehabstyle = new Chunk("TERAPIA Y REHABILITACIÓN:");
 		rehabstyle.setFont(rta);
 
-		Chunk preventstyle = new Chunk("PREVENCIÓN:");
+		Chunk preventstyle = new Chunk("APOYO:");
 		preventstyle.setFont(rta);
 
-		Chunk analystyle = new Chunk("ANÁLISIS DE LABORATORIO:");
+		Chunk analystyle = new Chunk("ANÁLISIS DE LABORATORIO CLINICO:");
 		analystyle.setFont(rta);
 
 		Chunk treatstyle = new Chunk("TRATAMIENTO Y MANTENIMIENTO A LA VIDA:");
@@ -6309,13 +6309,13 @@ public class PdfGenarator {
 		Chunk diagstyle = new Chunk("DIAGNÓSTICO:");
 		diagstyle.setFont(rta);
 
-		Chunk rehabstyle = new Chunk("REHABILITACIÓN:");
+		Chunk rehabstyle = new Chunk("TERAPIA Y REHABILITACIÓN:");
 		rehabstyle.setFont(rta);
 
-		Chunk preventstyle = new Chunk("PREVENCIÓN:");
+		Chunk preventstyle = new Chunk("APOYO:");
 		preventstyle.setFont(rta);
 
-		Chunk analystyle = new Chunk("ANÁLISIS DE LABORATORIO:");
+		Chunk analystyle = new Chunk("ANÁLISIS DE LABORATORIO CLINICO:");
 		analystyle.setFont(rta);
 
 		Chunk treatstyle = new Chunk("TRATAMIENTO Y MANTENIMIENTO A LA VIDA:");
